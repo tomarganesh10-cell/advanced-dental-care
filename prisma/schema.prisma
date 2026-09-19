@@ -1,0 +1,1709 @@
+// =============================================================================
+// Advanced Dental Care Centre — data model
+// -----------------------------------------------------------------------------
+// Conventions (see docs/DATABASE.md):
+//   * UUID primary keys everywhere — ids appear in URLs and must not be
+//     enumerable.
+//   * createdAt / updatedAt on every table.
+//   * Soft delete (deletedAt) on clinically or financially significant records.
+//     Patient and clinical records are NEVER hard-deleted from the application:
+//     medical record retention obligations outlive a patient's deletion request.
+//   * Money is stored in PAISE as Int. Never float.
+//   * All timestamps are UTC; display conversion to Asia/Kolkata happens in the
+//     application layer.
+// =============================================================================
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// =============================================================================
+// AUTH, USERS & RBAC
+// =============================================================================
+
+enum UserType {
+  STAFF
+  PATIENT
+}
+
+enum StaffRole {
+  SUPER_ADMIN
+  CLINIC_ADMIN
+  DOCTOR
+  DENTAL_ASSISTANT
+  RECEPTIONIST
+  MANAGER
+  MARKETING
+  ACCOUNTANT
+  SUPPORT
+}
+
+model User {
+  id       String   @id @default(uuid()) @db.Uuid
+  type     UserType
+  email    String?  @unique
+  phone    String?  @unique
+  /// Argon2id hash. Null for OTP-only patient accounts.
+  passwordHash String?
+  /// TOTP secret, encrypted at rest. Null when MFA is not enrolled.
+  mfaSecret        String?
+  mfaEnabledAt     DateTime?
+  emailVerifiedAt  DateTime?
+  phoneVerifiedAt  DateTime?
+  isActive         Boolean   @default(true)
+  /// Incremented to invalidate every outstanding session for this user.
+  sessionEpoch     Int       @default(0)
+  failedLoginCount Int       @default(0)
+  lockedUntil      DateTime?
+  lastLoginAt      DateTime?
+  lastLoginIp      String?
+
+  staff    Staff?
+  patient  Patient?
+  sessions Session[]
+  auditLogs AuditLog[] @relation("AuditActor")
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([type, isActive])
+  @@index([deletedAt])
+  @@map("users")
+}
+
+model Session {
+  id     String @id @default(uuid()) @db.Uuid
+  /// SHA-256 of the session token. The raw token exists only in the cookie.
+  tokenHash String @unique
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Copy of User.sessionEpoch at issue time; a mismatch revokes the session.
+  epoch     Int
+  ipAddress String?
+  userAgent String?
+  expiresAt DateTime
+  revokedAt DateTime?
+  lastSeenAt DateTime @default(now())
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, revokedAt])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+/// One-time passwords for patient login, booking verification and staff MFA
+/// recovery. The code itself is stored hashed.
+enum OtpPurpose {
+  PATIENT_LOGIN
+  BOOKING_VERIFICATION
+  PHONE_CHANGE
+  PASSWORD_RESET
+}
+
+model OtpChallenge {
+  id        String     @id @default(uuid()) @db.Uuid
+  purpose   OtpPurpose
+  /// E.164 phone or email address the code was sent to.
+  destination String
+  codeHash  String
+  attempts  Int        @default(0)
+  maxAttempts Int      @default(5)
+  expiresAt DateTime
+  consumedAt DateTime?
+  ipAddress String?
+  /// Arbitrary payload carried through verification (e.g. a pending booking).
+  payload   Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([destination, purpose, consumedAt])
+  @@index([expiresAt])
+  @@map("otp_challenges")
+}
+
+/// Explicit permission grants layered on top of StaffRole defaults.
+/// Role defaults live in code (src/lib/rbac/permissions.ts); this table records
+/// per-user exceptions so a receptionist can be given, say, refund rights
+/// without becoming an admin.
+model PermissionGrant {
+  id         String  @id @default(uuid()) @db.Uuid
+  staffId    String  @db.Uuid
+  staff      Staff   @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  permission String
+  /// false = explicit DENY, which always beats a role default.
+  allow      Boolean @default(true)
+  grantedBy  String? @db.Uuid
+  reason     String?
+  expiresAt  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([staffId, permission])
+  @@index([staffId])
+  @@map("permission_grants")
+}
+
+// =============================================================================
+// STAFF & ATTENDANCE
+// =============================================================================
+
+model Staff {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @unique @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Human-readable staff code, e.g. ADC-S-0007.
+  staffCode   String    @unique
+  fullName    String
+  role        StaffRole
+  designation String?
+  phone       String?
+  email       String?
+  photoUrl    String?
+  joiningDate DateTime?
+  isActive    Boolean   @default(true)
+
+  doctor           Doctor?
+  permissionGrants PermissionGrant[]
+  attendance       Attendance[]
+  leaveRequests    LeaveRequest[]
+  assignedLeads    Lead[]            @relation("LeadOwner")
+  leadActivities   LeadActivity[]
+  createdAppointments Appointment[]  @relation("AppointmentCreatedBy")
+  clinicalNotes    ClinicalNote[]
+  feedbackHandled  Feedback[]        @relation("FeedbackHandler")
+  verifiedClaims   ContentClaim[]    @relation("ClaimVerifier")
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([role, isActive])
+  @@index([deletedAt])
+  @@map("staff")
+}
+
+model Doctor {
+  id      String @id @default(uuid()) @db.Uuid
+  staffId String @unique @db.Uuid
+  staff   Staff  @relation(fields: [staffId], references: [id], onDelete: Cascade)
+
+  slug           String  @unique
+  displayName    String
+  qualifications String[]
+  /// Dental Council registration. Shown publicly — patients check these.
+  registrationCouncil String?
+  registrationNumber  String?
+  specialties    String[]
+  specialInterests String[]
+  bio            String?
+  photoUrl       String?
+  practisingSinceYear Int?
+  /// FULL_TIME or VISITING — published so patients know what to expect.
+  isVisiting     Boolean @default(false)
+  /// Shown on the public /doctors page.
+  isPubliclyListed Boolean @default(false)
+  /// Patients may pick this doctor in the booking flow.
+  isBookable     Boolean @default(true)
+  displayOrder   Int     @default(0)
+  /// Default minutes per appointment for this doctor.
+  defaultSlotMinutes Int @default(30)
+
+  schedules     DoctorSchedule[]
+  timeOff       DoctorTimeOff[]
+  appointments  Appointment[]
+  treatmentPlans TreatmentPlan[]
+  prescriptions Prescription[]
+  clinicalNotes ClinicalNote[]
+  galleryCases  GalleryCase[]
+  blogPosts     BlogPost[]       @relation("BlogAuthor")
+  reviewedPosts BlogPost[]       @relation("BlogMedicalReviewer")
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([isPubliclyListed, displayOrder])
+  @@map("doctors")
+}
+
+/// Recurring weekly availability. A doctor may have several blocks per day
+/// (e.g. 10:00–14:00 and 16:00–19:00) — the gap is the lunch break.
+model DoctorSchedule {
+  id       String @id @default(uuid()) @db.Uuid
+  doctorId String @db.Uuid
+  doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  /// 0 = Sunday … 6 = Saturday.
+  dayOfWeek  Int
+  /// "HH:mm" in clinic-local time (Asia/Kolkata).
+  startTime  String
+  endTime    String
+  slotMinutes Int    @default(30)
+  /// Appointments bookable in parallel in this block (multiple chairs).
+  capacity   Int     @default(1)
+  isActive   Boolean @default(true)
+  /// Optional: restrict this block to specific treatments, e.g. surgery lists.
+  serviceSlugs String[]
+
+  effectiveFrom DateTime?
+  effectiveTo   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([doctorId, dayOfWeek, isActive])
+  @@map("doctor_schedules")
+}
+
+/// Leave, conferences, blocked afternoons — anything that removes availability
+/// for one doctor without closing the clinic.
+model DoctorTimeOff {
+  id       String @id @default(uuid()) @db.Uuid
+  doctorId String @db.Uuid
+  doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  startsAt DateTime
+  endsAt   DateTime
+  reason   String?
+  createdBy String? @db.Uuid
+
+  createdAt DateTime @default(now())
+
+  @@index([doctorId, startsAt, endsAt])
+  @@map("doctor_time_off")
+}
+
+/// Clinic-wide closures: public holidays, maintenance days.
+model ClinicHoliday {
+  id     String   @id @default(uuid()) @db.Uuid
+  /// Date at clinic-local midnight.
+  date   DateTime @db.Date
+  name   String
+  /// Half-day closures set these instead of closing the whole day.
+  opens  String?
+  closes String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([date])
+  @@map("clinic_holidays")
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  HALF_DAY
+  LEAVE
+  WEEK_OFF
+  HOLIDAY
+}
+
+model Attendance {
+  id      String @id @default(uuid()) @db.Uuid
+  staffId String @db.Uuid
+  staff   Staff  @relation(fields: [staffId], references: [id], onDelete: Cascade)
+
+  /// Clinic-local date the shift belongs to.
+  date        DateTime         @db.Date
+  status      AttendanceStatus
+  checkInAt   DateTime?
+  checkOutAt  DateTime?
+  /// Derived on checkout; stored so reports don't recompute across the table.
+  workedMinutes Int?
+  lateMinutes   Int            @default(0)
+  notes         String?
+  /// IP the check-in came from, for the optional clinic-network restriction.
+  checkInIp     String?
+  checkOutIp    String?
+  /// Set when a manager edits a record rather than the staff member clocking.
+  adjustedBy    String?        @db.Uuid
+  adjustmentReason String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([staffId, date])
+  @@index([date, status])
+  @@map("attendance")
+}
+
+enum LeaveStatus {
+  REQUESTED
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+model LeaveRequest {
+  id      String @id @default(uuid()) @db.Uuid
+  staffId String @db.Uuid
+  staff   Staff  @relation(fields: [staffId], references: [id], onDelete: Cascade)
+
+  startDate DateTime    @db.Date
+  endDate   DateTime    @db.Date
+  /// CASUAL / SICK / UNPAID — free text so the clinic can define its own.
+  leaveType String
+  reason    String?
+  status    LeaveStatus @default(REQUESTED)
+  decidedBy String?     @db.Uuid
+  decidedAt DateTime?
+  decisionNote String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([staffId, status])
+  @@index([startDate, endDate])
+  @@map("leave_requests")
+}
+
+// =============================================================================
+// PATIENTS
+// =============================================================================
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  UNDISCLOSED
+}
+
+model Patient {
+  id     String  @id @default(uuid()) @db.Uuid
+  /// Null for walk-in records created by reception that have no portal login.
+  userId String? @unique @db.Uuid
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  /// Human-readable patient number, e.g. ADC-P-002381. Shown on invoices.
+  patientNumber String  @unique
+  fullName      String
+  phone         String
+  altPhone      String?
+  email         String?
+  dateOfBirth   DateTime? @db.Date
+  gender        Gender?
+  addressLine1  String?
+  addressLine2  String?
+  city          String?
+  state         String?
+  postalCode    String?
+  country       String?   @default("India")
+  preferredLanguage String? @default("en")
+
+  emergencyContactName  String?
+  emergencyContactPhone String?
+  emergencyContactRelation String?
+
+  /// Where this patient originally came from; mirrors Lead.source.
+  acquisitionSource String?
+  isInternational   Boolean @default(false)
+  countryOfResidence String?
+
+  /// Free-text alert shown at the top of the chart, e.g. "latex allergy".
+  clinicalAlert String?
+
+  consents        PatientConsent[]
+  medicalHistory  MedicalHistory?
+  appointments    Appointment[]
+  clinicalNotes   ClinicalNote[]
+  treatmentPlans  TreatmentPlan[]
+  prescriptions   Prescription[]
+  documents       PatientDocument[]
+  invoices        Invoice[]
+  payments        Payment[]
+  leads           Lead[]
+  notifications   NotificationMessage[]
+  feedback        Feedback[]
+  reviewRequests  ReviewRequest[]
+  galleryCases    GalleryCase[]
+  testimonials    Testimonial[]
+  dataRequests    DataSubjectRequest[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  /// Soft delete only. Clinical records must survive a portal-account deletion.
+  deletedAt DateTime?
+
+  @@index([phone])
+  @@index([email])
+  @@index([fullName])
+  @@index([deletedAt])
+  @@map("patients")
+}
+
+enum ConsentType {
+  TREATMENT
+  DATA_PROCESSING
+  WHATSAPP_MESSAGING
+  EMAIL_MARKETING
+  SMS_MESSAGING
+  PHOTOGRAPHY
+  /// Distinct from PHOTOGRAPHY: permission to publish on the website.
+  PUBLIC_MEDIA_USE
+  ANAESTHESIA
+  IMPLANT_SURGERY
+}
+
+model PatientConsent {
+  id        String      @id @default(uuid()) @db.Uuid
+  patientId String      @db.Uuid
+  patient   Patient     @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  type      ConsentType
+  granted   Boolean
+  /// Version of the consent text the patient actually agreed to.
+  documentVersion String?
+  /// Verbatim text presented, so the record survives a later wording change.
+  documentText    String?
+  grantedAt DateTime?
+  revokedAt DateTime?
+  expiresAt DateTime?
+  /// How consent was captured: PORTAL / PAPER / IN_PERSON / WHATSAPP.
+  method    String?
+  capturedBy String? @db.Uuid
+  ipAddress String?
+  /// Scan of a signed paper form.
+  documentId String? @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([patientId, type])
+  @@map("patient_consents")
+}
+
+model MedicalHistory {
+  id        String  @id @default(uuid()) @db.Uuid
+  patientId String  @unique @db.Uuid
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  allergies          String[]
+  currentMedications String[]
+  medicalConditions  String[]
+  pastSurgeries      String[]
+  /// Flags that change how treatment is planned.
+  isDiabetic         Boolean  @default(false)
+  isHypertensive     Boolean  @default(false)
+  isPregnant         Boolean  @default(false)
+  isSmoker           Boolean  @default(false)
+  bleedingDisorder   Boolean  @default(false)
+  onBloodThinners    Boolean  @default(false)
+  hasCardiacCondition Boolean @default(false)
+  /// Free text for anything the structured fields miss.
+  notes              String?
+  dentalHistory      String?
+  chiefComplaint     String?
+
+  lastReviewedAt DateTime?
+  lastReviewedBy String?   @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("medical_histories")
+}
+
+// =============================================================================
+// APPOINTMENTS
+// =============================================================================
+
+enum AppointmentStatus {
+  REQUESTED
+  PENDING_CONFIRMATION
+  CONFIRMED
+  RESCHEDULE_REQUESTED
+  RESCHEDULED
+  CHECKED_IN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum AppointmentChannel {
+  WEBSITE
+  PHONE
+  WALK_IN
+  WHATSAPP
+  PORTAL
+  ADMIN
+}
+
+model Appointment {
+  id     String @id @default(uuid()) @db.Uuid
+  /// Human-readable reference given to the patient, e.g. ADC-A-8F2K3M.
+  reference String @unique
+
+  patientId String  @db.Uuid
+  patient   Patient @relation(fields: [patientId], references: [id])
+
+  doctorId String? @db.Uuid
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+
+  /// Slug from data/services.ts. Not a FK — the catalogue lives in code.
+  serviceSlug String?
+  serviceName String?
+
+  status  AppointmentStatus  @default(REQUESTED)
+  channel AppointmentChannel @default(WEBSITE)
+
+  /// UTC. Display conversion happens in the app.
+  startsAt DateTime
+  endsAt   DateTime
+  durationMinutes Int
+
+  isNewPatient Boolean @default(true)
+  patientNote  String?
+  /// Internal, never shown to the patient.
+  staffNote    String?
+
+  confirmedAt  DateTime?
+  checkedInAt  DateTime?
+  startedAt    DateTime?
+  completedAt  DateTime?
+  cancelledAt  DateTime?
+  cancelledBy  String?  @db.Uuid
+  cancellationReason String?
+  noShowAt     DateTime?
+
+  /// Set when this appointment replaced another.
+  rescheduledFromId String?      @unique @db.Uuid
+  rescheduledFrom   Appointment? @relation("Reschedule", fields: [rescheduledFromId], references: [id])
+  rescheduledTo     Appointment? @relation("Reschedule")
+
+  createdByStaffId String? @db.Uuid
+  createdByStaff   Staff?  @relation("AppointmentCreatedBy", fields: [createdByStaffId], references: [id])
+
+  leadId String? @db.Uuid
+  lead   Lead?   @relation(fields: [leadId], references: [id])
+
+  clinicalNotes ClinicalNote[]
+  invoices      Invoice[]
+  notifications NotificationMessage[]
+  feedback      Feedback[]
+  reviewRequests ReviewRequest[]
+  payments      Payment[]
+  statusHistory AppointmentStatusEvent[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([startsAt, status])
+  @@index([doctorId, startsAt])
+  @@index([patientId, startsAt])
+  @@index([status])
+  @@map("appointments")
+}
+
+/// Append-only history of every status transition. Separate from AuditLog
+/// because the appointment timeline is shown in the UI, not just audited.
+model AppointmentStatusEvent {
+  id            String            @id @default(uuid()) @db.Uuid
+  appointmentId String            @db.Uuid
+  appointment   Appointment       @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  fromStatus    AppointmentStatus?
+  toStatus      AppointmentStatus
+  actorId       String?           @db.Uuid
+  actorLabel    String?
+  reason        String?
+
+  createdAt DateTime @default(now())
+
+  @@index([appointmentId, createdAt])
+  @@map("appointment_status_events")
+}
+
+// =============================================================================
+// CLINICAL RECORDS
+// =============================================================================
+
+model ClinicalNote {
+  id        String  @id @default(uuid()) @db.Uuid
+  patientId String  @db.Uuid
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  appointmentId String?      @db.Uuid
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+
+  doctorId String? @db.Uuid
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+
+  authorStaffId String? @db.Uuid
+  authorStaff   Staff?  @relation(fields: [authorStaffId], references: [id])
+
+  chiefComplaint String?
+  examination    String?
+  diagnosis      String?
+  procedure      String?
+  /// FDI tooth notation, e.g. ["16","17"].
+  toothNumbers   String[]
+  advice         String?
+  /// Visible only to clinical staff — excluded from every patient-portal query.
+  privateNote    String?
+  followUpDate   DateTime? @db.Date
+
+  /// Notes are locked after a grace period; corrections are appended as
+  /// amendments rather than rewriting the record.
+  lockedAt      DateTime?
+  amendmentOfId String?       @db.Uuid
+  amendmentOf   ClinicalNote? @relation("NoteAmendment", fields: [amendmentOfId], references: [id])
+  amendments    ClinicalNote[] @relation("NoteAmendment")
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([patientId, createdAt])
+  @@index([appointmentId])
+  @@map("clinical_notes")
+}
+
+enum TreatmentPlanStatus {
+  DRAFT
+  PROPOSED
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  DECLINED
+  ON_HOLD
+}
+
+model TreatmentPlan {
+  id        String  @id @default(uuid()) @db.Uuid
+  patientId String  @db.Uuid
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  doctorId String? @db.Uuid
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+
+  title       String
+  summary     String?
+  status      TreatmentPlanStatus @default(DRAFT)
+  /// Total of all items, in paise. Denormalised for listing performance.
+  estimatedTotalPaise Int @default(0)
+  /// Shown in the patient portal only once the plan has been proposed.
+  isVisibleToPatient  Boolean @default(false)
+  proposedAt  DateTime?
+  acceptedAt  DateTime?
+  completedAt DateTime?
+
+  items    TreatmentPlanItem[]
+  invoices Invoice[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([patientId, status])
+  @@map("treatment_plans")
+}
+
+enum TreatmentItemStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model TreatmentPlanItem {
+  id     String        @id @default(uuid()) @db.Uuid
+  planId String        @db.Uuid
+  plan   TreatmentPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  sequence     Int
+  description  String
+  serviceSlug  String?
+  toothNumbers String[]
+  quantity     Int    @default(1)
+  unitPricePaise Int  @default(0)
+  status       TreatmentItemStatus @default(PLANNED)
+  completedAt  DateTime?
+  notes        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([planId, sequence])
+  @@map("treatment_plan_items")
+}
+
+model Prescription {
+  id        String  @id @default(uuid()) @db.Uuid
+  patientId String  @db.Uuid
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  doctorId String? @db.Uuid
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+
+  /// Human-readable number printed on the prescription.
+  reference String  @unique
+  notes     String?
+  issuedAt  DateTime @default(now())
+  /// A prescription is immutable once issued; corrections supersede it.
+  supersededById String? @unique @db.Uuid
+  supersededBy   Prescription? @relation("PrescriptionSupersede", fields: [supersededById], references: [id])
+  supersedes     Prescription? @relation("PrescriptionSupersede")
+
+  items PrescriptionItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([patientId, issuedAt])
+  @@map("prescriptions")
+}
+
+model PrescriptionItem {
+  id             String       @id @default(uuid()) @db.Uuid
+  prescriptionId String       @db.Uuid
+  prescription   Prescription @relation(fields: [prescriptionId], references: [id], onDelete: Cascade)
+
+  drugName    String
+  strength    String?
+  dosage      String?
+  frequency   String?
+  durationDays Int?
+  instructions String?
+  sequence    Int    @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([prescriptionId, sequence])
+  @@map("prescription_items")
+}
+
+enum DocumentKind {
+  XRAY
+  CBCT
+  INTRAORAL_PHOTO
+  EXTRAORAL_PHOTO
+  LAB_REPORT
+  CONSENT_FORM
+  INVOICE
+  PRESCRIPTION
+  REFERRAL
+  INSURANCE
+  OTHER
+}
+
+model PatientDocument {
+  id        String  @id @default(uuid()) @db.Uuid
+  patientId String  @db.Uuid
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  kind        DocumentKind
+  title       String
+  description String?
+  /// Object key in private S3-compatible storage. NEVER a public URL.
+  storageKey  String
+  mimeType    String
+  sizeBytes   Int
+  /// SHA-256 of the uploaded bytes, for integrity and dedupe.
+  checksum    String?
+  /// Whether the patient can see this in their portal. Defaults to false:
+  /// staff decide explicitly what a patient should see unsupervised.
+  isVisibleToPatient Boolean @default(false)
+  uploadedById String? @db.Uuid
+  takenAt      DateTime?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([patientId, kind])
+  @@index([deletedAt])
+  @@map("patient_documents")
+}
+
+// =============================================================================
+// LEADS / CRM
+// =============================================================================
+
+enum LeadSource {
+  WEBSITE
+  GOOGLE
+  INSTAGRAM
+  FACEBOOK
+  WHATSAPP
+  PHONE
+  REFERRAL
+  WALK_IN
+  INTERNATIONAL
+  OTHER
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  APPOINTMENT_BOOKED
+  VISITED
+  TREATMENT_STARTED
+  WON
+  LOST
+  FOLLOW_UP
+}
+
+model Lead {
+  id        String @id @default(uuid()) @db.Uuid
+  reference String @unique
+
+  fullName String
+  phone    String
+  email    String?
+  city     String?
+  country  String?
+
+  serviceSlug   String?
+  treatmentInterest String?
+  message       String?
+
+  source LeadSource @default(WEBSITE)
+  status LeadStatus @default(NEW)
+
+  /// Marketing attribution captured at first touch and never overwritten.
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  utmContent  String?
+  utmTerm     String?
+  landingPage String?
+  referrerUrl String?
+  gclid       String?
+
+  assignedToId String? @db.Uuid
+  assignedTo   Staff?  @relation("LeadOwner", fields: [assignedToId], references: [id])
+
+  patientId String?  @db.Uuid
+  patient   Patient? @relation(fields: [patientId], references: [id])
+
+  nextFollowUpAt DateTime?
+  lostReason     String?
+  /// Estimated value in paise, for pipeline reporting.
+  estimatedValuePaise Int?
+
+  isInternational Boolean @default(false)
+  /// Extra fields for the international enquiry form.
+  internationalDetails Json?
+
+  activities   LeadActivity[]
+  appointments Appointment[]
+  notifications NotificationMessage[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([status, createdAt])
+  @@index([assignedToId, status])
+  @@index([nextFollowUpAt])
+  @@index([source])
+  @@index([phone])
+  @@map("leads")
+}
+
+enum LeadActivityType {
+  NOTE
+  CALL
+  WHATSAPP
+  EMAIL
+  SMS
+  STATUS_CHANGE
+  ASSIGNMENT
+  APPOINTMENT_LINKED
+  FOLLOW_UP_SCHEDULED
+}
+
+model LeadActivity {
+  id     String @id @default(uuid()) @db.Uuid
+  leadId String @db.Uuid
+  lead   Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  type    LeadActivityType
+  summary String
+  detail  String?
+
+  staffId String? @db.Uuid
+  staff   Staff?  @relation(fields: [staffId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([leadId, createdAt])
+  @@map("lead_activities")
+}
+
+// =============================================================================
+// PAYMENTS & INVOICING
+// =============================================================================
+
+enum PaymentStatus {
+  CREATED
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum PaymentMethod {
+  RAZORPAY
+  CASH
+  CARD
+  UPI
+  BANK_TRANSFER
+  CHEQUE
+  OTHER
+}
+
+model Payment {
+  id        String  @id @default(uuid()) @db.Uuid
+  reference String  @unique
+
+  patientId String?  @db.Uuid
+  patient   Patient? @relation(fields: [patientId], references: [id])
+
+  appointmentId String?      @db.Uuid
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+
+  invoiceId String?  @db.Uuid
+  invoice   Invoice? @relation(fields: [invoiceId], references: [id])
+
+  amountPaise Int
+  currency    String        @default("INR")
+  status      PaymentStatus @default(CREATED)
+  method      PaymentMethod @default(RAZORPAY)
+
+  /// Razorpay identifiers. orderId is created server-side; paymentId and
+  /// signature arrive from the client and are verified server-side before
+  /// status may become SUCCESS.
+  gatewayOrderId   String? @unique
+  gatewayPaymentId String? @unique
+  gatewaySignature String?
+  /// Raw gateway payload, retained for reconciliation and dispute handling.
+  gatewayPayload   Json?
+  failureReason    String?
+
+  /// Set the moment server-side signature verification passes. A payment with
+  /// a null value here has NOT been verified, whatever the client claimed.
+  verifiedAt DateTime?
+  paidAt     DateTime?
+
+  refunds Refund[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([patientId, status])
+  @@index([status, createdAt])
+  @@map("payments")
+}
+
+model Refund {
+  id        String @id @default(uuid()) @db.Uuid
+  paymentId String @db.Uuid
+  payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  amountPaise Int
+  reason      String?
+  gatewayRefundId String? @unique
+  status      String  @default("PENDING")
+  processedBy String? @db.Uuid
+  processedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([paymentId])
+  @@map("refunds")
+}
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PARTIALLY_PAID
+  PAID
+  CANCELLED
+  WRITTEN_OFF
+}
+
+model Invoice {
+  id     String @id @default(uuid()) @db.Uuid
+  /// Sequential per financial year, e.g. ADC-2026-00124. Generated in a
+  /// transaction so numbers are gapless — a tax requirement, not a nicety.
+  number String @unique
+
+  patientId String  @db.Uuid
+  patient   Patient @relation(fields: [patientId], references: [id])
+
+  appointmentId String?      @db.Uuid
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+
+  treatmentPlanId String?        @db.Uuid
+  treatmentPlan   TreatmentPlan? @relation(fields: [treatmentPlanId], references: [id])
+
+  status InvoiceStatus @default(DRAFT)
+
+  subtotalPaise Int @default(0)
+  discountPaise Int @default(0)
+  taxPaise      Int @default(0)
+  totalPaise    Int @default(0)
+  paidPaise     Int @default(0)
+  /// Denormalised: totalPaise - paidPaise. Kept in sync inside transactions.
+  balancePaise  Int @default(0)
+
+  /// GST details. Optional — many single-location dental clinics in India are
+  /// below the registration threshold for healthcare services.
+  gstNumber  String?
+  gstRate    Int?    // basis points, e.g. 1800 = 18%
+  placeOfSupply String?
+
+  issuedAt DateTime?
+  dueAt    DateTime?
+  paidAt   DateTime?
+  notes    String?
+  /// Generated PDF in private storage.
+  pdfStorageKey String?
+
+  items    InvoiceItem[]
+  payments Payment[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([patientId, status])
+  @@index([status, issuedAt])
+  @@map("invoices")
+}
+
+model InvoiceItem {
+  id        String  @id @default(uuid()) @db.Uuid
+  invoiceId String  @db.Uuid
+  invoice   Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  sequence       Int
+  description    String
+  serviceSlug    String?
+  toothNumbers   String[]
+  quantity       Int @default(1)
+  unitPricePaise Int
+  discountPaise  Int @default(0)
+  /// quantity * unitPricePaise - discountPaise
+  lineTotalPaise Int
+
+  createdAt DateTime @default(now())
+
+  @@index([invoiceId, sequence])
+  @@map("invoice_items")
+}
+
+/// Gapless per-year invoice counter. Row-locked during number generation.
+model InvoiceCounter {
+  /// Financial year label, e.g. "2026-27".
+  financialYear String @id
+  lastNumber    Int    @default(0)
+  updatedAt     DateTime @updatedAt
+
+  @@map("invoice_counters")
+}
+
+// =============================================================================
+// NOTIFICATIONS
+// =============================================================================
+
+enum NotificationChannel {
+  WHATSAPP
+  EMAIL
+  SMS
+  IN_APP
+}
+
+enum NotificationStatus {
+  QUEUED
+  SENDING
+  SENT
+  DELIVERED
+  READ
+  FAILED
+  /// Blocked before sending: no consent, opted out, or cooldown active.
+  SUPPRESSED
+}
+
+/// Editable message templates. Admin edits these; code references them by key.
+model NotificationTemplate {
+  id      String              @id @default(uuid()) @db.Uuid
+  key     String
+  channel NotificationChannel
+  /// Meta-approved template name, required for WhatsApp business-initiated
+  /// messages outside the 24-hour customer service window.
+  providerTemplateName String?
+  language String @default("en")
+  subject  String?
+  body     String
+  /// Ordered variable names substituted into the body, e.g. ["patientName"].
+  variables String[]
+  isActive  Boolean @default(true)
+  description String?
+
+  messages NotificationMessage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([key, channel, language])
+  @@map("notification_templates")
+}
+
+/// Outbox row. Created inside the same transaction as the business event, then
+/// picked up by the worker — so a notification is never lost and never sent for
+/// a transaction that rolled back.
+model NotificationMessage {
+  id         String              @id @default(uuid()) @db.Uuid
+  templateId String?             @db.Uuid
+  template   NotificationTemplate? @relation(fields: [templateId], references: [id])
+
+  channel   NotificationChannel
+  status    NotificationStatus  @default(QUEUED)
+  /// E.164 phone or email address.
+  recipient String
+
+  patientId String?  @db.Uuid
+  patient   Patient? @relation(fields: [patientId], references: [id])
+
+  appointmentId String?      @db.Uuid
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+
+  leadId String? @db.Uuid
+  lead   Lead?   @relation(fields: [leadId], references: [id])
+
+  subject String?
+  body    String
+  payload Json?
+
+  /// Earliest send time — drives the 24h and 2h reminders.
+  scheduledFor DateTime @default(now())
+  attempts     Int      @default(0)
+  maxAttempts  Int      @default(3)
+  lastAttemptAt DateTime?
+  sentAt       DateTime?
+  deliveredAt  DateTime?
+  readAt       DateTime?
+  failedAt     DateTime?
+  errorMessage String?
+  suppressionReason String?
+
+  providerMessageId String? @unique
+
+  /// Prevents the same logical message being queued twice (e.g. two workers
+  /// both scheduling the 24h reminder for one appointment).
+  dedupeKey String? @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, scheduledFor])
+  @@index([patientId, createdAt])
+  @@index([appointmentId])
+  @@map("notification_messages")
+}
+
+// =============================================================================
+// FEEDBACK & REVIEWS
+// =============================================================================
+
+enum ReviewRequestStatus {
+  PENDING
+  SENT
+  OPENED
+  COMPLETED
+  SUPPRESSED
+}
+
+model ReviewRequest {
+  id        String  @id @default(uuid()) @db.Uuid
+  patientId String  @db.Uuid
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  appointmentId String?      @db.Uuid
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+
+  status ReviewRequestStatus @default(PENDING)
+  /// Single-use token in the feedback link.
+  token  String @unique
+  sentAt   DateTime?
+  openedAt DateTime?
+  completedAt DateTime?
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([patientId, status])
+  @@map("review_requests")
+}
+
+model Feedback {
+  id        String  @id @default(uuid()) @db.Uuid
+  patientId String? @db.Uuid
+  patient   Patient? @relation(fields: [patientId], references: [id])
+
+  appointmentId String?      @db.Uuid
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+
+  /// 1–5.
+  overallRating   Int
+  doctorRating    Int?
+  staffRating     Int?
+  waitingRating   Int?
+  cleanlinessRating Int?
+  comment         String?
+
+  /// True when the patient was shown the Google review link. Every patient who
+  /// completes the form sees it — the link is not gated on a high score.
+  /// Filtering who is asked for a public review would be review gating, which
+  /// breaches Google's policies. Low scores additionally raise an internal alert.
+  googleLinkShown Boolean @default(false)
+
+  /// Internal service-recovery workflow for low scores.
+  needsFollowUp Boolean @default(false)
+  handledById   String? @db.Uuid
+  handledBy     Staff?  @relation("FeedbackHandler", fields: [handledById], references: [id])
+  handledAt     DateTime?
+  resolutionNote String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([overallRating, createdAt])
+  @@index([needsFollowUp])
+  @@map("feedback")
+}
+
+/// Text testimonials shown on the site. Distinct from Feedback: a testimonial
+/// is published, so it needs its own consent and approval trail.
+model Testimonial {
+  id        String   @id @default(uuid()) @db.Uuid
+  patientId String?  @db.Uuid
+  patient   Patient? @relation(fields: [patientId], references: [id])
+
+  authorName   String
+  /// Location shown alongside, e.g. "Chandigarh" or "London, UK".
+  authorLocation String?
+  serviceSlug  String?
+  rating       Int?
+  quote        String
+  /// Optional video.
+  videoUrl     String?
+  thumbnailUrl String?
+
+  isPublished Boolean @default(false)
+  consentGranted Boolean @default(false)
+  consentEvidence String?
+  approvedById String? @db.Uuid
+  approvedAt   DateTime?
+  displayOrder Int     @default(0)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([isPublished, displayOrder])
+  @@map("testimonials")
+}
+
+// =============================================================================
+// SMILE GALLERY
+// =============================================================================
+
+enum ConsentStatus {
+  NOT_REQUESTED
+  REQUESTED
+  GRANTED
+  REFUSED
+  WITHDRAWN
+  EXPIRED
+}
+
+model GalleryCase {
+  id    String @id @default(uuid()) @db.Uuid
+  slug  String @unique
+  title String
+
+  patientId String?  @db.Uuid
+  patient   Patient? @relation(fields: [patientId], references: [id])
+
+  doctorId String? @db.Uuid
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+
+  /// Category slug: implants / veneers / smile-design / whitening / braces /
+  /// full-mouth / other.
+  category    String
+  serviceSlug String?
+  concern     String?
+  summary     String?
+  treatmentDescription String?
+
+  /// A case is public ONLY when consentStatus = GRANTED and isPublished.
+  /// Enforced in the query layer (src/server/gallery.ts), not just the UI.
+  consentStatus   ConsentStatus @default(NOT_REQUESTED)
+  consentEvidence String?
+  consentExpiresAt DateTime?
+  isPublished     Boolean       @default(false)
+  displayOrder    Int           @default(0)
+
+  media GalleryMedia[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([category, isPublished])
+  @@index([consentStatus])
+  @@map("gallery_cases")
+}
+
+model GalleryMedia {
+  id     String      @id @default(uuid()) @db.Uuid
+  caseId String      @db.Uuid
+  case   GalleryCase @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  /// BEFORE | AFTER | DURING
+  phase    String
+  /// Public CDN path. Gallery images are the one patient-linked media that is
+  /// deliberately public — which is why consent is gated so hard above.
+  imageUrl String
+  altText  String
+  width    Int?
+  height   Int?
+  sequence Int @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([caseId, phase, sequence])
+  @@map("gallery_media")
+}
+
+// =============================================================================
+// CONTENT MANAGEMENT
+// =============================================================================
+
+model BlogCategory {
+  id          String @id @default(uuid()) @db.Uuid
+  slug        String @unique
+  name        String
+  description String?
+  displayOrder Int   @default(0)
+
+  posts BlogPost[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("blog_categories")
+}
+
+model BlogPost {
+  id      String @id @default(uuid()) @db.Uuid
+  slug    String @unique
+  title   String
+  summary String
+  /// Markdown.
+  content String
+
+  categoryId String?       @db.Uuid
+  category   BlogCategory? @relation(fields: [categoryId], references: [id])
+
+  /// The clinician who wrote it.
+  authorDoctorId String? @db.Uuid
+  authorDoctor   Doctor? @relation("BlogAuthor", fields: [authorDoctorId], references: [id])
+  authorName     String?
+
+  /// Medical review is a YMYL requirement: health content should name the
+  /// clinician who checked it and when.
+  medicalReviewerId String? @db.Uuid
+  medicalReviewer   Doctor? @relation("BlogMedicalReviewer", fields: [medicalReviewerId], references: [id])
+  medicallyReviewedAt DateTime?
+
+  tags String[]
+  /// [{question, answer}] rendered as FAQPage schema.
+  faqs Json?
+
+  coverImageUrl String?
+  seoTitle      String?
+  seoDescription String?
+
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
+  updatedContentAt DateTime?
+  readingMinutes Int?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([isPublished, publishedAt])
+  @@index([categoryId])
+  @@map("blog_posts")
+}
+
+/// Editable copy blocks for public pages, so marketing can change wording
+/// without a deploy. Structured, not raw HTML.
+model ContentBlock {
+  id   String @id @default(uuid()) @db.Uuid
+  /// Page path this belongs to, e.g. "/" or "/about".
+  page String
+  /// Block key within the page, e.g. "hero.heading".
+  key  String
+  /// JSON so a block can hold a heading + body + CTA rather than one string.
+  value Json
+  updatedById String? @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([page, key])
+  @@index([page])
+  @@map("content_blocks")
+}
+
+/// SEO metadata overrides per route.
+model SeoMetadata {
+  id       String @id @default(uuid()) @db.Uuid
+  path     String @unique
+  title    String?
+  description String?
+  ogImageUrl String?
+  canonicalUrl String?
+  noIndex  Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("seo_metadata")
+}
+
+/// Backs /admin/content-verification. Mirrors data/clinic-master-data.ts so the
+/// clinic can verify claims without a code change; the file is the fallback.
+model ContentClaim {
+  id     String @id @default(uuid()) @db.Uuid
+  /// Dotted path into the master data file, e.g. "statistics.patientsTreated".
+  key    String @unique
+  label  String
+  /// Current value as JSON.
+  value  Json
+  /// VERIFIED | NEEDS_VERIFICATION | ARCHIVED
+  status String @default("NEEDS_VERIFICATION")
+  source String
+  evidence String?
+  notes    String?
+  asOf     DateTime?
+
+  verifiedById String? @db.Uuid
+  verifiedBy   Staff?  @relation("ClaimVerifier", fields: [verifiedById], references: [id])
+  verifiedAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@map("content_claims")
+}
+
+// =============================================================================
+// INTERNATIONAL PATIENTS
+// =============================================================================
+
+enum InternationalEnquiryStatus {
+  NEW
+  REPORTS_REQUESTED
+  REPORTS_RECEIVED
+  CONSULTATION_SCHEDULED
+  PLAN_SENT
+  TRAVEL_PLANNED
+  ARRIVED
+  TREATMENT_STARTED
+  COMPLETED
+  LOST
+}
+
+model InternationalPatientEnquiry {
+  id        String @id @default(uuid()) @db.Uuid
+  reference String @unique
+
+  fullName String
+  email    String
+  phone    String
+  whatsapp String?
+  country  String
+  city     String?
+  /// IANA timezone, so consultation slots can be offered in their local time.
+  timezone String?
+
+  treatmentInterest String
+  serviceSlug       String?
+  message           String?
+  preferredTravelFrom DateTime? @db.Date
+  preferredTravelTo   DateTime? @db.Date
+  /// Storage keys of uploaded reports/X-rays. Private bucket.
+  uploadedDocumentKeys String[]
+
+  status InternationalEnquiryStatus @default(NEW)
+  leadId String? @db.Uuid
+
+  consultationScheduledAt DateTime?
+  planSentAt DateTime?
+  notes String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([country])
+  @@map("international_patient_enquiries")
+}
+
+// =============================================================================
+// AUDIT & COMPLIANCE
+// =============================================================================
+
+model AuditLog {
+  id      String  @id @default(uuid()) @db.Uuid
+  actorId String? @db.Uuid
+  actor   User?   @relation("AuditActor", fields: [actorId], references: [id])
+  /// Denormalised so the log survives the actor being deleted.
+  actorLabel String?
+  actorRole  String?
+
+  /// CREATE | UPDATE | DELETE | VIEW | LOGIN | LOGIN_FAILED | EXPORT | ...
+  action String
+  /// Table or domain object, e.g. "Patient".
+  entity String
+  entityId String?
+
+  /// Changed fields only, never the whole row, and never a password hash.
+  before Json?
+  after  Json?
+
+  ipAddress String?
+  userAgent String?
+  requestId String?
+  /// Extra context, e.g. which patient chart a document view belonged to.
+  metadata  Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId, createdAt])
+  @@index([actorId, createdAt])
+  @@index([action, createdAt])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+enum DataRequestType {
+  ACCESS
+  EXPORT
+  CORRECTION
+  DELETION
+}
+
+enum DataRequestStatus {
+  RECEIVED
+  IN_REVIEW
+  ACTIONED
+  PARTIALLY_ACTIONED
+  REFUSED
+}
+
+/// Patient data access / correction / deletion requests.
+/// Deletion is deliberately NOT automatic: dental records carry statutory
+/// retention periods, so a request is recorded, reviewed and answered rather
+/// than silently executed.
+model DataSubjectRequest {
+  id        String  @id @default(uuid()) @db.Uuid
+  patientId String? @db.Uuid
+  patient   Patient? @relation(fields: [patientId], references: [id])
+
+  requesterName  String
+  requesterEmail String?
+  requesterPhone String?
+
+  type   DataRequestType
+  status DataRequestStatus @default(RECEIVED)
+  details String?
+
+  /// Storage key of the generated export bundle, if any.
+  exportStorageKey String?
+  handledById String? @db.Uuid
+  handledAt   DateTime?
+  /// Why a deletion was refused or only partly actioned — the legal basis.
+  responseNote String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@map("data_subject_requests")
+}
+
+// =============================================================================
+// SETTINGS
+// =============================================================================
+
+/// Key/value application settings, editable from the admin panel.
+model Setting {
+  key       String   @id
+  value     Json
+  /// Set true for values safe to expose to the browser.
+  isPublic  Boolean  @default(false)
+  description String?
+  updatedById String? @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("settings")
+}
+
+/// Cached third-party data (currently the Google Places rating) so the public
+/// site is not coupled to an external API's uptime and never falls back to a
+/// hardcoded number.
+model IntegrationCache {
+  key       String   @id
+  value     Json
+  fetchedAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([expiresAt])
+  @@map("integration_cache")
+}
+
+/// Website analytics events, kept server-side so attribution survives ad
+/// blockers that stop GA4 from loading.
+model AnalyticsEvent {
+  id      String @id @default(uuid()) @db.Uuid
+  name    String
+  path    String?
+  sessionKey String?
+  utmSource String?
+  utmMedium String?
+  utmCampaign String?
+  referrer String?
+  metadata Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([name, createdAt])
+  @@index([createdAt])
+  @@map("analytics_events")
+}
