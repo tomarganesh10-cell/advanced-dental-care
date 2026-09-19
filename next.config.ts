@@ -33,7 +33,6 @@ const nextConfig: NextConfig = {
   compress: true,
   productionBrowserSourceMaps: false,
   serverExternalPackages: ["@node-rs/argon2", "pino", "ioredis", "pg"],
-  eslint: { ignoreDuringBuilds: false },
   typescript: { ignoreBuildErrors: false },
   images: {
     formats: ["image/avif", "image/webp"],

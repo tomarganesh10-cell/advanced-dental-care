@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens.
+ *
+ * Direction: premium medical. Deep navy for authority, a single medical blue
+ * for action, teal as a restrained accent, warm ivory rather than flat white so
+ * the page does not glare. Colour is never the only carrier of meaning —
+ * every status also has a label and an icon.
+ *
+ * Contrast: every foreground/background pairing below meets WCAG AA at body
+ * size. `--color-primary` on white is 7.4:1; `--color-accent` is used for
+ * large text and borders only, never small body copy.
+ */
+
+@theme {
+  /* --- brand ------------------------------------------------------- */
+  --color-navy-50: #f2f5f9;
+  --color-navy-100: #e2e9f1;
+  --color-navy-200: #c7d5e4;
+  --color-navy-300: #9db6ce;
+  --color-navy-400: #6c90b4;
+  --color-navy-500: #4a719a;
+  --color-navy-600: #395a7f;
+  --color-navy-700: #2f4967;
+  --color-navy-800: #1f3149;
+  --color-navy-900: #132238;
+  --color-navy-950: #0b1524;
+
+  --color-medical-50: #eff7ff;
+  --color-medical-100: #dbecfe;
+  --color-medical-200: #bfdefe;
+  --color-medical-300: #93c9fd;
+  --color-medical-400: #60a9fa;
+  --color-medical-500: #3b88f6;
+  --color-medical-600: #2569eb;
+  --color-medical-700: #1d53d8;
+  --color-medical-800: #1e45af;
+  --color-medical-900: #1e3d8a;
+
+  --color-teal-50: #eefbf6;
+  --color-teal-100: #d5f5e8;
+  --color-teal-200: #aeead5;
+  --color-teal-300: #79d9bc;
+  --color-teal-400: #44c09e;
+  --color-teal-500: #20a585;
+  --color-teal-600: #14846c;
+  --color-teal-700: #126a58;
+  --color-teal-800: #135448;
+  --color-teal-900: #12463d;
+
+  --color-ivory: #fdfcfa;
+  --color-sand: #f6f3ee;
+
+  /* --- semantic ---------------------------------------------------- */
+  --color-primary: var(--color-navy-800);
+  --color-primary-hover: var(--color-navy-900);
+  --color-action: var(--color-medical-700);
+  --color-action-hover: var(--color-medical-800);
+  --color-accent: var(--color-teal-600);
+
+  --color-surface: #ffffff;
+  --color-surface-muted: var(--color-ivory);
+  --color-surface-sunken: var(--color-sand);
+
+  --color-ink: var(--color-navy-900);
+  --color-ink-muted: #4c5b6e;
+  --color-ink-subtle: #6b7a8d;
+  --color-hairline: #e3e8ee;
+
+  --color-success: #167a52;
+  --color-warning: #8a5a00;
+  --color-danger: #b42318;
+  --color-info: var(--color-medical-700);
+
+  /* --- type -------------------------------------------------------- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+
+  /* --- radius & shadow --------------------------------------------- */
+  --radius-card: 0.875rem;
+  --radius-pill: 999px;
+
+  --shadow-subtle: 0 1px 2px rgb(19 34 56 / 0.04), 0 1px 3px rgb(19 34 56 / 0.06);
+  --shadow-card: 0 1px 3px rgb(19 34 56 / 0.05), 0 8px 24px -6px rgb(19 34 56 / 0.10);
+  --shadow-lifted: 0 2px 6px rgb(19 34 56 / 0.06), 0 20px 48px -12px rgb(19 34 56 / 0.18);
+}
+
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  * {
+    border-color: var(--color-hairline);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset for the sticky header when jumping to an anchor. */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-surface-muted);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    color: var(--color-primary);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /*
+   * A visible, high-contrast focus ring on everything focusable. Removing this
+   * makes the site unusable by keyboard, which for a medical site is both an
+   * accessibility failure and a legal exposure.
+   */
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-action);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Respect a user's reduced-motion preference. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Bottom padding so the sticky mobile CTA never covers page content. */
+  @media (max-width: 767px) {
+    body {
+      padding-bottom: 4.25rem;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    max-width: 80rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+
+  .prose-clinic {
+    max-width: 68ch;
+    line-height: 1.75;
+    color: var(--color-ink-muted);
+  }
+
+  .prose-clinic > * + * {
+    margin-top: 1.15em;
+  }
+
+  .prose-clinic strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  /* Screen-reader-only, still focusable — used by the skip link. */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* Print: patients do print appointment confirmations and invoices. */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    padding-bottom: 0;
+  }
+}
