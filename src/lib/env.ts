@@ -123,7 +123,23 @@ function parseEnv(): Env {
 
   const env = parsed.data;
 
-  if (env.NODE_ENV === "production") {
+  /**
+   * The production checks below run when the server BOOTS, not when the bundler
+   * imports this module during `next build`.
+   *
+   * A production build legitimately happens in CI, in a container image build,
+   * or on a developer's machine — none of which have (or should have) the
+   * clinic's real secrets. Failing the build there would push teams towards
+   * baking secrets into images, which is worse than what this check prevents.
+   *
+   * At runtime the checks are absolute: a server started with a placeholder
+   * AUTH_SECRET or with OTP echoing enabled refuses to serve.
+   */
+  const isBuildPhase =
+    process.env.NEXT_PHASE === "phase-production-build" ||
+    process.env.SKIP_ENV_VALIDATION === "1";
+
+  if (env.NODE_ENV === "production" && !isBuildPhase) {
     const problems: string[] = [];
 
     if (looksLikePlaceholder(env.AUTH_SECRET) || Buffer.from(env.AUTH_SECRET).length < 32) {

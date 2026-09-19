@@ -25,13 +25,22 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [treatmentsOpen, setTreatmentsOpen] = useState(false);
 
-  // Close the menus on navigation, or the overlay hangs around over the new page.
-  useEffect(() => {
+  /**
+   * Close both menus on navigation, adjusting state during render rather than
+   * in an effect. An effect would leave the open overlay painted over the new
+   * page for one frame; this closes it in the same render that the route
+   * changes. (React documents this "adjust state when a prop changes" pattern
+   * for exactly this case.)
+   */
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
     setMobileOpen(false);
     setTreatmentsOpen(false);
-  }, [pathname]);
+  }
 
-  // Stop the page scrolling behind the open mobile sheet.
+  // Stop the page scrolling behind the open mobile sheet. This is a genuine
+  // external-system sync, which is what effects are for.
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {

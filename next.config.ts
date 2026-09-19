@@ -4,13 +4,10 @@ import { legacyRedirects } from "./data/legacy-redirects";
 /**
  * Security headers applied to every response.
  *
- * The CSP is intentionally strict. `unsafe-inline` on style-src is required by
- * Next.js' inlined critical CSS; script-src uses a nonce injected by middleware
- * in production (see src/middleware.ts) and falls back to 'unsafe-eval' only in
- * development where React refresh needs it.
+ * The Content-Security-Policy is set per-request in src/middleware.ts, where a
+ * nonce can be generated; a static header here could not carry one. Everything
+ * that does not need a nonce is set here so it applies to static assets too.
  */
-const isDev = process.env.NODE_ENV === "development";
-
 const securityHeaders = [
   { key: "X-DNS-Prefetch-Control", value: "on" },
   { key: "X-Content-Type-Options", value: "nosniff" },

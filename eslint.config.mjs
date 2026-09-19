@@ -1,12 +1,13 @@
-import { dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-import { FlatCompat } from "@eslint/eslintrc";
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({ baseDirectory: __dirname });
-
+/**
+ * ESLint flat config.
+ *
+ * eslint-config-next 16 ships flat config arrays directly, so they are spread
+ * here rather than adapted through FlatCompat — the compat layer chokes on the
+ * plugin's circular references on ESLint 9.
+ */
 const config = [
   {
     ignores: [
@@ -19,7 +20,8 @@ const config = [
       "next-env.d.ts",
     ],
   },
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...nextCoreWebVitals,
+  ...nextTypescript,
   {
     rules: {
       "@typescript-eslint/no-unused-vars": [
@@ -31,7 +33,7 @@ const config = [
     },
   },
   {
-    // Scripts and seeds are allowed to log to stdout.
+    // Scripts, seeds and the background worker are allowed to log to stdout.
     files: ["prisma/**/*.ts", "scripts/**/*.ts", "src/server/jobs/**/*.ts"],
     rules: { "no-console": "off" },
   },
