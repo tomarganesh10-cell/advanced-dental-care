@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { KeyRound, Loader2, Lock } from "lucide-react";
@@ -88,9 +89,9 @@ export function StaffLoginForm() {
         <h1 className="mt-5 text-2xl">Staff sign in</h1>
         <p className="mt-2 text-sm text-[--color-ink-subtle]">
           For clinic staff only. Patients should use the{" "}
-          <a href="/patient-login" className="font-medium text-[--color-action] underline underline-offset-2">
+          <Link href="/patient-login" className="font-medium text-[--color-action] underline underline-offset-2">
             patient login
-          </a>
+          </Link>
           .
         </p>
 

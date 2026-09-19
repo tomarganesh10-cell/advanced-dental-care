@@ -60,10 +60,17 @@ const COLUMNS: Array<{
   },
 ];
 
-export default async function FrontDeskPage() {
-  await requireStaffPage(PERMISSIONS.APPOINTMENT_CHECK_IN);
-
-  const today = clinicDateString(new Date());
+/**
+ * Loads today's board.
+ *
+ * Kept out of the component body on purpose. Reading the clock is exactly what
+ * this page must do — it renders "today" and live waiting times — but a
+ * component body is supposed to be pure, so the time-dependent work happens
+ * here and the component renders the result it is given.
+ */
+async function loadFrontDeskBoard() {
+  const now = new Date();
+  const today = clinicDateString(now);
 
   const appointments = await prisma.appointment.findMany({
     where: {
@@ -86,7 +93,18 @@ export default async function FrontDeskPage() {
     },
   });
 
-  const now = Date.now();
+  return {
+    appointments,
+    // One timestamp for the whole render, so two rows in the same table cannot
+    // report waiting times measured a few milliseconds apart.
+    renderedAt: now.getTime(),
+  };
+}
+
+export default async function FrontDeskPage() {
+  await requireStaffPage(PERMISSIONS.APPOINTMENT_CHECK_IN);
+
+  const { appointments, renderedAt } = await loadFrontDeskBoard();
 
   return (
     <>
@@ -124,7 +142,7 @@ export default async function FrontDeskPage() {
                     // for, so it is computed and shown rather than left for
                     // someone to work out from a check-in timestamp.
                     const waitingMinutes = appointment.checkedInAt
-                      ? Math.floor((now - appointment.checkedInAt.getTime()) / 60000)
+                      ? Math.floor((renderedAt - appointment.checkedInAt.getTime()) / 60000)
                       : null;
 
                     return (

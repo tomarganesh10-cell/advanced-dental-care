@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { LogOut, Menu, X } from "lucide-react";
 import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
-import { ADMIN_NAV, type NavGroup } from "./admin-nav";
+import type { NavGroup } from "./admin-nav";
 
 export interface AdminShellProps {
   /** Pre-filtered on the server to what this person may see. */
