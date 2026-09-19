@@ -135,60 +135,80 @@ export async function verifyOtp(
     throw new ValidationError("Enter the 6-digit code from your message.");
   }
 
-  return prisma.$transaction(async (tx) => {
-    const challenge = await tx.otpChallenge.findFirst({
-      where: { destination: trimmedDestination, purpose, consumedAt: null },
-      orderBy: { createdAt: "desc" },
-    });
+  const challenge = await prisma.otpChallenge.findFirst({
+    where: { destination: trimmedDestination, purpose, consumedAt: null },
+    orderBy: { createdAt: "desc" },
+  });
 
-    if (!challenge) {
-      throw new ValidationError("That code is no longer valid. Please request a new one.");
-    }
+  if (!challenge) {
+    throw new ValidationError("That code is no longer valid. Please request a new one.");
+  }
 
-    if (challenge.expiresAt.getTime() <= Date.now()) {
-      await tx.otpChallenge.update({
-        where: { id: challenge.id },
-        data: { consumedAt: new Date() },
-      });
-      throw new ValidationError("That code has expired. Please request a new one.");
-    }
-
-    if (challenge.attempts >= challenge.maxAttempts) {
-      await tx.otpChallenge.update({
-        where: { id: challenge.id },
-        data: { consumedAt: new Date() },
-      });
-      throw new ValidationError("Too many incorrect attempts. Please request a new code.");
-    }
-
-    const expected = hashOtp(trimmedCode, trimmedDestination);
-
-    if (expected !== challenge.codeHash) {
-      const updated = await tx.otpChallenge.update({
-        where: { id: challenge.id },
-        data: { attempts: { increment: 1 } },
-        select: { attempts: true, maxAttempts: true },
-      });
-      const remaining = Math.max(0, updated.maxAttempts - updated.attempts);
-      throw new ValidationError(
-        remaining > 0
-          ? `That code is not correct. ${remaining} attempt${remaining === 1 ? "" : "s"} remaining.`
-          : "That code is not correct. Please request a new code.",
-      );
-    }
-
-    await tx.otpChallenge.update({
+  if (challenge.expiresAt.getTime() <= Date.now()) {
+    await prisma.otpChallenge.update({
       where: { id: challenge.id },
       data: { consumedAt: new Date() },
     });
+    throw new ValidationError("That code has expired. Please request a new one.");
+  }
 
-    return {
-      challengeId: challenge.id,
-      destination: challenge.destination,
-      purpose: challenge.purpose,
-      payload: (challenge.payload as Record<string, unknown> | null) ?? null,
-    };
+  if (challenge.attempts >= challenge.maxAttempts) {
+    await prisma.otpChallenge.update({
+      where: { id: challenge.id },
+      data: { consumedAt: new Date() },
+    });
+    throw new ValidationError("Too many incorrect attempts. Please request a new code.");
+  }
+
+  const expected = hashOtp(trimmedCode, trimmedDestination);
+
+  if (expected !== challenge.codeHash) {
+    /**
+     * The attempt counter is incremented OUTSIDE any transaction that then
+     * throws.
+     *
+     * An earlier version did the increment and the rejection inside one
+     * `$transaction`, so the throw rolled the increment back — the counter
+     * never moved and an attacker had unlimited guesses at a six-digit code.
+     * The whole safety of a short numeric OTP rests on this write surviving.
+     */
+    const updated = await prisma.otpChallenge.update({
+      where: { id: challenge.id },
+      data: { attempts: { increment: 1 } },
+      select: { attempts: true, maxAttempts: true },
+    });
+
+    const remaining = Math.max(0, updated.maxAttempts - updated.attempts);
+
+    throw new ValidationError(
+      remaining > 0
+        ? `That code is not correct. ${remaining} attempt${remaining === 1 ? "" : "s"} remaining.`
+        : "That code is not correct. Please request a new code.",
+    );
+  }
+
+  /**
+   * Consume atomically.
+   *
+   * `updateMany` with `consumedAt: null` in the WHERE clause is a compare-and-
+   * set: two requests arriving with the same valid code race here, and exactly
+   * one sees a row count of 1. Reading then writing would let both through.
+   */
+  const consumed = await prisma.otpChallenge.updateMany({
+    where: { id: challenge.id, consumedAt: null },
+    data: { consumedAt: new Date() },
   });
+
+  if (consumed.count === 0) {
+    throw new ValidationError("That code has already been used. Please request a new one.");
+  }
+
+  return {
+    challengeId: challenge.id,
+    destination: challenge.destination,
+    purpose: challenge.purpose,
+    payload: (challenge.payload as Record<string, unknown> | null) ?? null,
+  };
 }
 
 /** Maintenance: drop challenges that expired more than a day ago. */

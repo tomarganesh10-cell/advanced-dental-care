@@ -82,6 +82,75 @@ Our team will confirm shortly. If you need to change anything, reply here or cal
     description: "Sent the moment a booking request is submitted.",
   },
   {
+    key: TEMPLATE_KEYS.APPOINTMENT_REQUESTED,
+    channel: "EMAIL",
+    language: "en",
+    subject: "We have your appointment request — {{reference}}",
+    body: `Dear {{patientName}},
+
+Thank you for your appointment request at ${CLINIC}.
+
+Reference: {{reference}}
+Requested: {{dateTime}}
+Treatment: {{treatment}}
+
+This is a request, not yet a confirmation. Our reception team will confirm the
+time shortly and you will receive another message when they do.
+
+If you need to change anything, call {{clinicPhone}}.
+
+{{clinicName}}
+{{clinicAddress}}`,
+    variables: [
+      "patientName",
+      "reference",
+      "dateTime",
+      "treatment",
+      "clinicPhone",
+      "clinicName",
+      "clinicAddress",
+    ],
+    description: "Email version of the booking acknowledgement.",
+  },
+  {
+    key: TEMPLATE_KEYS.APPOINTMENT_RESCHEDULED,
+    channel: "EMAIL",
+    language: "en",
+    subject: "Your appointment has moved to {{date}}",
+    body: `Dear {{patientName}},
+
+Your appointment at ${CLINIC} has been moved.
+
+New date: {{date}}
+New time: {{time}}
+Doctor: {{doctorName}}
+Reference: {{reference}}
+
+If this does not suit you, call {{clinicPhone}} and we will find another time.
+
+{{clinicName}}`,
+    variables: ["patientName", "date", "time", "doctorName", "reference", "clinicPhone", "clinicName"],
+    description: "Email version of the reschedule notice.",
+  },
+  {
+    key: TEMPLATE_KEYS.LEAD_ACKNOWLEDGEMENT,
+    channel: "EMAIL",
+    language: "en",
+    subject: "Thank you for contacting {{clinicName}}",
+    body: `Dear {{name}},
+
+Thank you for contacting ${CLINIC} about {{treatment}}.
+
+A member of our team will be in touch. If your enquiry is urgent — particularly
+if you are in pain or have swelling — please call {{clinicPhone}} rather than
+waiting for a reply.
+
+{{clinicName}}
+{{clinicAddress}}`,
+    variables: ["name", "treatment", "clinicPhone", "clinicName", "clinicAddress"],
+    description: "Email acknowledgement of a website enquiry.",
+  },
+  {
     key: TEMPLATE_KEYS.APPOINTMENT_CONFIRMED,
     channel: "WHATSAPP",
     language: "en",

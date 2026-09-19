@@ -67,38 +67,37 @@ export async function generatePrescriptionReference(): Promise<string> {
 }
 
 /**
- * Sequential patient number, allocated under a row lock so two concurrent
- * registrations cannot take the same number.
+ * Sequential patient number, allocated atomically.
  *
- * Uses the settings table as the counter rather than a sequence, so the clinic
- * can set the starting number to continue from their existing paper records.
+ * Uses a single INSERT … ON CONFLICT DO UPDATE rather than SELECT FOR UPDATE
+ * then write. The earlier version had a real race on the very first patient:
+ * `SELECT … FOR UPDATE` takes no lock when the row does not exist yet, so two
+ * concurrent registrations both saw "no counter", both tried to create it, and
+ * one failed with a primary-key violation. One statement removes the window
+ * entirely — Postgres serialises conflicting upserts on the same key itself.
+ *
+ * The counter lives in `settings` rather than a Postgres sequence so the clinic
+ * can set its starting value to continue from their existing paper records.
  */
 export async function allocatePatientNumber(): Promise<string> {
   const key = "patient_number_counter";
+  const description =
+    "Last allocated patient number. Set this to continue from existing paper records.";
 
-  const next = await prisma.$transaction(async (tx) => {
-    const rows = await tx.$queryRaw<Array<{ value: unknown }>>`
-      SELECT value FROM settings WHERE key = ${key} FOR UPDATE
-    `;
+  const rows = await prisma.$queryRaw<Array<{ next: number }>>`
+    INSERT INTO settings ("key", "value", "isPublic", "description", "createdAt", "updatedAt")
+    VALUES (${key}, to_jsonb(1), false, ${description}, now(), now())
+    ON CONFLICT ("key") DO UPDATE
+      SET "value" = to_jsonb(((settings."value")::text)::bigint + 1),
+          "updatedAt" = now()
+    RETURNING (("value")::text)::int AS next
+  `;
 
-    const current =
-      rows.length > 0 && typeof rows[0]?.value === "number" ? (rows[0].value as number) : 0;
-    const incremented = current + 1;
+  const next = rows[0]?.next;
 
-    if (rows.length === 0) {
-      await tx.setting.create({
-        data: {
-          key,
-          value: incremented,
-          description: "Last allocated patient number. Set this to continue existing records.",
-        },
-      });
-    } else {
-      await tx.setting.update({ where: { key }, data: { value: incremented } });
-    }
-
-    return incremented;
-  });
+  if (typeof next !== "number" || !Number.isFinite(next)) {
+    throw new Error("Could not allocate a patient number");
+  }
 
   return `ADC-P-${String(next).padStart(6, "0")}`;
 }

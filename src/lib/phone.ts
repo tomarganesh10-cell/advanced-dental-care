@@ -29,6 +29,18 @@ export function normalisePhone(input: string, defaultCountry: "IN" | "INTL" = "I
     if (/^0[6-9]\d{9}$/.test(digits)) return `+91${digits.slice(1)}`;
     // Already country-coded without the plus
     if (/^91[6-9]\d{9}$/.test(digits)) return `+${digits}`;
+
+    /**
+     * Anything else without a leading "+" is rejected rather than guessed at.
+     *
+     * Falling through to a generic international rule here would turn a
+     * mistyped Indian number — say a digit dropped from a 10-digit mobile —
+     * into a syntactically valid foreign number. The booking would be accepted,
+     * the OTP would go nowhere, and the patient would be left waiting for a
+     * code that was never deliverable. An international caller has a country
+     * code; a local one who typos should be told.
+     */
+    return null;
   }
 
   if (digits.length >= 8 && digits.length <= 15) return `+${digits}`;

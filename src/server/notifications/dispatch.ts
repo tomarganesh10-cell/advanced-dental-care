@@ -99,11 +99,38 @@ export async function queueNotification(
     );
 
   if (!template) {
+    /**
+     * A missing template used to return null and log, which meant a
+     * confirmation could stop being sent and nobody would know until a patient
+     * turned up on the wrong day. Now it writes a SUPPRESSED row instead, so
+     * the gap is visible in Admin → Messages next to everything else.
+     */
     logger.error(
-      { templateKey: input.templateKey, channel: input.channel },
-      "no notification template found",
+      { templateKey: input.templateKey, channel: input.channel, language },
+      "no notification template found — message suppressed",
     );
-    return null;
+
+    try {
+      const suppressed = await client.notificationMessage.create({
+        data: {
+          channel: input.channel,
+          status: "SUPPRESSED",
+          suppressionReason: `No ${input.channel} template for "${input.templateKey}" (${language})`,
+          recipient: input.recipient,
+          patientId: input.patientId ?? null,
+          appointmentId: input.appointmentId ?? null,
+          leadId: input.leadId ?? null,
+          body: "",
+          scheduledFor: input.scheduledFor ?? new Date(),
+          dedupeKey: input.dedupeKey ? `missing-template:${input.dedupeKey}` : null,
+        },
+        select: { id: true },
+      });
+      return suppressed.id;
+    } catch {
+      // Even the suppression row failed. The log line above is the record.
+      return null;
+    }
   }
 
   const variables = { ...clinicVariables(), ...input.variables };
