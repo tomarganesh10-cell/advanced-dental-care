@@ -507,6 +507,278 @@ async function main(): Promise<void> {
     console.log("  ✓ 1 demo invoice");
   }
 
+  // ---------------------------------------------------------------- inventory
+  console.log("  Inventory…");
+
+  const inventoryCategories = [
+    { name: "Implants & Biomaterials", slug: "implants", position: 1 },
+    { name: "Restorative", slug: "restorative", position: 2 },
+    { name: "Endodontics", slug: "endodontics", position: 3 },
+    { name: "Anaesthetics & Medicines", slug: "anaesthetics", position: 4 },
+    { name: "Infection Control & PPE", slug: "ppe", position: 5 },
+    { name: "Impression & Lab", slug: "lab", position: 6 },
+  ];
+
+  const categoryByslug = new Map<string, string>();
+  for (const category of inventoryCategories) {
+    const record = await prisma.inventoryCategory.upsert({
+      where: { slug: category.slug },
+      create: category,
+      update: { name: category.name, position: category.position },
+    });
+    categoryByslug.set(category.slug, record.id);
+  }
+
+  const suppliers = [
+    { code: "SUP-IMPLANT", name: "Demo Implant Distributors (DEMO)", city: "New Delhi" },
+    { code: "SUP-DENTAL", name: "Demo Dental Supplies (DEMO)", city: "Chandigarh" },
+    { code: "SUP-PHARMA", name: "Demo Pharma Agencies (DEMO)", city: "Mohali" },
+  ];
+
+  const supplierByCode = new Map<string, string>();
+  for (const supplier of suppliers) {
+    const record = await prisma.supplier.upsert({
+      where: { code: supplier.code },
+      create: {
+        code: supplier.code,
+        name: supplier.name,
+        address: supplier.city,
+        contactName: "Demo Contact",
+      },
+      update: {},
+    });
+    supplierByCode.set(supplier.code, record.id);
+  }
+
+  /**
+   * Realistic consumables for a practice doing implants and general dentistry.
+   * Quantities are chosen so the stock screen shows every state on first load:
+   * healthy, at the reorder level, out of stock, expiring soon, and expired.
+   */
+  const stockSeeds: Array<{
+    sku: string;
+    name: string;
+    category: string;
+    supplier: string;
+    unit: string;
+    brand?: string;
+    reorderLevel: number;
+    reorderQuantity: number;
+    batchTracked: boolean;
+    expiryTracked: boolean;
+    storageLocation: string;
+    batches: Array<{ qty: number; expiryDays: number | null; costPaise?: number }>;
+  }> = [
+    {
+      sku: "ADC-I-0001",
+      name: "Titanium implant 4.1 × 10 mm",
+      category: "implants",
+      supplier: "SUP-IMPLANT",
+      unit: "PIECE",
+      brand: "Demo Implant System",
+      reorderLevel: 6,
+      reorderQuantity: 12,
+      batchTracked: true,
+      expiryTracked: true,
+      storageLocation: "Implant cabinet, drawer 1",
+      batches: [
+        { qty: 9, expiryDays: 540, costPaise: 850_000 },
+        { qty: 4, expiryDays: 120, costPaise: 850_000 },
+      ],
+    },
+    {
+      sku: "ADC-I-0002",
+      name: "Bone graft granules 0.5 g",
+      category: "implants",
+      supplier: "SUP-IMPLANT",
+      unit: "VIAL",
+      reorderLevel: 4,
+      reorderQuantity: 10,
+      batchTracked: true,
+      expiryTracked: true,
+      storageLocation: "Implant cabinet, drawer 2",
+      // At the reorder level exactly — shows the boundary case.
+      batches: [{ qty: 4, expiryDays: 200, costPaise: 420_000 }],
+    },
+    {
+      sku: "ADC-I-0003",
+      name: "Collagen membrane 15 × 20 mm",
+      category: "implants",
+      supplier: "SUP-IMPLANT",
+      unit: "PIECE",
+      reorderLevel: 3,
+      reorderQuantity: 6,
+      batchTracked: true,
+      expiryTracked: true,
+      storageLocation: "Implant cabinet, drawer 2",
+      // Out of stock.
+      batches: [],
+    },
+    {
+      sku: "ADC-R-0010",
+      name: "Composite resin A2 shade",
+      category: "restorative",
+      supplier: "SUP-DENTAL",
+      unit: "SYRINGE",
+      reorderLevel: 5,
+      reorderQuantity: 15,
+      batchTracked: true,
+      expiryTracked: true,
+      storageLocation: "Surgery 1, wall unit",
+      batches: [
+        { qty: 12, expiryDays: 400, costPaise: 95_000 },
+        // Inside the 60-day warning window.
+        { qty: 3, expiryDays: 35, costPaise: 95_000 },
+      ],
+    },
+    {
+      sku: "ADC-R-0011",
+      name: "Glass ionomer cement",
+      category: "restorative",
+      supplier: "SUP-DENTAL",
+      unit: "PACK",
+      reorderLevel: 2,
+      reorderQuantity: 6,
+      batchTracked: false,
+      expiryTracked: true,
+      storageLocation: "Surgery 1, wall unit",
+      batches: [{ qty: 7, expiryDays: 300, costPaise: 68_000 }],
+    },
+    {
+      sku: "ADC-E-0020",
+      name: "Rotary NiTi file assortment",
+      category: "endodontics",
+      supplier: "SUP-DENTAL",
+      unit: "PACK",
+      reorderLevel: 3,
+      reorderQuantity: 8,
+      batchTracked: false,
+      expiryTracked: false,
+      storageLocation: "Sterilisation room, shelf B2",
+      batches: [{ qty: 11, expiryDays: null, costPaise: 210_000 }],
+    },
+    {
+      sku: "ADC-A-0030",
+      name: "Lignocaine 2% with adrenaline",
+      category: "anaesthetics",
+      supplier: "SUP-PHARMA",
+      unit: "CARTRIDGE",
+      reorderLevel: 50,
+      reorderQuantity: 200,
+      batchTracked: true,
+      expiryTracked: true,
+      storageLocation: "Medicine cupboard (locked)",
+      batches: [
+        { qty: 180, expiryDays: 260, costPaise: 3_500 },
+        // Already expired — the stock screen surfaces this for write-off.
+        { qty: 20, expiryDays: -14, costPaise: 3_500 },
+      ],
+    },
+    {
+      sku: "ADC-P-0040",
+      name: "Nitrile examination gloves (medium)",
+      category: "ppe",
+      supplier: "SUP-DENTAL",
+      unit: "BOX",
+      reorderLevel: 8,
+      reorderQuantity: 24,
+      batchTracked: false,
+      expiryTracked: false,
+      storageLocation: "Store room, rack A",
+      batches: [{ qty: 22, expiryDays: null, costPaise: 45_000 }],
+    },
+    {
+      sku: "ADC-P-0041",
+      name: "Surgical face masks (3-ply)",
+      category: "ppe",
+      supplier: "SUP-DENTAL",
+      unit: "BOX",
+      reorderLevel: 6,
+      reorderQuantity: 20,
+      batchTracked: false,
+      expiryTracked: false,
+      storageLocation: "Store room, rack A",
+      // Below the reorder level.
+      batches: [{ qty: 3, expiryDays: null, costPaise: 22_000 }],
+    },
+    {
+      sku: "ADC-L-0050",
+      name: "Addition silicone impression material",
+      category: "lab",
+      supplier: "SUP-DENTAL",
+      unit: "PACK",
+      reorderLevel: 3,
+      reorderQuantity: 8,
+      batchTracked: true,
+      expiryTracked: true,
+      storageLocation: "Surgery 2, cupboard",
+      batches: [{ qty: 6, expiryDays: 150, costPaise: 135_000 }],
+    },
+  ];
+
+  /** Deterministic so re-seeding does not renumber every label. */
+  let labelSequence = 0;
+  const nextLabelCode = () => {
+    labelSequence += 1;
+    return `ADC-B-SEED${String(labelSequence).padStart(2, "0")}`;
+  };
+
+  for (const seed of stockSeeds) {
+    const item = await prisma.inventoryItem.upsert({
+      where: { sku: seed.sku },
+      create: {
+        sku: seed.sku,
+        name: seed.name,
+        brand: seed.brand ?? null,
+        categoryId: categoryByslug.get(seed.category)!,
+        supplierId: supplierByCode.get(seed.supplier)!,
+        unit: seed.unit as never,
+        reorderLevel: seed.reorderLevel,
+        reorderQuantity: seed.reorderQuantity,
+        requiresBatchTracking: seed.batchTracked,
+        requiresExpiryTracking: seed.expiryTracked,
+        storageLocation: seed.storageLocation,
+      },
+      update: {},
+    });
+
+    for (const [index, batch] of seed.batches.entries()) {
+      const labelCode = nextLabelCode();
+
+      const existing = await prisma.inventoryBatch.findUnique({ where: { labelCode } });
+      if (existing) continue;
+
+      const created = await prisma.inventoryBatch.create({
+        data: {
+          itemId: item.id,
+          labelCode,
+          batchNumber: seed.batchTracked ? `LOT-${seed.sku.slice(-4)}-${index + 1}` : null,
+          expiryDate: batch.expiryDays === null ? null : atClinicTime(batch.expiryDays, "12:00"),
+          supplierId: supplierByCode.get(seed.supplier)!,
+          invoiceRef: `DEMO-INV-${seed.sku.slice(-4)}`,
+          quantityReceived: batch.qty,
+          quantityRemaining: batch.qty,
+          unitCostPaise: batch.costPaise ?? null,
+          receivedAt: atClinicTime(-30 + index * 5, "10:00"),
+        },
+      });
+
+      // Every batch gets the RECEIPT movement that explains its balance, so the
+      // seeded data satisfies the same ledger invariant the application does.
+      await prisma.stockMovement.create({
+        data: {
+          itemId: item.id,
+          batchId: created.id,
+          type: "RECEIPT",
+          quantity: batch.qty,
+          balanceAfter: batch.qty,
+          notes: "Opening stock (seed)",
+          createdAt: created.receivedAt,
+        },
+      });
+    }
+  }
+
   // ----------------------------------------------------------------- settings
   await prisma.setting.upsert({
     where: { key: "patient_number_counter" },

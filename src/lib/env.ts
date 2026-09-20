@@ -93,6 +93,13 @@ const schema = z.object({
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).default("info"),
   SENTRY_DSN: optionalString,
 
+  /**
+   * Shared secret for /api/cron/drain. Required on a serverless host, where the
+   * long-running worker cannot run and a scheduler calls that endpoint instead.
+   * Unset is fine when `npm run worker` is running alongside the app.
+   */
+  CRON_SECRET: optionalString,
+
   RATE_LIMIT_BOOKING_PER_HOUR: int(10),
   RATE_LIMIT_OTP_PER_HOUR: int(8),
   RATE_LIMIT_LOGIN_PER_15MIN: int(10),

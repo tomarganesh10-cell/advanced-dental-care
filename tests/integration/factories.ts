@@ -160,3 +160,43 @@ export async function seedNotificationTemplates() {
     });
   }
 }
+
+export async function createInventoryItem(
+  options: {
+    name?: string;
+    reorderLevel?: number;
+    requiresBatchTracking?: boolean;
+    requiresExpiryTracking?: boolean;
+    expiryWarningDays?: number;
+  } = {},
+) {
+  const id = next();
+
+  const category = await testDb.inventoryCategory.upsert({
+    where: { slug: "test-consumables" },
+    update: {},
+    create: { name: "Test Consumables", slug: "test-consumables", position: 1 },
+  });
+
+  return testDb.inventoryItem.create({
+    data: {
+      sku: `TEST-I-${id}`,
+      name: options.name ?? `Test Item ${id}`,
+      categoryId: category.id,
+      unit: "PIECE",
+      reorderLevel: options.reorderLevel ?? 0,
+      reorderQuantity: 10,
+      requiresBatchTracking: options.requiresBatchTracking ?? false,
+      requiresExpiryTracking: options.requiresExpiryTracking ?? false,
+      expiryWarningDays: options.expiryWarningDays ?? 60,
+    },
+  });
+}
+
+/** Days from now, at midday, so a test never straddles a date boundary. */
+export function daysFromNow(days: number): Date {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+  date.setHours(12, 0, 0, 0);
+  return date;
+}

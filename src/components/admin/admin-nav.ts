@@ -19,7 +19,7 @@ export interface NavItem {
   icon: string;
   permission?: Permission;
   /** Shown as a small count badge, resolved by the layout. */
-  badgeKey?: "todayAppointments" | "newLeads" | "pendingConfirmations" | "followUps";
+  badgeKey?: "todayAppointments" | "newLeads" | "pendingConfirmations" | "followUps" | "lowStock";
 }
 
 export interface NavGroup {
@@ -98,6 +98,42 @@ export const ADMIN_NAV: NavGroup[] = [
         label: "Feedback",
         icon: "MessageSquareHeart",
         permission: PERMISSIONS.FEEDBACK_VIEW,
+      },
+    ],
+  },
+  {
+    label: "Stock",
+    items: [
+      {
+        href: "/admin/inventory",
+        label: "Inventory",
+        icon: "Package",
+        permission: PERMISSIONS.INVENTORY_VIEW,
+        badgeKey: "lowStock",
+      },
+      {
+        href: "/admin/inventory/expiry",
+        label: "Expiry",
+        icon: "CalendarClock",
+        permission: PERMISSIONS.INVENTORY_VIEW,
+      },
+      {
+        href: "/admin/inventory/labels",
+        label: "Print labels",
+        icon: "Barcode",
+        permission: PERMISSIONS.INVENTORY_LABEL,
+      },
+      {
+        href: "/admin/inventory/counts",
+        label: "Stock counts",
+        icon: "ClipboardCheck",
+        permission: PERMISSIONS.INVENTORY_COUNT,
+      },
+      {
+        href: "/admin/inventory/suppliers",
+        label: "Suppliers",
+        icon: "Truck",
+        permission: PERMISSIONS.SUPPLIER_VIEW,
       },
     ],
   },

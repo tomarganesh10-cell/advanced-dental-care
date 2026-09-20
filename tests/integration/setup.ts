@@ -76,6 +76,13 @@ export const testDb = new PrismaClient({
 const TABLES = [
   "audit_logs",
   "analytics_events",
+  "stock_count_lines",
+  "stock_movements",
+  "stock_counts",
+  "inventory_batches",
+  "inventory_items",
+  "inventory_categories",
+  "suppliers",
   "notification_messages",
   "appointment_status_events",
   "lead_activities",

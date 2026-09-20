@@ -6,6 +6,7 @@ import { AdminShell } from "@/components/admin/admin-shell";
 import { requireStaffPage } from "@/server/auth/guards";
 import { staffCan } from "@/server/auth/session";
 import { clinicDayEnd, clinicDayStart, clinicDateString } from "@/lib/time";
+import { getLowStockCount } from "@/server/inventory/queries";
 
 export const metadata: Metadata = {
   title: "Clinic admin",
@@ -54,7 +55,8 @@ async function loadBadges(staffId: string, role: StaffRoleName): Promise<Record<
   const dayStart = clinicDayStart(today);
   const dayEnd = clinicDayEnd(today);
 
-  const [todayAppointments, pendingConfirmations, newLeads, followUps] = await Promise.all([
+  const [todayAppointments, pendingConfirmations, newLeads, followUps, lowStock] =
+    await Promise.all([
     prisma.appointment.count({
       where: {
         deletedAt: null,
@@ -76,7 +78,8 @@ async function loadBadges(staffId: string, role: StaffRoleName): Promise<Record<
         ...(role === "MARKETING" || role === "SUPPORT" ? { assignedToId: staffId } : {}),
       },
     }),
+    getLowStockCount(),
   ]);
 
-  return { todayAppointments, pendingConfirmations, newLeads, followUps };
+  return { todayAppointments, pendingConfirmations, newLeads, followUps, lowStock };
 }

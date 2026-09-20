@@ -80,3 +80,20 @@ export class SlotUnavailableError extends ConflictError {
     super(message);
   }
 }
+
+/** Asked to take more stock out of a batch or an item than is on hand. */
+export class InsufficientStockError extends ConflictError {
+  constructor(message = "There is not enough of that in stock.") {
+    super(message);
+  }
+}
+
+/**
+ * Two people moved the same stock at once and the database refused one of them.
+ * Always safe to retry — nothing was written.
+ */
+export class ConcurrentStockMovementError extends ConflictError {
+  constructor(message = "That stock was picked by someone else a moment ago. Please try again.") {
+    super(message);
+  }
+}

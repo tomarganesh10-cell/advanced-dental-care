@@ -90,6 +90,25 @@ export const PERMISSIONS = {
   PAYMENT_RECORD: "payment:record",
   PAYMENT_REFUND: "payment:refund",
 
+  // --- inventory --------------------------------------------------------
+  // Split finer than most resources, because the interesting risk here is not
+  // reading stock levels — it is writing them. Anyone can be told there are
+  // four implants left; the permission that matters is the one that lets
+  // someone record that there are now three, with no patient attached.
+  INVENTORY_VIEW: "inventory:view",
+  /** Create and edit items, categories and reorder levels. */
+  INVENTORY_MANAGE: "inventory:manage",
+  INVENTORY_RECEIVE: "inventory:receive",
+  INVENTORY_ISSUE: "inventory:issue",
+  /** Adjustments, wastage and expiry write-offs — stock leaving without a patient. */
+  INVENTORY_ADJUST: "inventory:adjust",
+  INVENTORY_COUNT: "inventory:count",
+  INVENTORY_LABEL: "inventory:label",
+  /** Purchase costs and stock valuation, which not everyone who picks stock needs. */
+  INVENTORY_VIEW_COST: "inventory:view_cost",
+  SUPPLIER_VIEW: "supplier:view",
+  SUPPLIER_MANAGE: "supplier:manage",
+
   // --- content ----------------------------------------------------------
   CONTENT_VIEW: "content:view",
   CONTENT_EDIT: "content:edit",
@@ -195,6 +214,16 @@ export const ROLE_PERMISSIONS: Record<StaffRoleName, Permission[]> = {
     P.INVOICE_CANCEL,
     P.PAYMENT_VIEW,
     P.PAYMENT_RECORD,
+    P.INVENTORY_VIEW,
+    P.INVENTORY_MANAGE,
+    P.INVENTORY_RECEIVE,
+    P.INVENTORY_ISSUE,
+    P.INVENTORY_ADJUST,
+    P.INVENTORY_COUNT,
+    P.INVENTORY_LABEL,
+    P.INVENTORY_VIEW_COST,
+    P.SUPPLIER_VIEW,
+    P.SUPPLIER_MANAGE,
     P.CONTENT_VIEW,
     P.CONTENT_EDIT,
     P.CONTENT_PUBLISH,
@@ -245,6 +274,8 @@ export const ROLE_PERMISSIONS: Record<StaffRoleName, Permission[]> = {
     P.DOCUMENT_VIEW,
     P.DOCUMENT_UPLOAD,
     P.INVOICE_VIEW,
+    P.INVENTORY_VIEW,
+    P.INVENTORY_ISSUE,
     P.GALLERY_MANAGE,
     P.FEEDBACK_VIEW,
     P.REPORT_VIEW,
@@ -266,6 +297,12 @@ export const ROLE_PERMISSIONS: Record<StaffRoleName, Permission[]> = {
     P.TREATMENT_PLAN_VIEW,
     P.DOCUMENT_VIEW,
     P.DOCUMENT_UPLOAD,
+    P.INVENTORY_VIEW,
+    P.INVENTORY_RECEIVE,
+    P.INVENTORY_ISSUE,
+    P.INVENTORY_COUNT,
+    P.INVENTORY_LABEL,
+    P.SUPPLIER_VIEW,
   ],
 
   /**
@@ -299,6 +336,9 @@ export const ROLE_PERMISSIONS: Record<StaffRoleName, Permission[]> = {
     P.NOTIFICATION_VIEW,
     P.NOTIFICATION_RESEND,
     P.FEEDBACK_VIEW,
+    P.INVENTORY_VIEW,
+    P.INVENTORY_RECEIVE,
+    P.SUPPLIER_VIEW,
   ],
 
   /**
@@ -331,6 +371,15 @@ export const ROLE_PERMISSIONS: Record<StaffRoleName, Permission[]> = {
     P.REPORT_EXPORT,
     P.ANALYTICS_VIEW,
     P.CONTENT_VIEW,
+    P.INVENTORY_VIEW,
+    P.INVENTORY_MANAGE,
+    P.INVENTORY_RECEIVE,
+    P.INVENTORY_ADJUST,
+    P.INVENTORY_COUNT,
+    P.INVENTORY_LABEL,
+    P.INVENTORY_VIEW_COST,
+    P.SUPPLIER_VIEW,
+    P.SUPPLIER_MANAGE,
   ],
 
   /**
@@ -372,6 +421,9 @@ export const ROLE_PERMISSIONS: Record<StaffRoleName, Permission[]> = {
     P.REPORT_VIEW,
     P.REPORT_FINANCIAL,
     P.REPORT_EXPORT,
+    P.INVENTORY_VIEW,
+    P.INVENTORY_VIEW_COST,
+    P.SUPPLIER_VIEW,
   ],
 
   SUPPORT: [

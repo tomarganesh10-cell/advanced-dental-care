@@ -181,6 +181,8 @@ model Staff {
   clinicalNotes    ClinicalNote[]
   feedbackHandled  Feedback[]        @relation("FeedbackHandler")
   verifiedClaims   ContentClaim[]    @relation("ClaimVerifier")
+  stockMovements   StockMovement[]   @relation("StockMovementActor")
+  stockCounts      StockCount[]      @relation("StockCountCounter")
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -428,6 +430,7 @@ model Patient {
   galleryCases    GalleryCase[]
   testimonials    Testimonial[]
   dataRequests    DataSubjectRequest[]
+  stockMovements  StockMovement[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -594,6 +597,7 @@ model Appointment {
   reviewRequests ReviewRequest[]
   payments      Payment[]
   statusHistory AppointmentStatusEvent[]
+  stockMovements StockMovement[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -1706,4 +1710,304 @@ model AnalyticsEvent {
   @@index([name, createdAt])
   @@index([createdAt])
   @@map("analytics_events")
+}
+
+// =============================================================================
+// Inventory
+// -----------------------------------------------------------------------------
+// A dental clinic's stock is not interchangeable with a shop's. Three things
+// drive this model:
+//
+//   1. Implants and biomaterials are regulated medical devices. When a
+//      manufacturer recalls a lot, the clinic must be able to name every
+//      patient who received an item from it — so a stock issue records the
+//      batch, not just the item, and can point at the appointment it was used in.
+//   2. Anaesthetic, composite and impression material expire. Stock is therefore
+//      held per batch with an expiry date, and issuing draws from the batch that
+//      expires first rather than the one received first.
+//   3. Quantities are whole numbers in the item's own unit. Storing 0.1 of a
+//      bottle invites float drift into a figure that has to reconcile against a
+//      physical count.
+// =============================================================================
+
+enum InventoryUnit {
+  PIECE
+  BOX
+  PACK
+  PAIR
+  BOTTLE
+  TUBE
+  VIAL
+  AMPOULE
+  SYRINGE
+  CARTRIDGE
+  ROLL
+  SHEET
+  GRAM
+  MILLILITRE
+}
+
+enum StockMovementType {
+  /// Goods in from a supplier. The only type that creates a batch.
+  RECEIPT
+  /// Consumed — in a treatment, or taken for general clinic use.
+  ISSUE
+  /// Came back unused after an issue.
+  RETURN
+  /// Deliberate correction with a stated reason. Not for physical counts.
+  ADJUSTMENT
+  /// Damaged, contaminated, dropped, or opened and not used.
+  WASTAGE
+  /// Passed its expiry date and was discarded.
+  EXPIRY_WRITE_OFF
+  /// Reconciliation against a physical count.
+  COUNT_CORRECTION
+}
+
+enum StockCountStatus {
+  DRAFT
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model Supplier {
+  id   String @id @default(uuid()) @db.Uuid
+  name String
+  /// Short code used on purchase orders, e.g. SUP-DENTSPLY.
+  code String @unique
+
+  contactName String?
+  phone       String?
+  email       String?
+  gstin       String?
+  address     String?
+  notes       String?
+
+  isActive Boolean @default(true)
+
+  items   InventoryItem[]
+  batches InventoryBatch[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([isActive])
+  @@map("suppliers")
+}
+
+model InventoryCategory {
+  id    String @id @default(uuid()) @db.Uuid
+  name  String @unique
+  slug  String @unique
+  /// Ordering in the stock list. Lower sorts first.
+  position Int   @default(0)
+  description String?
+
+  items InventoryItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("inventory_categories")
+}
+
+model InventoryItem {
+  id   String @id @default(uuid()) @db.Uuid
+  /// Clinic's own stock code, e.g. ADC-I-0042. Printed on shelf labels.
+  sku  String @unique
+  name String
+
+  categoryId String            @db.Uuid
+  category   InventoryCategory @relation(fields: [categoryId], references: [id])
+
+  /// Usual supplier. A batch records the supplier it actually came from, which
+  /// may differ.
+  supplierId String?   @db.Uuid
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+
+  unit        InventoryUnit @default(PIECE)
+  description String?
+  brand       String?
+  /// Manufacturer's catalogue number, for reordering and recall matching.
+  manufacturerRef String?
+  /// Where it physically lives, e.g. "Sterilisation room, shelf B2".
+  storageLocation String?
+
+  /// Below this on-hand quantity the item is flagged for reorder.
+  reorderLevel    Int @default(0)
+  /// Suggested quantity to order when it drops below the level above.
+  reorderQuantity Int @default(0)
+
+  /// Implants, biomaterials and anything regulated: an issue must name a batch.
+  /// Gloves and bibs generally do not need it.
+  requiresBatchTracking  Boolean @default(true)
+  /// Off for instruments and equipment, which do not expire.
+  requiresExpiryTracking Boolean @default(true)
+  /// Warn this many days before a batch expires.
+  expiryWarningDays      Int     @default(60)
+
+  isActive Boolean @default(true)
+
+  batches   InventoryBatch[]
+  movements StockMovement[]
+  countLines StockCountLine[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([categoryId, isActive])
+  @@index([isActive, name])
+  @@map("inventory_items")
+}
+
+model InventoryBatch {
+  id     String        @id @default(uuid()) @db.Uuid
+  itemId String        @db.Uuid
+  item   InventoryItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  /// Manufacturer's batch or lot number, copied from the packaging. This is the
+  /// string a recall notice quotes.
+  batchNumber String?
+  /// Scannable code the clinic prints and sticks on the box. Unique across all
+  /// batches, uppercase alphanumeric so it encodes as Code 128-B.
+  labelCode   String  @unique
+
+  expiryDate DateTime?
+
+  supplierId String?   @db.Uuid
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+  /// Supplier's invoice or challan number, for reconciling with accounts.
+  invoiceRef String?
+
+  quantityReceived  Int
+  /// On-hand quantity. Authoritative, and only ever changed inside the same
+  /// transaction that writes the matching StockMovement row, so the ledger and
+  /// the balance cannot drift apart.
+  quantityRemaining Int
+  /// Purchase cost per unit, in paise. Integer for the same reason money always is.
+  unitCostPaise     Int?
+
+  receivedAt DateTime @default(now())
+  /// Set when the batch is exhausted or written off, so it drops out of picking.
+  closedAt   DateTime?
+  notes      String?
+
+  movements  StockMovement[]
+  countLines StockCountLine[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  /// Picking order: the batch expiring soonest, among those with stock left.
+  @@index([itemId, expiryDate, quantityRemaining])
+  @@index([expiryDate])
+  @@index([batchNumber])
+  @@map("inventory_batches")
+}
+
+model StockMovement {
+  id     String        @id @default(uuid()) @db.Uuid
+  itemId String        @db.Uuid
+  item   InventoryItem @relation(fields: [itemId], references: [id])
+
+  batchId String?         @db.Uuid
+  batch   InventoryBatch? @relation(fields: [batchId], references: [id])
+
+  type StockMovementType
+
+  /// Signed, in the item's unit: positive adds to stock, negative removes.
+  /// Storing the sign rather than a direction flag means the ledger sums to the
+  /// balance with no case analysis.
+  quantity Int
+
+  /// Running balance for this batch immediately after the movement. Redundant
+  /// by design — it makes the history readable without replaying it, and a
+  /// mismatch is how a reconciliation bug is caught.
+  balanceAfter Int
+
+  /// Required for ADJUSTMENT, WASTAGE and EXPIRY_WRITE_OFF. Stock that changes
+  /// without a stated reason is how shrinkage hides.
+  reason String?
+  notes  String?
+
+  /// The treatment this was used in. What makes a recall answerable.
+  appointmentId String?      @db.Uuid
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+  /// Denormalised from the appointment so a recall query does not depend on the
+  /// appointment surviving, and so stock can be issued to a patient without one.
+  patientId String?  @db.Uuid
+  patient   Patient? @relation(fields: [patientId], references: [id])
+
+  stockCountId String?     @db.Uuid
+  stockCount   StockCount? @relation(fields: [stockCountId], references: [id])
+
+  /// Who did it. Null only for movements the system generated itself.
+  performedById String? @db.Uuid
+  performedBy   Staff?  @relation("StockMovementActor", fields: [performedById], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([itemId, createdAt])
+  @@index([batchId, createdAt])
+  @@index([appointmentId])
+  @@index([patientId])
+  @@index([type, createdAt])
+  @@map("stock_movements")
+}
+
+model StockCount {
+  id        String @id @default(uuid()) @db.Uuid
+  /// Human-readable reference, e.g. ADC-SC-000004.
+  reference String @unique
+
+  status StockCountStatus @default(DRAFT)
+  /// Optional narrowing, e.g. "Implants only" or "Sterilisation room".
+  scope  String?
+  notes  String?
+
+  countedById String? @db.Uuid
+  countedBy   Staff?  @relation("StockCountCounter", fields: [countedById], references: [id])
+
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  lines     StockCountLine[]
+  movements StockMovement[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, startedAt])
+  @@map("stock_counts")
+}
+
+model StockCountLine {
+  id           String     @id @default(uuid()) @db.Uuid
+  stockCountId String     @db.Uuid
+  stockCount   StockCount @relation(fields: [stockCountId], references: [id], onDelete: Cascade)
+
+  itemId String        @db.Uuid
+  item   InventoryItem @relation(fields: [itemId], references: [id])
+
+  batchId String?         @db.Uuid
+  batch   InventoryBatch? @relation(fields: [batchId], references: [id])
+
+  /// What the system thought was there when the count was opened.
+  expectedQuantity Int
+  /// What was physically on the shelf. Null until someone counts it.
+  countedQuantity  Int?
+  /// Why it differs. Required before a line with a variance can be applied.
+  varianceReason   String?
+
+  countedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([stockCountId, itemId, batchId])
+  @@index([stockCountId])
+  @@map("stock_count_lines")
 }
