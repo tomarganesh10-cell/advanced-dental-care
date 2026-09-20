@@ -28,7 +28,11 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "verify": "npm run typecheck && npm run lint && npm run test:all",
-    "worker": "tsx src/server/jobs/worker.ts"
+    "worker": "tsx src/server/jobs/worker.ts",
+    "verify:permissions": "node scripts/verify-permissions.mjs",
+    "verify:routes": "node scripts/verify-admin-routes.mjs",
+    "verify:portal": "node scripts/verify-portal.mjs",
+    "verify:live": "npm run verify:routes && npm run verify:permissions && npm run verify:portal"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

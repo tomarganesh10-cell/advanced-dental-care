@@ -70,6 +70,7 @@ is logged instead of sent.
 - Multi-location support — the model assumes one clinic
 - Patient-facing rescheduling (a deliberate choice; see [PATIENT_PORTAL.md](PATIENT_PORTAL.md))
 - Automated accessibility and Lighthouse runs in CI
+- Editing schedules, holidays and settings from the admin UI (they display; changes are made in data)
 
 ---
 

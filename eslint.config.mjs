@@ -33,8 +33,13 @@ const config = [
     },
   },
   {
-    // Scripts, seeds and the background worker are allowed to log to stdout.
-    files: ["prisma/**/*.ts", "scripts/**/*.ts", "src/server/jobs/**/*.ts"],
+    // Scripts, seeds and the background worker report to stdout by design —
+    // that is their entire output.
+    files: [
+      "prisma/**/*.ts",
+      "scripts/**/*.{ts,mjs,js}",
+      "src/server/jobs/**/*.ts",
+    ],
     rules: { "no-console": "off" },
   },
 ];
