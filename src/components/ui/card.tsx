@@ -5,7 +5,7 @@ export function Card({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "rounded-[--radius-card] border border-[--color-hairline] bg-white shadow-[--shadow-subtle]",
+        "rounded-(--radius-card) border border-(--color-hairline) bg-white shadow-(--shadow-subtle)",
         className,
       )}
       {...props}
@@ -22,7 +22,7 @@ export function CardTitle({ className, ...props }: ComponentProps<"h3">) {
 }
 
 export function CardDescription({ className, ...props }: ComponentProps<"p">) {
-  return <p className={cn("text-sm text-[--color-ink-subtle]", className)} {...props} />;
+  return <p className={cn("text-sm text-(--color-ink-subtle)", className)} {...props} />;
 }
 
 export function CardContent({ className, ...props }: ComponentProps<"div">) {

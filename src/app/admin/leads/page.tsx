@@ -134,8 +134,8 @@ export default async function LeadsPage({
             className={cn(
               "rounded-full border px-3.5 py-1.5 text-sm font-medium",
               filterKey === item.key
-                ? "border-[--color-action] bg-[--color-action] text-white"
-                : "border-[--color-navy-200] bg-white text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                ? "border-(--color-action) bg-(--color-action) text-white"
+                : "border-(--color-navy-200) bg-white text-(--color-ink-muted) hover:bg-(--color-navy-50)",
             )}
           >
             {item.label}
@@ -149,10 +149,10 @@ export default async function LeadsPage({
           description="Enquiries from the website, phone and walk-ins all land here."
         />
       ) : (
-        <div className="overflow-x-auto rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <div className="overflow-x-auto rounded-(--radius-card) border border-(--color-hairline) bg-white">
           <table className="w-full min-w-[56rem] text-sm">
             <caption className="sr-only">Enquiries</caption>
-            <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+            <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
               <tr>
                 <th scope="col" className="px-4 py-2.5 text-left font-medium">
                   Enquirer
@@ -174,7 +174,7 @@ export default async function LeadsPage({
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[--color-hairline]">
+            <tbody className="divide-y divide-(--color-hairline)">
               {leads.map((lead) => {
                 const overdue =
                   lead.nextFollowUpAt &&
@@ -182,15 +182,15 @@ export default async function LeadsPage({
                   !["WON", "LOST"].includes(lead.status);
 
                 return (
-                  <tr key={lead.id} className="hover:bg-[--color-navy-50]/50">
+                  <tr key={lead.id} className="hover:bg-(--color-navy-50)/50">
                     <td className="px-4 py-3">
                       <Link
                         href={`/admin/leads/${lead.id}`}
-                        className="font-medium text-[--color-action] hover:underline"
+                        className="font-medium text-(--color-action) hover:underline"
                       >
                         {lead.fullName}
                       </Link>
-                      <span className="block text-xs text-[--color-ink-subtle]">
+                      <span className="block text-xs text-(--color-ink-subtle)">
                         <a
                           href={`tel:${lead.phone}`}
                           className="inline-flex items-center gap-1 hover:underline"
@@ -203,20 +203,20 @@ export default async function LeadsPage({
                         {lead.isInternational ? <Badge tone="info">International</Badge> : null}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-[--color-ink-muted]">
+                    <td className="px-4 py-3 text-(--color-ink-muted)">
                       {lead.treatmentInterest ?? "—"}
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-[--color-ink-muted]">{titleCase(lead.source)}</span>
+                      <span className="text-(--color-ink-muted)">{titleCase(lead.source)}</span>
                       {lead.utmCampaign ? (
-                        <span className="block text-xs text-[--color-ink-subtle]">
+                        <span className="block text-xs text-(--color-ink-subtle)">
                           {lead.utmSource} / {lead.utmCampaign}
                         </span>
                       ) : null}
                     </td>
-                    <td className="px-4 py-3 text-[--color-ink-muted]">
+                    <td className="px-4 py-3 text-(--color-ink-muted)">
                       {lead.assignedTo?.fullName ?? (
-                        <span className="text-[--color-ink-subtle]">Unassigned</span>
+                        <span className="text-(--color-ink-subtle)">Unassigned</span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -225,15 +225,15 @@ export default async function LeadsPage({
                           className={cn(
                             "inline-flex items-center gap-1 tabular-nums",
                             overdue
-                              ? "font-medium text-[--color-danger]"
-                              : "text-[--color-ink-muted]",
+                              ? "font-medium text-(--color-danger)"
+                              : "text-(--color-ink-muted)",
                           )}
                         >
                           {overdue ? <AlertCircle className="size-3.5" aria-hidden="true" /> : null}
                           {formatClinicDate(lead.nextFollowUpAt, "d MMM")}
                         </span>
                       ) : (
-                        <span className="text-[--color-ink-subtle]">—</span>
+                        <span className="text-(--color-ink-subtle)">—</span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -249,14 +249,14 @@ export default async function LeadsPage({
 
       {pageCount > 1 ? (
         <nav aria-label="Pagination" className="mt-4 flex items-center justify-between text-sm">
-          <p className="text-[--color-ink-subtle]">
+          <p className="text-(--color-ink-subtle)">
             Page {page} of {pageCount}
           </p>
           <div className="flex gap-2">
             {page > 1 ? (
               <Link
                 href={`/admin/leads?filter=${filterKey}&page=${page - 1}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Previous
               </Link>
@@ -264,7 +264,7 @@ export default async function LeadsPage({
             {page < pageCount ? (
               <Link
                 href={`/admin/leads?filter=${filterKey}&page=${page + 1}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Next
               </Link>
@@ -276,13 +276,13 @@ export default async function LeadsPage({
       {/* Source performance — the question the clinic is really paying to answer. */}
       {sources.length > 0 ? (
         <section className="mt-8">
-          <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
             Where enquiries come from (last 90 days)
           </h2>
-          <div className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+          <div className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
             <table className="w-full text-sm">
               <caption className="sr-only">Enquiry volume and booking rate by source</caption>
-              <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+              <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
                 <tr>
                   <th scope="col" className="px-4 py-2.5 text-left font-medium">
                     Source
@@ -298,7 +298,7 @@ export default async function LeadsPage({
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[--color-hairline]">
+              <tbody className="divide-y divide-(--color-hairline)">
                 {sources.map((source) => (
                   <tr key={source.source}>
                     <td className="px-4 py-2.5 font-medium">{titleCase(source.source)}</td>
@@ -312,7 +312,7 @@ export default async function LeadsPage({
               </tbody>
             </table>
           </div>
-          <p className="mt-2 text-xs text-[--color-ink-subtle]">
+          <p className="mt-2 text-xs text-(--color-ink-subtle)">
             Booking rate counts enquiries that reached an appointment or beyond. A source with high
             volume and a low rate is usually a targeting problem, not a volume problem.
           </p>

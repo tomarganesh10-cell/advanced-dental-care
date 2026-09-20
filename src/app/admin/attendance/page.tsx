@@ -100,10 +100,10 @@ export default async function AttendancePage() {
         />
 
         {canSeeAll ? (
-          <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white">
-            <div className="border-b border-[--color-hairline] px-5 py-3.5">
+          <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white">
+            <div className="border-b border-(--color-hairline) px-5 py-3.5">
               <h2 className="text-base font-semibold">Today</h2>
-              <p className="text-xs text-[--color-ink-subtle]">
+              <p className="text-xs text-(--color-ink-subtle)">
                 {todayBoard.length} of {activeStaff.length} staff have clocked in
               </p>
             </div>
@@ -118,7 +118,7 @@ export default async function AttendancePage() {
             ) : (
               <table className="w-full text-sm">
                 <caption className="sr-only">Staff attendance today</caption>
-                <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+                <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
                   <tr>
                     <th scope="col" className="px-5 py-2.5 text-left font-medium">
                       Staff
@@ -140,21 +140,21 @@ export default async function AttendancePage() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[--color-hairline]">
+                <tbody className="divide-y divide-(--color-hairline)">
                   {todayBoard.map((row) => (
                     <tr key={row.id}>
                       <td className="px-5 py-2.5 font-medium">
                         {row.staff.fullName}
                         {row.adjustmentReason ? (
                           <span
-                            className="ml-1.5 text-xs text-[--color-ink-subtle]"
+                            className="ml-1.5 text-xs text-(--color-ink-subtle)"
                             title={`Adjusted: ${row.adjustmentReason}`}
                           >
                             (edited)
                           </span>
                         ) : null}
                       </td>
-                      <td className="hidden px-4 py-2.5 text-[--color-ink-subtle] sm:table-cell">
+                      <td className="hidden px-4 py-2.5 text-(--color-ink-subtle) sm:table-cell">
                         {ROLE_LABELS[row.staff.role as StaffRoleName] ?? row.staff.role}
                       </td>
                       <td className="px-4 py-2.5 tabular-nums">
@@ -173,7 +173,7 @@ export default async function AttendancePage() {
                   ))}
 
                   {notYetIn.map((member) => (
-                    <tr key={member.id} className="text-[--color-ink-subtle]">
+                    <tr key={member.id} className="text-(--color-ink-subtle)">
                       <td className="px-5 py-2.5">{member.fullName}</td>
                       <td className="hidden px-4 py-2.5 sm:table-cell">
                         {ROLE_LABELS[member.role as StaffRoleName] ?? member.role}
@@ -194,13 +194,13 @@ export default async function AttendancePage() {
 
       {canSeeAll ? (
         <section className="mt-8">
-          <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
             This month
           </h2>
-          <div className="overflow-x-auto rounded-[--radius-card] border border-[--color-hairline] bg-white">
+          <div className="overflow-x-auto rounded-(--radius-card) border border-(--color-hairline) bg-white">
             <table className="w-full text-sm">
               <caption className="sr-only">Monthly attendance summary by staff member</caption>
-              <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+              <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
                 <tr>
                   <th scope="col" className="px-5 py-2.5 text-left font-medium">
                     Staff
@@ -225,7 +225,7 @@ export default async function AttendancePage() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[--color-hairline]">
+              <tbody className="divide-y divide-(--color-hairline)">
                 {monthly.map((row) => (
                   <tr key={row.staffId}>
                     <td className="px-5 py-2.5 font-medium">{row.fullName}</td>
@@ -243,7 +243,7 @@ export default async function AttendancePage() {
             </table>
           </div>
 
-          <p className="mt-3 text-xs leading-relaxed text-[--color-ink-subtle]">
+          <p className="mt-3 text-xs leading-relaxed text-(--color-ink-subtle)">
             Attendance records track check-in and check-out only. This system does not record
             location, screen activity or anything else about how staff spend their day. Every
             manager adjustment is logged with a reason and is visible to the staff member.

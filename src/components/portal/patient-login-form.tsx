@@ -93,8 +93,8 @@ export function PatientLoginForm() {
 
   return (
     <div className="w-full max-w-md">
-      <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-7 shadow-[--shadow-subtle] md:p-8">
-        <div className="flex size-11 items-center justify-center rounded-xl bg-[--color-medical-50] text-[--color-action]">
+      <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-7 shadow-(--shadow-subtle) md:p-8">
+        <div className="flex size-11 items-center justify-center rounded-xl bg-(--color-medical-50) text-(--color-action)">
           {step === "phone" ? (
             <Smartphone className="size-5" aria-hidden="true" />
           ) : (
@@ -103,7 +103,7 @@ export function PatientLoginForm() {
         </div>
 
         <h1 className="mt-5 text-2xl">{step === "phone" ? "Patient login" : "Enter your code"}</h1>
-        <p className="mt-2 text-sm leading-relaxed text-[--color-ink-subtle]">
+        <p className="mt-2 text-sm leading-relaxed text-(--color-ink-subtle)">
           {step === "phone"
             ? "Sign in with the mobile number registered at the clinic. We will send you a 6-digit code — no password needed."
             : `We sent a 6-digit code to ${masked}. It expires in a few minutes.`}
@@ -186,7 +186,7 @@ export function PatientLoginForm() {
                   setCode("");
                   setError(null);
                 }}
-                className="inline-flex items-center gap-1 text-[--color-ink-subtle] hover:text-[--color-ink]"
+                className="inline-flex items-center gap-1 text-(--color-ink-subtle) hover:text-(--color-ink)"
               >
                 <ArrowLeft className="size-3.5" aria-hidden="true" />
                 Change number
@@ -196,7 +196,7 @@ export function PatientLoginForm() {
                 type="button"
                 onClick={() => void sendCode()}
                 disabled={submitting}
-                className="font-medium text-[--color-action] hover:underline"
+                className="font-medium text-(--color-action) hover:underline"
               >
                 Resend code
               </button>
@@ -205,9 +205,9 @@ export function PatientLoginForm() {
         )}
       </div>
 
-      <p className="mt-5 text-center text-sm text-[--color-ink-subtle]">
+      <p className="mt-5 text-center text-sm text-(--color-ink-subtle)">
         Trouble signing in? Call the clinic on{" "}
-        <a href={`tel:${contact.phone.e164}`} className="font-medium text-[--color-action]">
+        <a href={`tel:${contact.phone.e164}`} className="font-medium text-(--color-action)">
           {contact.phone.display}
         </a>
         .

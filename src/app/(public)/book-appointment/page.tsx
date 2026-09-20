@@ -20,11 +20,11 @@ export default async function BookAppointmentPage({
   const params = await searchParams;
 
   return (
-    <div className="bg-[--color-surface-sunken] py-10 md:py-16">
+    <div className="bg-(--color-surface-sunken) py-10 md:py-16">
       <div className="container-page">
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <h1 className="text-3xl md:text-4xl">Book an appointment</h1>
-          <p className="mt-3 text-base leading-relaxed text-[--color-ink-muted]">
+          <p className="mt-3 text-base leading-relaxed text-(--color-ink-muted)">
             Choose a time that suits you. Your booking is confirmed by reception, and you will get a
             message as soon as it is.
           </p>
@@ -49,7 +49,7 @@ export default async function BookAppointmentPage({
             body={
               <>
                 Call{" "}
-                <a href={`tel:${contact.phone.e164}`} className="font-medium text-[--color-action]">
+                <a href={`tel:${contact.phone.e164}`} className="font-medium text-(--color-action)">
                   {contact.phone.display}
                 </a>{" "}
                 or{" "}
@@ -67,11 +67,11 @@ export default async function BookAppointmentPage({
           />
         </div>
 
-        <div className="mx-auto mt-6 max-w-3xl rounded-[--radius-card] border border-[--color-hairline] bg-white p-6">
+        <div className="mx-auto mt-6 max-w-3xl rounded-(--radius-card) border border-(--color-hairline) bg-white p-6">
           <div className="flex flex-wrap items-start justify-between gap-6">
             <div>
               <h2 className="text-base font-semibold">Clinic hours</h2>
-              <p className="mt-1 text-sm text-[--color-ink-subtle]">
+              <p className="mt-1 text-sm text-(--color-ink-subtle)">
                 All appointment times shown are Chandigarh time (IST).
               </p>
             </div>
@@ -79,7 +79,7 @@ export default async function BookAppointmentPage({
           </div>
         </div>
 
-        <p className="mx-auto mt-6 max-w-3xl text-center text-xs leading-relaxed text-[--color-ink-subtle]">
+        <p className="mx-auto mt-6 max-w-3xl text-center text-xs leading-relaxed text-(--color-ink-subtle)">
           Online bookings need at least two hours&apos; notice. For anything urgent today, please
           call the clinic — we keep time free for emergencies.
         </p>
@@ -98,15 +98,15 @@ function InfoCard({
   body: React.ReactNode;
 }) {
   return (
-    <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5">
+    <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-5">
       <span
-        className="mb-2.5 flex size-8 items-center justify-center rounded-lg bg-[--color-teal-50] text-[--color-accent]"
+        className="mb-2.5 flex size-8 items-center justify-center rounded-lg bg-(--color-teal-50) text-(--color-accent)"
         aria-hidden="true"
       >
         {icon}
       </span>
-      <p className="text-sm font-semibold text-[--color-primary]">{title}</p>
-      <p className="mt-1 text-xs leading-relaxed text-[--color-ink-subtle]">{body}</p>
+      <p className="text-sm font-semibold text-(--color-primary)">{title}</p>
+      <p className="mt-1 text-xs leading-relaxed text-(--color-ink-subtle)">{body}</p>
     </div>
   );
 }

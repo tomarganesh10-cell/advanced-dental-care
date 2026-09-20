@@ -26,7 +26,7 @@ const URGENT_SYMPTOMS = [
 export function EmergencyBanner() {
   return (
     <div className="container-page">
-      <div className="overflow-hidden rounded-[--radius-card] border border-amber-200 bg-amber-50">
+      <div className="overflow-hidden rounded-(--radius-card) border border-amber-200 bg-amber-50">
         <div className="grid gap-8 p-6 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] md:p-8">
           <div>
             <p className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold tracking-wide text-amber-900 uppercase">
@@ -36,13 +36,13 @@ export function EmergencyBanner() {
 
             <h2 className="mt-4 text-2xl md:text-3xl">In pain today?</h2>
 
-            <p className="mt-3 max-w-lg text-sm leading-relaxed text-[--color-ink-muted]">
+            <p className="mt-3 max-w-lg text-sm leading-relaxed text-(--color-ink-muted)">
               Call the clinic during opening hours and we will try to see you the same day. Tell
               reception what the problem is — dental pain with swelling is triaged ahead of a
               routine check-up.
             </p>
 
-            <ul className="mt-4 grid gap-x-6 gap-y-1.5 text-sm text-[--color-ink-muted] sm:grid-cols-2">
+            <ul className="mt-4 grid gap-x-6 gap-y-1.5 text-sm text-(--color-ink-muted) sm:grid-cols-2">
               {URGENT_SYMPTOMS.map((symptom) => (
                 <li key={symptom} className="flex items-start gap-2">
                   <span
@@ -65,7 +65,7 @@ export function EmergencyBanner() {
 
           <div className="space-y-5">
             <div className="rounded-xl border border-amber-200 bg-white p-5">
-              <p className="text-xs font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+              <p className="text-xs font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
                 Clinic hours
               </p>
               <OpeningHoursList claim={openingHours} className="mt-3" />

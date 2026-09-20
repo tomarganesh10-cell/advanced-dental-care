@@ -63,7 +63,7 @@ export default function InternationalPatientsPage() {
       <Breadcrumbs items={[{ name: "International patients", path: "/international-patients" }]} />
 
       <div className="container-page pb-10">
-        <p className="inline-flex items-center gap-1.5 rounded-full bg-[--color-teal-50] px-3 py-1 text-xs font-semibold text-[--color-teal-800]">
+        <p className="inline-flex items-center gap-1.5 rounded-full bg-(--color-teal-50) px-3 py-1 text-xs font-semibold text-(--color-teal-800)">
           <Globe2 className="size-3.5" aria-hidden="true" />
           Dental tourism
         </p>
@@ -92,10 +92,10 @@ export default function InternationalPatientsPage() {
               {RECORDS_NEEDED.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-3 text-sm leading-relaxed text-[--color-ink-muted]"
+                  className="flex items-start gap-3 text-sm leading-relaxed text-(--color-ink-muted)"
                 >
                   <FileText
-                    className="mt-0.5 size-4 shrink-0 text-[--color-accent]"
+                    className="mt-0.5 size-4 shrink-0 text-(--color-accent)"
                     aria-hidden="true"
                   />
                   {item}
@@ -103,11 +103,11 @@ export default function InternationalPatientsPage() {
               ))}
             </ul>
 
-            <p className="mt-5 text-sm text-[--color-ink-subtle]">
+            <p className="mt-5 text-sm text-(--color-ink-subtle)">
               Send them by email to{" "}
               <a
                 href={`mailto:${contact.email.primary}`}
-                className="font-medium text-[--color-action]"
+                className="font-medium text-(--color-action)"
               >
                 {contact.email.primary}
               </a>{" "}
@@ -123,7 +123,7 @@ export default function InternationalPatientsPage() {
               , quoting the reference from your enquiry.
             </p>
 
-            <div className="mt-6 flex items-start gap-3 rounded-[--radius-card] border border-amber-200 bg-amber-50 p-5">
+            <div className="mt-6 flex items-start gap-3 rounded-(--radius-card) border border-amber-200 bg-amber-50 p-5">
               <AlertTriangle className="mt-0.5 size-4 shrink-0 text-amber-700" aria-hidden="true" />
               <p className="text-sm leading-relaxed text-amber-900">
                 A remote assessment is a starting point, not a diagnosis. Nothing we say before
@@ -133,9 +133,9 @@ export default function InternationalPatientsPage() {
             </div>
           </div>
 
-          <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-6 md:p-8">
+          <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-6 md:p-8">
             <h2 className="text-xl">Request a consultation</h2>
-            <p className="mt-1.5 text-sm text-[--color-ink-subtle]">
+            <p className="mt-1.5 text-sm text-(--color-ink-subtle)">
               We will reply with the records we need and offer a video call in your timezone.
             </p>
             <div className="mt-6">

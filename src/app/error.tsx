@@ -32,7 +32,7 @@ export default function GlobalError({
       </div>
 
       <h1 className="mt-5 text-2xl md:text-3xl">Something went wrong</h1>
-      <p className="mt-3 max-w-md text-[--color-ink-muted]">
+      <p className="mt-3 max-w-md text-(--color-ink-muted)">
         This is a problem at our end, not yours. Try again — and if you were booking an appointment,
         please call us so it does not get missed.
       </p>
@@ -51,7 +51,7 @@ export default function GlobalError({
       </div>
 
       {error.digest ? (
-        <p className="mt-8 text-xs text-[--color-ink-subtle]">
+        <p className="mt-8 text-xs text-(--color-ink-subtle)">
           Reference for our team: <code className="font-mono">{error.digest}</code>
         </p>
       ) : null}

@@ -82,7 +82,7 @@ export default async function GalleryAdminPage() {
       </div>
 
       {blocked.length > 0 ? (
-        <div className="mb-5 flex items-start gap-3 rounded-[--radius-card] border border-amber-200 bg-amber-50 p-4">
+        <div className="mb-5 flex items-start gap-3 rounded-(--radius-card) border border-amber-200 bg-amber-50 p-4">
           <AlertTriangle className="mt-0.5 size-4 shrink-0 text-amber-700" aria-hidden="true" />
           <p className="text-sm text-amber-900">
             <strong>
@@ -110,11 +110,11 @@ export default async function GalleryAdminPage() {
             return (
               <li
                 key={item.id}
-                className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white"
+                className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white"
               >
-                <div className="grid grid-cols-2 gap-px bg-[--color-hairline]">
+                <div className="grid grid-cols-2 gap-px bg-(--color-hairline)">
                   {[before, after].map((media, index) => (
-                    <div key={index} className="relative aspect-square bg-[--color-sand]">
+                    <div key={index} className="relative aspect-square bg-(--color-sand)">
                       {media ? (
                         <Image
                           src={media.imageUrl}
@@ -126,7 +126,7 @@ export default async function GalleryAdminPage() {
                       ) : (
                         <div className="flex h-full items-center justify-center">
                           <ImageIcon
-                            className="size-5 text-[--color-navy-300]"
+                            className="size-5 text-(--color-navy-300)"
                             aria-hidden="true"
                           />
                         </div>
@@ -137,7 +137,7 @@ export default async function GalleryAdminPage() {
 
                 <div className="p-4">
                   <p className="text-sm font-semibold">{item.title}</p>
-                  <p className="mt-0.5 text-xs text-[--color-ink-subtle]">
+                  <p className="mt-0.5 text-xs text-(--color-ink-subtle)">
                     {item.category}
                     {item.concern ? ` · ${item.concern}` : ""}
                   </p>
@@ -152,13 +152,13 @@ export default async function GalleryAdminPage() {
                   </div>
 
                   {item.consentExpiresAt ? (
-                    <p className="mt-2 text-xs text-[--color-ink-subtle]">
+                    <p className="mt-2 text-xs text-(--color-ink-subtle)">
                       Consent expires {formatClinicDate(item.consentExpiresAt, "d MMM yyyy")}
                     </p>
                   ) : null}
 
                   {item.consentEvidence ? (
-                    <p className="mt-1 flex items-start gap-1 text-xs text-[--color-ink-subtle]">
+                    <p className="mt-1 flex items-start gap-1 text-xs text-(--color-ink-subtle)">
                       <ShieldCheck className="mt-px size-3 shrink-0" aria-hidden="true" />
                       {item.consentEvidence}
                     </p>
@@ -170,7 +170,7 @@ export default async function GalleryAdminPage() {
         </ul>
       )}
 
-      <p className="mt-6 rounded-[--radius-card] border border-[--color-hairline] bg-[--color-surface-sunken] p-4 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-6 rounded-(--radius-card) border border-(--color-hairline) bg-(--color-surface-sunken) p-4 text-xs leading-relaxed text-(--color-ink-subtle)">
         Consent to treatment is not consent to publication. A case needs separate, specific, written
         consent, and the patient can withdraw it at any time — at which point the images come off
         the website immediately. That gate is enforced in the query that the public page uses, not

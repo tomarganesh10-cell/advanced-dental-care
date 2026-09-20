@@ -33,13 +33,13 @@ export default async function PortalDocumentsPage() {
     <>
       <div className="mb-6">
         <h1 className="text-2xl">Your records</h1>
-        <p className="mt-1 text-sm text-[--color-ink-subtle]">
+        <p className="mt-1 text-sm text-(--color-ink-subtle)">
           Documents and prescriptions the clinic has shared with you.
         </p>
       </div>
 
       <section className="mb-8" aria-label="Documents">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           Documents
         </h2>
 
@@ -49,11 +49,11 @@ export default async function PortalDocumentsPage() {
             description="X-rays and reports appear here once your dentist has been through them with you."
           />
         ) : (
-          <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+          <ul className="divide-y divide-(--color-hairline) overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
             {documents.map((document) => (
               <li key={document.id} className="flex items-center gap-4 px-4 py-3.5">
                 <span
-                  className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-[--color-navy-50] text-[--color-navy-600]"
+                  className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-(--color-navy-50) text-(--color-navy-600)"
                   aria-hidden="true"
                 >
                   <FileImage className="size-4" />
@@ -61,13 +61,13 @@ export default async function PortalDocumentsPage() {
 
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium">{document.title}</p>
-                  <p className="text-xs text-[--color-ink-subtle]">
+                  <p className="text-xs text-(--color-ink-subtle)">
                     {KIND_LABELS[document.kind] ?? document.kind} ·{" "}
                     {formatClinicDate(document.takenAt ?? document.createdAt, "d MMM yyyy")} ·{" "}
                     {formatBytes(document.sizeBytes)}
                   </p>
                   {document.description ? (
-                    <p className="mt-0.5 text-xs text-[--color-ink-muted]">
+                    <p className="mt-0.5 text-xs text-(--color-ink-muted)">
                       {document.description}
                     </p>
                   ) : null}
@@ -81,7 +81,7 @@ export default async function PortalDocumentsPage() {
                 */}
                 <a
                   href={`/api/portal/documents/${document.id}`}
-                  className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-[--color-navy-200] px-3 py-1.5 text-sm font-medium text-[--color-action] hover:bg-[--color-navy-50]"
+                  className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-(--color-navy-200) px-3 py-1.5 text-sm font-medium text-(--color-action) hover:bg-(--color-navy-50)"
                 >
                   <Download className="size-3.5" aria-hidden="true" />
                   Download
@@ -93,7 +93,7 @@ export default async function PortalDocumentsPage() {
       </section>
 
       <section aria-label="Prescriptions">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           Prescriptions
         </h2>
 
@@ -104,7 +104,7 @@ export default async function PortalDocumentsPage() {
             {prescriptions.map((prescription) => (
               <li
                 key={prescription.id}
-                className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5"
+                className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-5"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <p className="font-medium">
@@ -113,7 +113,7 @@ export default async function PortalDocumentsPage() {
                   <Badge tone="outline">{prescription.reference}</Badge>
                 </div>
                 {prescription.doctor ? (
-                  <p className="mt-0.5 text-xs text-[--color-ink-subtle]">
+                  <p className="mt-0.5 text-xs text-(--color-ink-subtle)">
                     Prescribed by {prescription.doctor.displayName}
                   </p>
                 ) : null}
@@ -122,13 +122,13 @@ export default async function PortalDocumentsPage() {
                   {prescription.items.map((item) => (
                     <li
                       key={item.id}
-                      className="rounded-lg bg-[--color-surface-sunken] p-3 text-sm"
+                      className="rounded-lg bg-(--color-surface-sunken) p-3 text-sm"
                     >
                       <p className="font-medium">
                         {item.drugName}
                         {item.strength ? ` ${item.strength}` : ""}
                       </p>
-                      <p className="mt-0.5 text-xs text-[--color-ink-muted]">
+                      <p className="mt-0.5 text-xs text-(--color-ink-muted)">
                         {[
                           item.dosage,
                           item.frequency,
@@ -138,7 +138,7 @@ export default async function PortalDocumentsPage() {
                           .join(" · ")}
                       </p>
                       {item.instructions ? (
-                        <p className="mt-1 text-xs text-[--color-ink-subtle]">
+                        <p className="mt-1 text-xs text-(--color-ink-subtle)">
                           {item.instructions}
                         </p>
                       ) : null}
@@ -147,7 +147,7 @@ export default async function PortalDocumentsPage() {
                 </ul>
 
                 {prescription.notes ? (
-                  <p className="mt-3 text-xs text-[--color-ink-muted]">{prescription.notes}</p>
+                  <p className="mt-3 text-xs text-(--color-ink-muted)">{prescription.notes}</p>
                 ) : null}
               </li>
             ))}
@@ -155,9 +155,9 @@ export default async function PortalDocumentsPage() {
         )}
       </section>
 
-      <div className="mt-8 flex items-start gap-3 rounded-[--radius-card] border border-[--color-hairline] bg-white p-4">
-        <Info className="mt-0.5 size-4 shrink-0 text-[--color-ink-subtle]" aria-hidden="true" />
-        <p className="text-xs leading-relaxed text-[--color-ink-subtle]">
+      <div className="mt-8 flex items-start gap-3 rounded-(--radius-card) border border-(--color-hairline) bg-white p-4">
+        <Info className="mt-0.5 size-4 shrink-0 text-(--color-ink-subtle)" aria-hidden="true" />
+        <p className="text-xs leading-relaxed text-(--color-ink-subtle)">
           Not everything in your record appears here. Your dentist shares images and reports once
           they have been through them with you, because a scan without an explanation usually causes
           more worry than it resolves. You are entitled to your full record at any time — ask

@@ -123,21 +123,21 @@ export default async function FrontDeskPage() {
             <section
               key={column.key}
               aria-label={column.title}
-              className="rounded-[--radius-card] border border-[--color-hairline] bg-white"
+              className="rounded-(--radius-card) border border-(--color-hairline) bg-white"
             >
-              <header className="border-b border-[--color-hairline] px-4 py-3">
+              <header className="border-b border-(--color-hairline) px-4 py-3">
                 <div className="flex items-center justify-between gap-2">
                   <h2 className="text-sm font-semibold">{column.title}</h2>
-                  <span className="rounded-full bg-[--color-navy-100] px-2 py-0.5 text-xs font-medium tabular-nums">
+                  <span className="rounded-full bg-(--color-navy-100) px-2 py-0.5 text-xs font-medium tabular-nums">
                     {items.length}
                   </span>
                 </div>
-                <p className="mt-0.5 text-[11px] text-[--color-ink-subtle]">{column.description}</p>
+                <p className="mt-0.5 text-[11px] text-(--color-ink-subtle)">{column.description}</p>
               </header>
 
               <div className="space-y-2.5 p-3">
                 {items.length === 0 ? (
-                  <p className="py-6 text-center text-xs text-[--color-ink-subtle]">Nobody here</p>
+                  <p className="py-6 text-center text-xs text-(--color-ink-subtle)">Nobody here</p>
                 ) : (
                   items.map((appointment) => {
                     // Waiting time is the number reception is actually asked
@@ -150,23 +150,23 @@ export default async function FrontDeskPage() {
                     return (
                       <article
                         key={appointment.id}
-                        className="rounded-lg border border-[--color-hairline] p-3"
+                        className="rounded-lg border border-(--color-hairline) p-3"
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0">
                             <p className="truncate text-sm font-semibold">
                               {appointment.patient.fullName}
                             </p>
-                            <p className="text-[11px] text-[--color-ink-subtle]">
+                            <p className="text-[11px] text-(--color-ink-subtle)">
                               {appointment.patient.patientNumber}
                             </p>
                           </div>
-                          <span className="shrink-0 text-xs font-semibold text-[--color-ink] tabular-nums">
+                          <span className="shrink-0 text-xs font-semibold text-(--color-ink) tabular-nums">
                             {formatClinicTime(appointment.startsAt)}
                           </span>
                         </div>
 
-                        <p className="mt-1.5 text-xs text-[--color-ink-muted]">
+                        <p className="mt-1.5 text-xs text-(--color-ink-muted)">
                           {appointment.serviceName ?? "Consultation"}
                           {appointment.doctor ? ` · ${appointment.doctor.displayName}` : ""}
                         </p>
@@ -198,7 +198,7 @@ export default async function FrontDeskPage() {
                         </div>
 
                         {appointment.patientNote ? (
-                          <p className="mt-2 rounded bg-[--color-surface-sunken] p-2 text-[11px] leading-relaxed text-[--color-ink-muted]">
+                          <p className="mt-2 rounded bg-(--color-surface-sunken) p-2 text-[11px] leading-relaxed text-(--color-ink-muted)">
                             “{appointment.patientNote}”
                           </p>
                         ) : null}
@@ -206,14 +206,14 @@ export default async function FrontDeskPage() {
                         <div className="mt-2.5 flex items-center gap-2 text-[11px]">
                           <a
                             href={`tel:${appointment.patient.phone}`}
-                            className="inline-flex items-center gap-1 text-[--color-action] hover:underline"
+                            className="inline-flex items-center gap-1 text-(--color-action) hover:underline"
                           >
                             <Phone className="size-3" aria-hidden="true" />
                             {formatPhone(appointment.patient.phone)}
                           </a>
                           <Link
                             href={`/admin/patients/${appointment.patient.id}`}
-                            className="text-[--color-ink-subtle] hover:underline"
+                            className="text-(--color-ink-subtle) hover:underline"
                           >
                             Record
                           </Link>

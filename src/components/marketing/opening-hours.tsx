@@ -86,7 +86,7 @@ export function OpeningHoursList({ claim, tone = "light", className }: OpeningHo
           <div key={group.label} className="flex items-baseline justify-between gap-4">
             <dt
               className={cn(
-                tone === "dark" ? "text-[--color-navy-300]" : "text-[--color-ink-muted]",
+                tone === "dark" ? "text-(--color-navy-300)" : "text-(--color-ink-muted)",
               )}
             >
               {group.label}
@@ -94,7 +94,7 @@ export function OpeningHoursList({ claim, tone = "light", className }: OpeningHo
             <dd
               className={cn(
                 "text-right font-medium tabular-nums",
-                tone === "dark" ? "text-white" : "text-[--color-ink]",
+                tone === "dark" ? "text-white" : "text-(--color-ink)",
                 group.hours === "Closed" && "font-normal opacity-70",
               )}
             >
@@ -108,7 +108,7 @@ export function OpeningHoursList({ claim, tone = "light", className }: OpeningHo
         <p
           className={cn(
             "mt-3 flex items-start gap-1.5 text-xs",
-            tone === "dark" ? "text-[--color-navy-400]" : "text-[--color-ink-subtle]",
+            tone === "dark" ? "text-(--color-navy-400)" : "text-(--color-ink-subtle)",
           )}
         >
           <CalendarClock className="mt-px size-3.5 shrink-0" aria-hidden="true" />

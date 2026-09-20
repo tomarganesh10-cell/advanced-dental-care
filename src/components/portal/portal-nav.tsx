@@ -31,7 +31,7 @@ export function PortalNav() {
   }
 
   return (
-    <nav aria-label="Your records" className="border-b border-[--color-hairline] bg-white">
+    <nav aria-label="Your records" className="border-b border-(--color-hairline) bg-white">
       <div className="container-page flex items-center gap-1 overflow-x-auto">
         {ITEMS.map((item) => {
           const isActive =
@@ -47,8 +47,8 @@ export function PortalNav() {
               className={cn(
                 "flex shrink-0 items-center gap-1.5 border-b-2 px-3 py-3 text-sm font-medium transition-colors",
                 isActive
-                  ? "border-[--color-action] text-[--color-action]"
-                  : "border-transparent text-[--color-ink-muted] hover:text-[--color-primary]",
+                  ? "border-(--color-action) text-(--color-action)"
+                  : "border-transparent text-(--color-ink-muted) hover:text-(--color-primary)",
               )}
             >
               <item.icon className="size-4" aria-hidden="true" />
@@ -60,7 +60,7 @@ export function PortalNav() {
         <button
           type="button"
           onClick={() => void signOut()}
-          className="ml-auto flex shrink-0 items-center gap-1.5 px-3 py-3 text-sm font-medium text-[--color-ink-subtle] hover:text-[--color-ink]"
+          className="ml-auto flex shrink-0 items-center gap-1.5 px-3 py-3 text-sm font-medium text-(--color-ink-subtle) hover:text-(--color-ink)"
         >
           <LogOut className="size-4" aria-hidden="true" />
           Sign out

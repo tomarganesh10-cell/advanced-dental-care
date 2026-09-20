@@ -122,7 +122,7 @@ export default async function SettingsPage() {
       />
 
       {notReady.length > 0 ? (
-        <div className="mb-5 flex items-start gap-3 rounded-[--radius-card] border border-amber-200 bg-amber-50 p-4">
+        <div className="mb-5 flex items-start gap-3 rounded-(--radius-card) border border-amber-200 bg-amber-50 p-4">
           <AlertTriangle className="mt-0.5 size-4 shrink-0 text-amber-700" aria-hidden="true" />
           <p className="text-sm text-amber-900">
             <strong>
@@ -135,15 +135,15 @@ export default async function SettingsPage() {
       ) : null}
 
       <section className="mb-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           Integrations
         </h2>
-        <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <ul className="divide-y divide-(--color-hairline) overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
           {integrations.map((integration) => (
             <li key={integration.name} className="flex items-start gap-3 px-4 py-3">
               {integration.ready ? (
                 <CheckCircle2
-                  className="mt-0.5 size-4 shrink-0 text-[--color-teal-600]"
+                  className="mt-0.5 size-4 shrink-0 text-(--color-teal-600)"
                   aria-hidden="true"
                 />
               ) : (
@@ -151,7 +151,7 @@ export default async function SettingsPage() {
               )}
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium">{integration.name}</p>
-                <p className="text-xs text-[--color-ink-subtle]">{integration.detail}</p>
+                <p className="text-xs text-(--color-ink-subtle)">{integration.detail}</p>
               </div>
               <Badge tone={integration.ready ? "success" : "warning"}>
                 {integration.ready ? "Live" : "Not live"}
@@ -159,17 +159,17 @@ export default async function SettingsPage() {
             </li>
           ))}
         </ul>
-        <p className="mt-2 text-xs text-[--color-ink-subtle]">
+        <p className="mt-2 text-xs text-(--color-ink-subtle)">
           Credentials are held in the environment and never shown here. Only whether a value is
           present is displayed.
         </p>
       </section>
 
       <section className="mb-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           Clinic details
         </h2>
-        <dl className="grid gap-3 rounded-[--radius-card] border border-[--color-hairline] bg-white p-5 text-sm sm:grid-cols-2">
+        <dl className="grid gap-3 rounded-(--radius-card) border border-(--color-hairline) bg-white p-5 text-sm sm:grid-cols-2">
           <Row label="Practice name" value={identity.legalName} />
           <Row label="Address" value={contact.address.formatted} />
           <Row label="Phone" value={contact.phone.display} />
@@ -184,7 +184,7 @@ export default async function SettingsPage() {
             }
           />
         </dl>
-        <p className="mt-2 text-xs text-[--color-ink-subtle]">
+        <p className="mt-2 text-xs text-(--color-ink-subtle)">
           These come from <code className="font-mono">data/clinic-master-data.ts</code>. Changing
           them is a code change by design, so the address and phone number on invoices, emails and
           the website cannot drift apart.
@@ -192,23 +192,23 @@ export default async function SettingsPage() {
       </section>
 
       <section className="mb-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           Content verification
         </h2>
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-[--radius-card] border border-[--color-hairline] bg-white p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-(--radius-card) border border-(--color-hairline) bg-white p-5">
           <div>
             <p className="text-sm">
               <strong>{fileClaims.length}</strong> public claims,{" "}
               <strong>{Math.max(verifiedInDb, verifiedInFile)}</strong> verified,{" "}
               <strong>{pendingClaims}</strong> withheld from the website.
             </p>
-            <p className="mt-1 text-xs text-[--color-ink-subtle]">
+            <p className="mt-1 text-xs text-(--color-ink-subtle)">
               Claims are hidden until someone records the evidence behind them.
             </p>
           </div>
           <Link
             href="/admin/content-verification"
-            className="inline-flex items-center gap-1.5 rounded-full border border-[--color-navy-200] px-4 py-2 text-sm font-medium text-[--color-action] hover:bg-[--color-navy-50]"
+            className="inline-flex items-center gap-1.5 rounded-full border border-(--color-navy-200) px-4 py-2 text-sm font-medium text-(--color-action) hover:bg-(--color-navy-50)"
           >
             Open
             <ExternalLink className="size-3.5" aria-hidden="true" />
@@ -218,13 +218,13 @@ export default async function SettingsPage() {
 
       {settings.length > 0 ? (
         <section>
-          <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
             Stored settings
           </h2>
-          <div className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+          <div className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
             <table className="w-full text-sm">
               <caption className="sr-only">Application settings</caption>
-              <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+              <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
                 <tr>
                   <th scope="col" className="px-4 py-2.5 text-left font-medium">
                     Key
@@ -237,14 +237,14 @@ export default async function SettingsPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[--color-hairline]">
+              <tbody className="divide-y divide-(--color-hairline)">
                 {settings.map((setting) => (
                   <tr key={setting.key}>
                     <td className="px-4 py-2.5 font-mono text-xs">{setting.key}</td>
-                    <td className="px-4 py-2.5 font-mono text-xs text-[--color-ink-muted]">
+                    <td className="px-4 py-2.5 font-mono text-xs text-(--color-ink-muted)">
                       {JSON.stringify(setting.value)}
                     </td>
-                    <td className="px-4 py-2.5 text-xs text-[--color-ink-subtle]">
+                    <td className="px-4 py-2.5 text-xs text-(--color-ink-subtle)">
                       {formatClinicDateTime(setting.updatedAt)}
                     </td>
                   </tr>
@@ -261,8 +261,8 @@ export default async function SettingsPage() {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-xs text-[--color-ink-subtle]">{label}</dt>
-      <dd className="mt-0.5 text-[--color-ink]">{value}</dd>
+      <dt className="text-xs text-(--color-ink-subtle)">{label}</dt>
+      <dd className="mt-0.5 text-(--color-ink)">{value}</dd>
     </div>
   );
 }

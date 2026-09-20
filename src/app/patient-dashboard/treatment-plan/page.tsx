@@ -39,7 +39,7 @@ export default async function PortalTreatmentPlanPage() {
       <div className="mb-6">
         <h1 className="text-2xl">{plan.title}</h1>
         {plan.summary ? (
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[--color-ink-muted]">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-(--color-ink-muted)">
             {plan.summary}
           </p>
         ) : null}
@@ -47,7 +47,7 @@ export default async function PortalTreatmentPlanPage() {
           <Badge tone={plan.status === "IN_PROGRESS" ? "info" : "neutral"}>
             {plan.status.toLowerCase().replace(/_/g, " ")}
           </Badge>
-          <span className="text-sm text-[--color-ink-subtle]">
+          <span className="text-sm text-(--color-ink-subtle)">
             {completed} of {plan.items.length} steps completed
           </span>
         </div>
@@ -56,7 +56,7 @@ export default async function PortalTreatmentPlanPage() {
       {/* Progress */}
       <div className="mb-6">
         <div
-          className="h-2 overflow-hidden rounded-full bg-[--color-navy-100]"
+          className="h-2 overflow-hidden rounded-full bg-(--color-navy-100)"
           role="progressbar"
           aria-valuenow={progress}
           aria-valuemin={0}
@@ -64,7 +64,7 @@ export default async function PortalTreatmentPlanPage() {
           aria-label="Treatment progress"
         >
           <div
-            className="h-full rounded-full bg-[--color-accent]"
+            className="h-full rounded-full bg-(--color-accent)"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -78,17 +78,17 @@ export default async function PortalTreatmentPlanPage() {
           return (
             <li
               key={item.id}
-              className={`flex gap-4 rounded-[--radius-card] border border-[--color-hairline] bg-white p-5 ${
+              className={`flex gap-4 rounded-(--radius-card) border border-(--color-hairline) bg-white p-5 ${
                 isCancelled ? "opacity-60" : ""
               }`}
             >
               <span
                 className={`mt-0.5 shrink-0 ${
                   item.status === "COMPLETED"
-                    ? "text-[--color-teal-600]"
+                    ? "text-(--color-teal-600)"
                     : item.status === "IN_PROGRESS"
-                      ? "text-[--color-action]"
-                      : "text-[--color-navy-300]"
+                      ? "text-(--color-action)"
+                      : "text-(--color-navy-300)"
                 }`}
                 aria-hidden="true"
               >
@@ -101,19 +101,19 @@ export default async function PortalTreatmentPlanPage() {
                     {index + 1}. {item.description}
                   </p>
                   {item.unitPricePaise > 0 ? (
-                    <span className="shrink-0 text-sm text-[--color-ink-muted] tabular-nums">
+                    <span className="shrink-0 text-sm text-(--color-ink-muted) tabular-nums">
                       {formatPaise(item.unitPricePaise * item.quantity)}
                     </span>
                   ) : null}
                 </div>
 
                 {item.toothNumbers.length > 0 ? (
-                  <p className="mt-1 text-xs text-[--color-ink-subtle]">
+                  <p className="mt-1 text-xs text-(--color-ink-subtle)">
                     Teeth: {item.toothNumbers.join(", ")}
                   </p>
                 ) : null}
 
-                <p className="mt-1.5 text-xs text-[--color-ink-subtle]">
+                <p className="mt-1.5 text-xs text-(--color-ink-subtle)">
                   {item.status.toLowerCase().replace(/_/g, " ")}
                 </p>
               </div>
@@ -123,7 +123,7 @@ export default async function PortalTreatmentPlanPage() {
       </ol>
 
       {plan.estimatedTotalPaise > 0 ? (
-        <div className="mt-5 flex items-center justify-between rounded-[--radius-card] border border-[--color-hairline] bg-white px-5 py-4">
+        <div className="mt-5 flex items-center justify-between rounded-(--radius-card) border border-(--color-hairline) bg-white px-5 py-4">
           <span className="font-medium">Estimated total</span>
           <span className="font-[family-name:--font-display] text-xl font-semibold tabular-nums">
             {formatPaise(plan.estimatedTotalPaise)}
@@ -131,9 +131,9 @@ export default async function PortalTreatmentPlanPage() {
         </div>
       ) : null}
 
-      <div className="mt-6 flex items-start gap-3 rounded-[--radius-card] border border-[--color-hairline] bg-[--color-surface-sunken] p-4">
-        <Info className="mt-0.5 size-4 shrink-0 text-[--color-ink-subtle]" aria-hidden="true" />
-        <div className="text-xs leading-relaxed text-[--color-ink-subtle]">
+      <div className="mt-6 flex items-start gap-3 rounded-(--radius-card) border border-(--color-hairline) bg-(--color-surface-sunken) p-4">
+        <Info className="mt-0.5 size-4 shrink-0 text-(--color-ink-subtle)" aria-hidden="true" />
+        <div className="text-xs leading-relaxed text-(--color-ink-subtle)">
           <p>
             This is an estimate based on what was found at your examination. If something changes
             during treatment — and occasionally it does — we will discuss it with you before going

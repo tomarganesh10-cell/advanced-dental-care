@@ -65,22 +65,22 @@ export default async function DoctorsPage() {
               return (
                 <li
                   key={doctor.slug}
-                  className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white"
+                  className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white"
                 >
-                  <div className="flex aspect-16/10 items-center justify-center bg-gradient-to-br from-[--color-navy-50] to-[--color-sand]">
-                    <UserRound className="size-12 text-[--color-navy-300]" aria-hidden="true" />
+                  <div className="flex aspect-16/10 items-center justify-center bg-gradient-to-br from-(--color-navy-50) to-(--color-sand)">
+                    <UserRound className="size-12 text-(--color-navy-300)" aria-hidden="true" />
                   </div>
 
                   <div className="p-6">
                     <h2 className="text-xl">{doctor.name}</h2>
-                    <p className="mt-1 text-sm font-medium text-[--color-ink-muted]">
+                    <p className="mt-1 text-sm font-medium text-(--color-ink-muted)">
                       {doctor.designation}
                     </p>
 
                     {qualifications?.length ? (
-                      <p className="mt-2.5 flex items-center gap-2 text-sm text-[--color-ink-subtle]">
+                      <p className="mt-2.5 flex items-center gap-2 text-sm text-(--color-ink-subtle)">
                         <GraduationCap
-                          className="size-4 shrink-0 text-[--color-accent]"
+                          className="size-4 shrink-0 text-(--color-accent)"
                           aria-hidden="true"
                         />
                         {qualifications.join(" · ")}
@@ -88,12 +88,12 @@ export default async function DoctorsPage() {
                     ) : null}
 
                     {registration ? (
-                      <p className="mt-1 text-xs text-[--color-ink-subtle]">
+                      <p className="mt-1 text-xs text-(--color-ink-subtle)">
                         {registration.council} reg. {registration.number}
                       </p>
                     ) : null}
 
-                    <p className="mt-3 text-sm leading-relaxed text-[--color-ink-muted]">
+                    <p className="mt-3 text-sm leading-relaxed text-(--color-ink-muted)">
                       {doctor.bio}
                     </p>
 
@@ -101,7 +101,7 @@ export default async function DoctorsPage() {
                       {doctor.specialInterests.map((interest) => (
                         <li
                           key={interest}
-                          className="rounded-full bg-[--color-navy-50] px-2.5 py-1 text-xs text-[--color-navy-800]"
+                          className="rounded-full bg-(--color-navy-50) px-2.5 py-1 text-xs text-(--color-navy-800)"
                         >
                           {interest}
                         </li>
@@ -110,7 +110,7 @@ export default async function DoctorsPage() {
 
                     <Link
                       href={`/doctors/${doctor.slug}`}
-                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[--color-action]"
+                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-(--color-action)"
                     >
                       Full profile
                       <ArrowRight className="size-4" aria-hidden="true" />
@@ -126,33 +126,33 @@ export default async function DoctorsPage() {
               .map((doctor) => (
                 <li
                   key={doctor.id}
-                  className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white"
+                  className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white"
                 >
-                  <div className="flex aspect-16/10 items-center justify-center bg-gradient-to-br from-[--color-navy-50] to-[--color-sand]">
-                    <UserRound className="size-12 text-[--color-navy-300]" aria-hidden="true" />
+                  <div className="flex aspect-16/10 items-center justify-center bg-gradient-to-br from-(--color-navy-50) to-(--color-sand)">
+                    <UserRound className="size-12 text-(--color-navy-300)" aria-hidden="true" />
                   </div>
                   <div className="p-6">
                     <h2 className="text-xl">
                       {doctor.displayName}
                       {doctor.isVisiting ? (
-                        <span className="ml-2 rounded-full bg-[--color-navy-100] px-2 py-0.5 align-middle text-[10px] font-medium tracking-wide text-[--color-navy-700] uppercase">
+                        <span className="ml-2 rounded-full bg-(--color-navy-100) px-2 py-0.5 align-middle text-[10px] font-medium tracking-wide text-(--color-navy-700) uppercase">
                           Visiting
                         </span>
                       ) : null}
                     </h2>
                     {doctor.qualifications.length > 0 ? (
-                      <p className="mt-2 text-sm text-[--color-ink-subtle]">
+                      <p className="mt-2 text-sm text-(--color-ink-subtle)">
                         {doctor.qualifications.join(" · ")}
                       </p>
                     ) : null}
                     {doctor.bio ? (
-                      <p className="mt-3 text-sm leading-relaxed text-[--color-ink-muted]">
+                      <p className="mt-3 text-sm leading-relaxed text-(--color-ink-muted)">
                         {doctor.bio}
                       </p>
                     ) : null}
                     <Link
                       href={`/doctors/${doctor.slug}`}
-                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[--color-action]"
+                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-(--color-action)"
                     >
                       Full profile
                       <ArrowRight className="size-4" aria-hidden="true" />
@@ -169,17 +169,17 @@ export default async function DoctorsPage() {
             named once the clinic supplies their registration details.
           */}
           {!isPublishable(specialistTeam) && dbDoctors.length <= masterDoctors.length ? (
-            <div className="mt-8 flex items-start gap-3 rounded-[--radius-card] border border-[--color-hairline] bg-white p-6">
-              <Info className="mt-0.5 size-5 shrink-0 text-[--color-accent]" aria-hidden="true" />
+            <div className="mt-8 flex items-start gap-3 rounded-(--radius-card) border border-(--color-hairline) bg-white p-6">
+              <Info className="mt-0.5 size-5 shrink-0 text-(--color-accent)" aria-hidden="true" />
               <div>
                 <h2 className="text-base font-semibold">Specialist clinicians</h2>
-                <p className="mt-1.5 text-sm leading-relaxed text-[--color-ink-muted]">
+                <p className="mt-1.5 text-sm leading-relaxed text-(--color-ink-muted)">
                   The practice covers endodontics, orthodontics, oral &amp; maxillofacial surgery
                   and paediatric dentistry. Individual specialists are listed here with their
                   qualifications and council registration once those details have been verified — we
                   would rather list nobody than list someone incorrectly.
                 </p>
-                <p className="mt-2 text-sm text-[--color-ink-subtle]">
+                <p className="mt-2 text-sm text-(--color-ink-subtle)">
                   Ask reception which clinician would see you for a specific treatment.
                 </p>
               </div>

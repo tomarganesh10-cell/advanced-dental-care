@@ -36,15 +36,15 @@ export async function GoogleRating({
                 ? "fill-amber-400 text-amber-400"
                 : tone === "dark"
                   ? "text-white/25"
-                  : "text-[--color-navy-200]",
+                  : "text-(--color-navy-200)",
             )}
           />
         ))}
       </div>
 
-      <p className={cn("text-sm", tone === "dark" ? "text-white" : "text-[--color-ink]")}>
+      <p className={cn("text-sm", tone === "dark" ? "text-white" : "text-(--color-ink)")}>
         <span className="font-semibold">{rounded.toFixed(1)}</span>
-        <span className={tone === "dark" ? "text-white/70" : "text-[--color-ink-subtle]"}>
+        <span className={tone === "dark" ? "text-white/70" : "text-(--color-ink-subtle)"}>
           {" "}
           from {formatCount(rating.reviewCount)} Google reviews
         </span>
@@ -57,7 +57,7 @@ export async function GoogleRating({
           rel="noopener noreferrer"
           className={cn(
             "text-sm font-medium underline underline-offset-4",
-            tone === "dark" ? "text-white" : "text-[--color-action]",
+            tone === "dark" ? "text-white" : "text-(--color-action)",
           )}
         >
           Read all reviews

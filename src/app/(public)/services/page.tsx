@@ -41,14 +41,14 @@ export default function ServicesPage() {
             <div className="container-page">
               <div className="flex items-start gap-4">
                 <span
-                  className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[--color-teal-50] text-[--color-accent]"
+                  className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-(--color-teal-50) text-(--color-accent)"
                   aria-hidden="true"
                 >
                   <Icon name={category.icon} className="size-5" />
                 </span>
                 <div>
                   <h2 className="text-2xl">{category.name}</h2>
-                  <p className="mt-1.5 text-[--color-ink-muted]">{category.description}</p>
+                  <p className="mt-1.5 text-(--color-ink-muted)">{category.description}</p>
                 </div>
               </div>
 

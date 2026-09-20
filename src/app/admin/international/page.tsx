@@ -98,7 +98,7 @@ export default async function InternationalPage() {
 
       {countries.length > 0 ? (
         <div className="mb-5 flex flex-wrap items-center gap-2">
-          <span className="text-xs font-medium tracking-wide text-[--color-ink-subtle] uppercase">
+          <span className="text-xs font-medium tracking-wide text-(--color-ink-subtle) uppercase">
             Top countries
           </span>
           {countries.map((row) => (
@@ -120,7 +120,7 @@ export default async function InternationalPage() {
           {enquiries.map((enquiry) => (
             <li
               key={enquiry.id}
-              className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5"
+              className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-5"
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
@@ -136,12 +136,12 @@ export default async function InternationalPage() {
                     </Badge>
                   </div>
 
-                  <p className="mt-1.5 text-sm text-[--color-ink-muted]">
+                  <p className="mt-1.5 text-sm text-(--color-ink-muted)">
                     Asking about <strong>{enquiry.treatmentInterest}</strong>
                   </p>
 
                   {enquiry.message ? (
-                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[--color-ink-muted]">
+                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-(--color-ink-muted)">
                       {enquiry.message}
                     </p>
                   ) : null}
@@ -149,14 +149,14 @@ export default async function InternationalPage() {
                   <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs">
                     <a
                       href={`mailto:${enquiry.email}`}
-                      className="inline-flex items-center gap-1 text-[--color-action] hover:underline"
+                      className="inline-flex items-center gap-1 text-(--color-action) hover:underline"
                     >
                       <Mail className="size-3" aria-hidden="true" />
                       {enquiry.email}
                     </a>
                     <a
                       href={`tel:${enquiry.phone}`}
-                      className="text-[--color-ink-muted] hover:underline"
+                      className="text-(--color-ink-muted) hover:underline"
                     >
                       {formatPhone(enquiry.phone)}
                     </a>
@@ -179,17 +179,17 @@ export default async function InternationalPage() {
                     screen and the reason the form asks for a timezone.
                   */}
                   {enquiry.timezone ? (
-                    <p className="mt-2 text-xs text-[--color-ink-subtle]">
+                    <p className="mt-2 text-xs text-(--color-ink-subtle)">
                       Their local time now: {formatInViewerTimezone(now, enquiry.timezone)}
                     </p>
                   ) : null}
                 </div>
 
-                <div className="shrink-0 text-right text-xs text-[--color-ink-subtle]">
+                <div className="shrink-0 text-right text-xs text-(--color-ink-subtle)">
                   <p className="font-mono">{enquiry.reference}</p>
                   <p className="mt-0.5">{formatClinicDate(enquiry.createdAt, "d MMM yyyy")}</p>
                   {enquiry.preferredTravelFrom ? (
-                    <p className="mt-1.5 text-[--color-ink-muted]">
+                    <p className="mt-1.5 text-(--color-ink-muted)">
                       Travelling {formatClinicDate(enquiry.preferredTravelFrom, "d MMM")}
                       {enquiry.preferredTravelTo
                         ? ` – ${formatClinicDate(enquiry.preferredTravelTo, "d MMM")}`
@@ -203,9 +203,9 @@ export default async function InternationalPage() {
         </ul>
       )}
 
-      <p className="mt-6 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-6 text-xs leading-relaxed text-(--color-ink-subtle)">
         Every enquiry here also appears in{" "}
-        <Link href="/admin/leads?filter=all" className="text-[--color-action] hover:underline">
+        <Link href="/admin/leads?filter=all" className="text-(--color-action) hover:underline">
           Enquiries
         </Link>{" "}
         so international conversion is measured on the same basis as every other channel.

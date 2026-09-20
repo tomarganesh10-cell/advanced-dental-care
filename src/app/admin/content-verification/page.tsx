@@ -97,7 +97,7 @@ export default async function ContentVerificationPage() {
       </div>
 
       {pending > 0 ? (
-        <div className="mb-6 flex items-start gap-3 rounded-[--radius-card] border border-amber-200 bg-amber-50 p-4">
+        <div className="mb-6 flex items-start gap-3 rounded-(--radius-card) border border-amber-200 bg-amber-50 p-4">
           <AlertTriangle className="mt-0.5 size-4 shrink-0 text-amber-700" aria-hidden="true" />
           <div className="text-sm text-amber-900">
             <p className="font-medium text-amber-950">
@@ -119,10 +119,10 @@ export default async function ContentVerificationPage() {
       <div className="space-y-6">
         {[...groups.entries()].map(([group, groupClaims]) => (
           <section key={group}>
-            <h2 className="mb-2 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+            <h2 className="mb-2 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
               {group.replace(/([A-Z])/g, " $1")}
             </h2>
-            <ul className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+            <ul className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
               {groupClaims.map((claim) => (
                 <ClaimRow
                   key={claim.key}
@@ -135,7 +135,7 @@ export default async function ContentVerificationPage() {
         ))}
       </div>
 
-      <p className="mt-6 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-6 text-xs leading-relaxed text-(--color-ink-subtle)">
         Claims defined in <code className="font-mono">data/clinic-master-data.ts</code>. Verifying
         here stores an override in the database, so no deploy is needed. See{" "}
         <code className="font-mono">docs/CONTENT_AUDIT.md</code> for the full list of conflicts

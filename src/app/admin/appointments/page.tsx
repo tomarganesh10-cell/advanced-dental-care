@@ -112,8 +112,8 @@ export default async function AppointmentsPage({
             className={cn(
               "rounded-full border px-3.5 py-1.5 text-sm font-medium",
               filterKey === item.key
-                ? "border-[--color-action] bg-[--color-action] text-white"
-                : "border-[--color-navy-200] bg-white text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                ? "border-(--color-action) bg-(--color-action) text-white"
+                : "border-(--color-navy-200) bg-white text-(--color-ink-muted) hover:bg-(--color-navy-50)",
             )}
           >
             {item.label}
@@ -130,11 +130,11 @@ export default async function AppointmentsPage({
           defaultValue={search}
           placeholder="Search by name, phone, patient number or reference"
           aria-label="Search appointments"
-          className="h-10 w-full max-w-md rounded-lg border border-[--color-navy-200] bg-white px-3.5 text-sm"
+          className="h-10 w-full max-w-md rounded-lg border border-(--color-navy-200) bg-white px-3.5 text-sm"
         />
         <button
           type="submit"
-          className="h-10 rounded-lg border border-[--color-navy-200] bg-white px-4 text-sm font-medium hover:bg-[--color-navy-50]"
+          className="h-10 rounded-lg border border-(--color-navy-200) bg-white px-4 text-sm font-medium hover:bg-(--color-navy-50)"
         >
           Search
         </button>
@@ -150,10 +150,10 @@ export default async function AppointmentsPage({
           }
         />
       ) : (
-        <div className="overflow-x-auto rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <div className="overflow-x-auto rounded-(--radius-card) border border-(--color-hairline) bg-white">
           <table className="w-full min-w-[56rem] text-sm">
             <caption className="sr-only">Appointments, {filter.label}</caption>
-            <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+            <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
               <tr>
                 <th scope="col" className="px-4 py-2.5 text-left font-medium">
                   When
@@ -175,29 +175,29 @@ export default async function AppointmentsPage({
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[--color-hairline]">
+            <tbody className="divide-y divide-(--color-hairline)">
               {appointments.map((appointment) => (
                 <tr key={appointment.id} className="align-top">
                   <td className="px-4 py-3 whitespace-nowrap">
                     <span className="block font-medium">
                       {formatClinicDate(appointment.startsAt, "d MMM")}
                     </span>
-                    <span className="block text-xs text-[--color-ink-subtle] tabular-nums">
+                    <span className="block text-xs text-(--color-ink-subtle) tabular-nums">
                       {formatClinicTime(appointment.startsAt)}
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <Link
                       href={`/admin/patients/${appointment.patient.id}`}
-                      className="font-medium text-[--color-action] hover:underline"
+                      className="font-medium text-(--color-action) hover:underline"
                     >
                       {appointment.patient.fullName}
                     </Link>
-                    <span className="block text-xs text-[--color-ink-subtle]">
+                    <span className="block text-xs text-(--color-ink-subtle)">
                       {formatPhone(appointment.patient.phone)} · {appointment.reference}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-[--color-ink-muted]">
+                  <td className="px-4 py-3 text-(--color-ink-muted)">
                     {appointment.serviceName ?? "—"}
                     {appointment.isNewPatient ? (
                       <Badge tone="info" className="ml-1.5">
@@ -205,7 +205,7 @@ export default async function AppointmentsPage({
                       </Badge>
                     ) : null}
                   </td>
-                  <td className="px-4 py-3 text-[--color-ink-muted]">
+                  <td className="px-4 py-3 text-(--color-ink-muted)">
                     {appointment.doctor?.displayName ?? "Unassigned"}
                   </td>
                   <td className="px-4 py-3">
@@ -213,7 +213,7 @@ export default async function AppointmentsPage({
                       {humanStatus(appointment.status)}
                     </Badge>
                     {appointment.cancellationReason ? (
-                      <span className="mt-1 block max-w-[12rem] text-xs text-[--color-ink-subtle]">
+                      <span className="mt-1 block max-w-[12rem] text-xs text-(--color-ink-subtle)">
                         {appointment.cancellationReason}
                       </span>
                     ) : null}
@@ -233,14 +233,14 @@ export default async function AppointmentsPage({
 
       {pageCount > 1 ? (
         <nav aria-label="Pagination" className="mt-4 flex items-center justify-between text-sm">
-          <p className="text-[--color-ink-subtle]">
+          <p className="text-(--color-ink-subtle)">
             Page {page} of {pageCount}
           </p>
           <div className="flex gap-2">
             {page > 1 ? (
               <Link
                 href={`/admin/appointments?filter=${filterKey}&page=${page - 1}${search ? `&q=${encodeURIComponent(search)}` : ""}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Previous
               </Link>
@@ -248,7 +248,7 @@ export default async function AppointmentsPage({
             {page < pageCount ? (
               <Link
                 href={`/admin/appointments?filter=${filterKey}&page=${page + 1}${search ? `&q=${encodeURIComponent(search)}` : ""}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Next
               </Link>

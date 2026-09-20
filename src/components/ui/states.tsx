@@ -29,10 +29,10 @@ function StateShell({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center rounded-[--radius-card] border border-dashed px-6 py-12 text-center",
+        "flex flex-col items-center justify-center rounded-(--radius-card) border border-dashed px-6 py-12 text-center",
         tone === "danger"
           ? "border-red-200 bg-red-50/50"
-          : "border-[--color-navy-200] bg-[--color-surface-muted]",
+          : "border-(--color-navy-200) bg-(--color-surface-muted)",
         className,
       )}
     >
@@ -41,15 +41,15 @@ function StateShell({
           "mb-3 flex size-11 items-center justify-center rounded-full",
           tone === "danger"
             ? "bg-red-100 text-red-700"
-            : "bg-[--color-navy-100] text-[--color-navy-700]",
+            : "bg-(--color-navy-100) text-(--color-navy-700)",
         )}
         aria-hidden="true"
       >
         {icon}
       </div>
-      <p className="font-semibold text-[--color-primary]">{title}</p>
+      <p className="font-semibold text-(--color-primary)">{title}</p>
       {description ? (
-        <p className="mt-1 max-w-sm text-sm text-[--color-ink-subtle]">{description}</p>
+        <p className="mt-1 max-w-sm text-sm text-(--color-ink-subtle)">{description}</p>
       ) : null}
       {action ? <div className="mt-4">{action}</div> : null}
     </div>
@@ -91,7 +91,7 @@ export function LoadingState({ label = "Loading…" }: { label?: string }) {
     <div
       role="status"
       aria-live="polite"
-      className="flex flex-col items-center justify-center gap-3 py-12 text-sm text-[--color-ink-subtle]"
+      className="flex flex-col items-center justify-center gap-3 py-12 text-sm text-(--color-ink-subtle)"
     >
       <Loader2 className="size-5 animate-spin" aria-hidden="true" />
       {label}
@@ -103,7 +103,7 @@ export function LoadingState({ label = "Loading…" }: { label?: string }) {
 export function Skeleton({ className }: { className?: string }) {
   return (
     <div
-      className={cn("animate-pulse rounded-md bg-[--color-navy-100]", className)}
+      className={cn("animate-pulse rounded-md bg-(--color-navy-100)", className)}
       aria-hidden="true"
     />
   );

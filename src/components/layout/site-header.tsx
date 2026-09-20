@@ -49,9 +49,9 @@ export function SiteHeader() {
   }, [mobileOpen]);
 
   return (
-    <header className="no-print sticky top-0 z-40 border-b border-[--color-hairline] bg-white/95 backdrop-blur-sm">
+    <header className="no-print sticky top-0 z-40 border-b border-(--color-hairline) bg-white/95 backdrop-blur-sm">
       {/* Utility strip — phone number visible without scrolling on desktop. */}
-      <div className="hidden border-b border-[--color-hairline] bg-[--color-navy-900] text-white lg:block">
+      <div className="hidden border-b border-(--color-hairline) bg-(--color-navy-900) text-white lg:block">
         <div className="container-page flex h-9 items-center justify-between text-xs">
           <p>{contact.address.formatted}</p>
           <div className="flex items-center gap-5">
@@ -75,12 +75,12 @@ export function SiteHeader() {
           className="flex items-center gap-2.5"
           aria-label={`${identity.displayName} — home`}
         >
-          <ToothMark className="size-8 shrink-0 text-[--color-action]" />
+          <ToothMark className="size-8 shrink-0 text-(--color-action)" />
           <span className="flex flex-col leading-none">
-            <span className="font-[family-name:--font-display] text-[15px] font-semibold tracking-tight text-[--color-primary] sm:text-base">
+            <span className="font-[family-name:--font-display] text-[15px] font-semibold tracking-tight text-(--color-primary) sm:text-base">
               Advanced Dental
             </span>
-            <span className="mt-0.5 text-[10px] font-medium tracking-[0.14em] text-[--color-ink-subtle] uppercase">
+            <span className="mt-0.5 text-[10px] font-medium tracking-[0.14em] text-(--color-ink-subtle) uppercase">
               Care Centre
             </span>
           </span>
@@ -102,8 +102,8 @@ export function SiteHeader() {
                   className={cn(
                     "flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                     pathname.startsWith(item.href)
-                      ? "text-[--color-action]"
-                      : "text-[--color-ink-muted] hover:text-[--color-primary]",
+                      ? "text-(--color-action)"
+                      : "text-(--color-ink-muted) hover:text-(--color-primary)",
                   )}
                 >
                   {item.label}
@@ -112,10 +112,10 @@ export function SiteHeader() {
 
                 {treatmentsOpen ? (
                   <div className="absolute top-full left-1/2 w-[46rem] -translate-x-1/2 pt-2">
-                    <div className="grid grid-cols-3 gap-x-6 gap-y-5 rounded-[--radius-card] border border-[--color-hairline] bg-white p-6 shadow-[--shadow-lifted]">
+                    <div className="grid grid-cols-3 gap-x-6 gap-y-5 rounded-(--radius-card) border border-(--color-hairline) bg-white p-6 shadow-(--shadow-lifted)">
                       {SERVICE_CATEGORIES.map((category) => (
                         <div key={category.slug}>
-                          <p className="mb-2 text-xs font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+                          <p className="mb-2 text-xs font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
                             {category.name}
                           </p>
                           <ul className="space-y-1">
@@ -123,7 +123,7 @@ export function SiteHeader() {
                               <li key={service.slug}>
                                 <Link
                                   href={`/services/${service.slug}`}
-                                  className="block rounded px-1.5 py-1 text-sm text-[--color-ink-muted] hover:bg-[--color-navy-50] hover:text-[--color-primary]"
+                                  className="block rounded px-1.5 py-1 text-sm text-(--color-ink-muted) hover:bg-(--color-navy-50) hover:text-(--color-primary)"
                                 >
                                   {service.name}
                                 </Link>
@@ -143,8 +143,8 @@ export function SiteHeader() {
                 className={cn(
                   "rounded-md px-3 py-2 text-sm font-medium transition-colors",
                   pathname === item.href
-                    ? "text-[--color-action]"
-                    : "text-[--color-ink-muted] hover:text-[--color-primary]",
+                    ? "text-(--color-action)"
+                    : "text-(--color-ink-muted) hover:text-(--color-primary)",
                 )}
               >
                 {item.label}
@@ -163,7 +163,7 @@ export function SiteHeader() {
           <button
             type="button"
             onClick={() => setMobileOpen((open) => !open)}
-            className="flex size-10 items-center justify-center rounded-lg border border-[--color-navy-200] text-[--color-primary] xl:hidden"
+            className="flex size-10 items-center justify-center rounded-lg border border-(--color-navy-200) text-(--color-primary) xl:hidden"
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -176,7 +176,7 @@ export function SiteHeader() {
       {mobileOpen ? (
         <div
           id="mobile-menu"
-          className="fixed inset-x-0 top-16 bottom-0 z-50 overflow-y-auto border-t border-[--color-hairline] bg-white xl:hidden"
+          className="fixed inset-x-0 top-16 bottom-0 z-50 overflow-y-auto border-t border-(--color-hairline) bg-white xl:hidden"
         >
           <nav aria-label="Mobile" className="container-page py-5">
             <ul className="space-y-0.5">
@@ -184,7 +184,7 @@ export function SiteHeader() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="block rounded-lg px-3 py-3 text-[15px] font-medium text-[--color-ink] hover:bg-[--color-navy-50]"
+                    className="block rounded-lg px-3 py-3 text-[15px] font-medium text-(--color-ink) hover:bg-(--color-navy-50)"
                   >
                     {item.label}
                   </Link>
@@ -192,7 +192,7 @@ export function SiteHeader() {
               ))}
             </ul>
 
-            <div className="mt-5 space-y-2 border-t border-[--color-hairline] pt-5">
+            <div className="mt-5 space-y-2 border-t border-(--color-hairline) pt-5">
               <Button asChild size="lg" full>
                 <Link href="/book-appointment">Book an appointment</Link>
               </Button>
@@ -201,10 +201,10 @@ export function SiteHeader() {
               </Button>
             </div>
 
-            <div className="mt-5 space-y-1 border-t border-[--color-hairline] pt-5 text-sm text-[--color-ink-subtle]">
-              <p className="font-medium text-[--color-ink]">{identity.displayName}</p>
+            <div className="mt-5 space-y-1 border-t border-(--color-hairline) pt-5 text-sm text-(--color-ink-subtle)">
+              <p className="font-medium text-(--color-ink)">{identity.displayName}</p>
               <p>{contact.address.formatted}</p>
-              <a href={`tel:${contact.phone.e164}`} className="block text-[--color-action]">
+              <a href={`tel:${contact.phone.e164}`} className="block text-(--color-action)">
                 {contact.phone.display}
               </a>
             </div>

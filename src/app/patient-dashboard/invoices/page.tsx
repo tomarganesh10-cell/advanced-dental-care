@@ -33,7 +33,7 @@ export default async function PortalInvoicesPage() {
     <>
       <div className="mb-6">
         <h1 className="text-2xl">Invoices</h1>
-        <p className="mt-1 text-sm text-[--color-ink-subtle]">
+        <p className="mt-1 text-sm text-(--color-ink-subtle)">
           {outstanding > 0
             ? `${formatPaise(outstanding)} outstanding across ${invoices.filter((i) => i.status !== "PAID").length} invoice(s).`
             : "Everything is settled."}
@@ -50,15 +50,15 @@ export default async function PortalInvoicesPage() {
           {invoices.map((invoice) => (
             <li
               key={invoice.id}
-              className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white"
+              className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white"
             >
-              <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[--color-hairline] px-5 py-4">
+              <div className="flex flex-wrap items-start justify-between gap-4 border-b border-(--color-hairline) px-5 py-4">
                 <div>
                   <p className="flex items-center gap-2 font-semibold">
-                    <Receipt className="size-4 text-[--color-ink-subtle]" aria-hidden="true" />
+                    <Receipt className="size-4 text-(--color-ink-subtle)" aria-hidden="true" />
                     {invoice.number}
                   </p>
-                  <p className="mt-0.5 text-xs text-[--color-ink-subtle]">
+                  <p className="mt-0.5 text-xs text-(--color-ink-subtle)">
                     {invoice.issuedAt
                       ? `Issued ${formatClinicDate(invoice.issuedAt, "d MMM yyyy")}`
                       : "Not yet issued"}
@@ -78,7 +78,7 @@ export default async function PortalInvoicesPage() {
 
               <table className="w-full text-sm">
                 <caption className="sr-only">Items on invoice {invoice.number}</caption>
-                <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+                <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
                   <tr>
                     <th scope="col" className="px-5 py-2 text-left font-medium">
                       Treatment
@@ -91,7 +91,7 @@ export default async function PortalInvoicesPage() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[--color-hairline]">
+                <tbody className="divide-y divide-(--color-hairline)">
                   {invoice.items.map((item) => (
                     <tr key={item.id}>
                       <td className="px-5 py-2.5">{item.description}</td>
@@ -104,7 +104,7 @@ export default async function PortalInvoicesPage() {
                 </tbody>
               </table>
 
-              <div className="space-y-1 border-t border-[--color-hairline] px-5 py-3 text-sm">
+              <div className="space-y-1 border-t border-(--color-hairline) px-5 py-3 text-sm">
                 <Line label="Subtotal" value={formatPaise(invoice.subtotalPaise)} />
                 {invoice.discountPaise > 0 ? (
                   <Line label="Discount" value={`− ${formatPaise(invoice.discountPaise)}`} />
@@ -122,7 +122,7 @@ export default async function PortalInvoicesPage() {
               </div>
 
               {invoice.balancePaise > 0 && invoice.status !== "CANCELLED" ? (
-                <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[--color-hairline] bg-[--color-surface-sunken] px-5 py-3.5">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-t border-(--color-hairline) bg-(--color-surface-sunken) px-5 py-3.5">
                   {features.payments ? (
                     <PayInvoiceButton
                       invoiceId={invoice.id}
@@ -132,12 +132,12 @@ export default async function PortalInvoicesPage() {
                       patientPhone={principal.phone}
                     />
                   ) : (
-                    <p className="text-sm text-[--color-ink-muted]">
+                    <p className="text-sm text-(--color-ink-muted)">
                       Online payment is not enabled. Please pay at the clinic or call{" "}
                       {contact.phone.display}.
                     </p>
                   )}
-                  <p className="text-xs text-[--color-ink-subtle]">
+                  <p className="text-xs text-(--color-ink-subtle)">
                     You can also pay at the clinic by cash, card or UPI.
                   </p>
                 </div>
@@ -153,7 +153,7 @@ export default async function PortalInvoicesPage() {
 function Line({ label, value, emphasise }: { label: string; value: string; emphasise?: boolean }) {
   return (
     <div className="flex justify-between gap-4">
-      <span className={emphasise ? "font-medium" : "text-[--color-ink-subtle]"}>{label}</span>
+      <span className={emphasise ? "font-medium" : "text-(--color-ink-subtle)"}>{label}</span>
       <span className={`tabular-nums ${emphasise ? "font-semibold" : ""}`}>{value}</span>
     </div>
   );

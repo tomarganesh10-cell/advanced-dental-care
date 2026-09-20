@@ -150,7 +150,7 @@ export function AppointmentActions({
             event.preventDefault();
             submit(reasonFor, reason);
           }}
-          className="flex flex-wrap gap-2 rounded-lg border border-[--color-hairline] bg-[--color-surface-sunken] p-3"
+          className="flex flex-wrap gap-2 rounded-lg border border-(--color-hairline) bg-(--color-surface-sunken) p-3"
         >
           <label htmlFor={`reason-${appointmentId}`} className="w-full text-xs font-medium">
             Why is this being cancelled?
@@ -163,7 +163,7 @@ export function AppointmentActions({
             maxLength={500}
             autoFocus
             placeholder="Patient unwell, clinician unavailable, patient rescheduled…"
-            className="h-9 min-w-0 flex-1 rounded-lg border border-[--color-navy-200] bg-white px-3 text-sm"
+            className="h-9 min-w-0 flex-1 rounded-lg border border-(--color-navy-200) bg-white px-3 text-sm"
           />
           <Button type="submit" size="sm" variant="danger" disabled={pending || !reason.trim()}>
             Confirm cancellation
@@ -185,7 +185,7 @@ export function AppointmentActions({
       {message ? (
         <p
           role="status"
-          className={`text-xs ${message.ok ? "text-[--color-teal-700]" : "text-[--color-danger]"}`}
+          className={`text-xs ${message.ok ? "text-(--color-teal-700)" : "text-(--color-danger)"}`}
         >
           {message.text}
         </p>

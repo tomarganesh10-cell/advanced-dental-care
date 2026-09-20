@@ -12,9 +12,9 @@ export function BookingCta({
 }) {
   return (
     <div className="container-page">
-      <div className="rounded-[--radius-card] bg-gradient-to-br from-[--color-navy-800] to-[--color-navy-950] px-7 py-12 text-center md:px-12 md:py-16">
+      <div className="rounded-(--radius-card) bg-gradient-to-br from-(--color-navy-800) to-(--color-navy-950) px-7 py-12 text-center md:px-12 md:py-16">
         <h2 className="text-3xl text-white md:text-4xl">{title}</h2>
-        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-[--color-navy-200]">
+        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-(--color-navy-200)">
           {description}
         </p>
 

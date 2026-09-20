@@ -71,7 +71,7 @@ export default async function LandingPage({
 
       <div className="container-page pb-12">
         <div className="max-w-3xl">
-          <p className="inline-flex items-center gap-1.5 rounded-full bg-[--color-teal-50] px-3 py-1 text-xs font-semibold text-[--color-teal-800]">
+          <p className="inline-flex items-center gap-1.5 rounded-full bg-(--color-teal-50) px-3 py-1 text-xs font-semibold text-(--color-teal-800)">
             <MapPin className="size-3.5" aria-hidden="true" />
             Sector 18-A, Chandigarh
           </p>
@@ -80,7 +80,7 @@ export default async function LandingPage({
             {service.name} in Chandigarh
           </h1>
 
-          <p className="mt-4 text-lg leading-relaxed text-[--color-ink-muted]">{service.summary}</p>
+          <p className="mt-4 text-lg leading-relaxed text-(--color-ink-muted)">{service.summary}</p>
 
           <GoogleRating className="mt-5" showLink />
 
@@ -111,7 +111,7 @@ export default async function LandingPage({
             <p>
               <Link
                 href={`/services/${service.slug}`}
-                className="font-semibold text-[--color-action] underline underline-offset-4"
+                className="font-semibold text-(--color-action) underline underline-offset-4"
               >
                 Read the full {service.name.toLowerCase()} treatment guide →
               </Link>
@@ -119,16 +119,16 @@ export default async function LandingPage({
           </div>
 
           <aside className="space-y-5">
-            <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5">
+            <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-5">
               <h2 className="text-sm font-semibold">Who this suits</h2>
               <ul className="mt-3 space-y-2">
                 {service.indications.map((indication) => (
                   <li
                     key={indication}
-                    className="flex items-start gap-2 text-sm text-[--color-ink-muted]"
+                    className="flex items-start gap-2 text-sm text-(--color-ink-muted)"
                   >
                     <CheckCircle2
-                      className="mt-0.5 size-4 shrink-0 text-[--color-accent]"
+                      className="mt-0.5 size-4 shrink-0 text-(--color-accent)"
                       aria-hidden="true"
                     />
                     {indication}
@@ -137,9 +137,9 @@ export default async function LandingPage({
               </ul>
             </div>
 
-            <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5">
+            <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-5">
               <h2 className="text-sm font-semibold">Finding the clinic</h2>
-              <p className="mt-2 text-sm leading-relaxed text-[--color-ink-muted]">
+              <p className="mt-2 text-sm leading-relaxed text-(--color-ink-muted)">
                 {contact.address.formatted}. Sector 18-A is in central Chandigarh, a short drive
                 from Sector 17 and the ISBT.
               </p>
@@ -147,7 +147,7 @@ export default async function LandingPage({
                 href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(contact.address.formatted)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-block text-sm font-semibold text-[--color-action] underline underline-offset-4"
+                className="mt-3 inline-block text-sm font-semibold text-(--color-action) underline underline-offset-4"
               >
                 Get directions
               </a>
@@ -176,7 +176,7 @@ export default async function LandingPage({
           title={`Book a ${service.name.toLowerCase()} consultation`}
           description="Choose a time online, or call the clinic and reception will find one with you."
         />
-        <p className="container-page mt-8 max-w-3xl text-center text-xs leading-relaxed text-[--color-ink-subtle]">
+        <p className="container-page mt-8 max-w-3xl text-center text-xs leading-relaxed text-(--color-ink-subtle)">
           {disclaimers.medical}
         </p>
       </Section>

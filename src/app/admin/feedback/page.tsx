@@ -98,8 +98,8 @@ export default async function FeedbackPage({
             className={cn(
               "rounded-full border px-3.5 py-1.5 text-sm font-medium",
               filterKey === item.key
-                ? "border-[--color-action] bg-[--color-action] text-white"
-                : "border-[--color-navy-200] bg-white text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                ? "border-(--color-action) bg-(--color-action) text-white"
+                : "border-(--color-navy-200) bg-white text-(--color-ink-muted) hover:bg-(--color-navy-50)",
             )}
           >
             {item.label}
@@ -118,10 +118,10 @@ export default async function FeedbackPage({
             <li
               key={entry.id}
               className={cn(
-                "rounded-[--radius-card] border bg-white p-5",
+                "rounded-(--radius-card) border bg-white p-5",
                 entry.needsFollowUp && !entry.handledAt
                   ? "border-red-200 bg-red-50/40"
-                  : "border-[--color-hairline]",
+                  : "border-(--color-hairline)",
               )}
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
@@ -134,7 +134,7 @@ export default async function FeedbackPage({
                           className={
                             index < entry.overallRating
                               ? "size-4 fill-amber-400 text-amber-400"
-                              : "size-4 text-[--color-navy-200]"
+                              : "size-4 text-(--color-navy-200)"
                           }
                           aria-hidden="true"
                         />
@@ -143,22 +143,22 @@ export default async function FeedbackPage({
                     {entry.patient ? (
                       <Link
                         href={`/admin/patients/${entry.patient.id}`}
-                        className="text-sm font-medium text-[--color-action] hover:underline"
+                        className="text-sm font-medium text-(--color-action) hover:underline"
                       >
                         {entry.patient.fullName}
                       </Link>
                     ) : (
-                      <span className="text-sm text-[--color-ink-subtle]">Anonymous</span>
+                      <span className="text-sm text-(--color-ink-subtle)">Anonymous</span>
                     )}
                   </div>
 
                   {entry.comment ? (
-                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[--color-ink-muted]">
+                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-(--color-ink-muted)">
                       &ldquo;{entry.comment}&rdquo;
                     </p>
                   ) : null}
 
-                  <dl className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-[--color-ink-subtle]">
+                  <dl className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-(--color-ink-subtle)">
                     {[
                       { label: "Doctor", value: entry.doctorRating },
                       { label: "Staff", value: entry.staffRating },
@@ -176,7 +176,7 @@ export default async function FeedbackPage({
                 </div>
 
                 <div className="shrink-0 text-right">
-                  <p className="text-xs text-[--color-ink-subtle]">
+                  <p className="text-xs text-(--color-ink-subtle)">
                     {formatClinicDate(entry.createdAt, "d MMM yyyy")}
                   </p>
                   {entry.needsFollowUp ? (
@@ -188,7 +188,7 @@ export default async function FeedbackPage({
               </div>
 
               {entry.handledAt && entry.resolutionNote ? (
-                <p className="mt-3 border-t border-[--color-hairline] pt-2.5 text-xs text-[--color-ink-subtle]">
+                <p className="mt-3 border-t border-(--color-hairline) pt-2.5 text-xs text-(--color-ink-subtle)">
                   Resolved by {entry.handledBy?.fullName ?? "staff"}: {entry.resolutionNote}
                 </p>
               ) : null}
@@ -197,7 +197,7 @@ export default async function FeedbackPage({
         </ul>
       )}
 
-      <p className="mt-6 rounded-[--radius-card] border border-[--color-hairline] bg-[--color-surface-sunken] p-4 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-6 rounded-(--radius-card) border border-(--color-hairline) bg-(--color-surface-sunken) p-4 text-xs leading-relaxed text-(--color-ink-subtle)">
         Every patient who completes this form is shown the Google review link, whatever their score.
         Filtering who gets asked for a public review is review gating and breaches Google&apos;s
         policies. A low score additionally raises the internal alert above — that is about fixing

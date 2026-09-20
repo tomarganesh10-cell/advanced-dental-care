@@ -34,7 +34,7 @@ export default async function PatientDashboardPage() {
     <>
       <div className="mb-6">
         <h1 className="text-2xl md:text-3xl">Hello, {patient.fullName.split(" ")[0]}</h1>
-        <p className="mt-1 text-sm text-[--color-ink-subtle]">
+        <p className="mt-1 text-sm text-(--color-ink-subtle)">
           Patient number {patient.patientNumber}
         </p>
       </div>
@@ -42,19 +42,19 @@ export default async function PatientDashboardPage() {
       {/* Next appointment — the single thing most people sign in to check. */}
       <section className="mb-6" aria-label="Next appointment">
         {nextAppointment ? (
-          <div className="rounded-[--radius-card] border border-[--color-medical-200] bg-[--color-medical-50] p-5 md:p-6">
+          <div className="rounded-(--radius-card) border border-(--color-medical-200) bg-(--color-medical-50) p-5 md:p-6">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold tracking-wide text-[--color-action] uppercase">
+                <p className="text-xs font-semibold tracking-wide text-(--color-action) uppercase">
                   Your next appointment
                 </p>
-                <p className="mt-2 font-[family-name:--font-display] text-2xl font-semibold text-[--color-primary]">
+                <p className="mt-2 font-[family-name:--font-display] text-2xl font-semibold text-(--color-primary)">
                   {formatClinicDate(nextAppointment.startsAt, "EEEE d MMMM")}
                 </p>
-                <p className="mt-0.5 text-lg text-[--color-ink]">
+                <p className="mt-0.5 text-lg text-(--color-ink)">
                   {formatClinicTime(nextAppointment.startsAt)}
                 </p>
-                <p className="mt-2 text-sm text-[--color-ink-muted]">
+                <p className="mt-2 text-sm text-(--color-ink-muted)">
                   {nextAppointment.serviceName ?? "Consultation"}
                   {nextAppointment.doctor ? ` with ${nextAppointment.doctor.displayName}` : ""}
                 </p>
@@ -62,7 +62,7 @@ export default async function PatientDashboardPage() {
                   <Badge tone={STATUS_TONES[nextAppointment.status]}>
                     {humanStatus(nextAppointment.status)}
                   </Badge>
-                  <span className="text-xs text-[--color-ink-subtle]">
+                  <span className="text-xs text-(--color-ink-subtle)">
                     Reference {nextAppointment.reference}
                   </span>
                 </div>
@@ -78,7 +78,7 @@ export default async function PatientDashboardPage() {
               </div>
             </div>
 
-            <p className="mt-4 border-t border-[--color-medical-200] pt-3 text-xs leading-relaxed text-[--color-ink-muted]">
+            <p className="mt-4 border-t border-(--color-medical-200) pt-3 text-xs leading-relaxed text-(--color-ink-muted)">
               Please arrive about 10 minutes early. {contact.address.formatted}
             </p>
           </div>
@@ -138,10 +138,10 @@ export default async function PatientDashboardPage() {
       {upcoming.length > 1 ? (
         <section aria-label="Other upcoming appointments">
           <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-            <CalendarDays className="size-4 text-[--color-ink-subtle]" aria-hidden="true" />
+            <CalendarDays className="size-4 text-(--color-ink-subtle)" aria-hidden="true" />
             Also coming up
           </h2>
-          <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+          <ul className="divide-y divide-(--color-hairline) overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
             {upcoming.slice(1).map((appointment) => (
               <li
                 key={appointment.id}
@@ -151,7 +151,7 @@ export default async function PatientDashboardPage() {
                   {formatClinicDate(appointment.startsAt, "d MMM")} ·{" "}
                   {formatClinicTime(appointment.startsAt)}
                 </span>
-                <span className="text-[--color-ink-muted]">
+                <span className="text-(--color-ink-muted)">
                   {appointment.serviceName ?? "Consultation"}
                 </span>
                 <Badge tone={STATUS_TONES[appointment.status]} className="ml-auto">
@@ -163,10 +163,10 @@ export default async function PatientDashboardPage() {
         </section>
       ) : null}
 
-      <p className="mt-8 rounded-[--radius-card] border border-[--color-hairline] bg-white p-4 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-8 rounded-(--radius-card) border border-(--color-hairline) bg-white p-4 text-xs leading-relaxed text-(--color-ink-subtle)">
         This portal shows your appointments, treatment plan and records. It is not a way to reach
         the clinic urgently — if you are in pain or something is wrong, please call{" "}
-        <a href={`tel:${contact.phone.e164}`} className="font-medium text-[--color-action]">
+        <a href={`tel:${contact.phone.e164}`} className="font-medium text-(--color-action)">
           {contact.phone.display}
         </a>
         .
@@ -193,21 +193,21 @@ function PortalCard({
   return (
     <Link
       href={href}
-      className={`block rounded-[--radius-card] border p-5 transition-shadow hover:shadow-[--shadow-card] ${
-        tone === "warning" ? "border-amber-200 bg-amber-50" : "border-[--color-hairline] bg-white"
+      className={`block rounded-(--radius-card) border p-5 transition-shadow hover:shadow-(--shadow-card) ${
+        tone === "warning" ? "border-amber-200 bg-amber-50" : "border-(--color-hairline) bg-white"
       }`}
     >
       <span
-        className="mb-3 flex size-10 items-center justify-center rounded-xl bg-[--color-navy-50] text-[--color-action]"
+        className="mb-3 flex size-10 items-center justify-center rounded-xl bg-(--color-navy-50) text-(--color-action)"
         aria-hidden="true"
       >
         {icon}
       </span>
-      <p className="text-xs font-medium tracking-wide text-[--color-ink-subtle] uppercase">
+      <p className="text-xs font-medium tracking-wide text-(--color-ink-subtle) uppercase">
         {title}
       </p>
-      <p className="mt-1 font-semibold text-[--color-primary]">{value}</p>
-      <p className="mt-1 text-xs leading-relaxed text-[--color-ink-subtle]">{hint}</p>
+      <p className="mt-1 font-semibold text-(--color-primary)">{value}</p>
+      <p className="mt-1 text-xs leading-relaxed text-(--color-ink-subtle)">{hint}</p>
     </Link>
   );
 }

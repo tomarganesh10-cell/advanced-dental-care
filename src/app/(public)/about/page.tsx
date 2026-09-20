@@ -80,13 +80,13 @@ export default function AboutPage() {
             ].map((step, index) => (
               <li
                 key={step.title}
-                className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-6"
+                className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-6"
               >
-                <span className="flex size-8 items-center justify-center rounded-full bg-[--color-action] text-xs font-semibold text-white">
+                <span className="flex size-8 items-center justify-center rounded-full bg-(--color-action) text-xs font-semibold text-white">
                   {index + 1}
                 </span>
                 <h3 className="mt-3.5 text-base font-semibold">{step.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-[--color-ink-muted]">
+                <p className="mt-1.5 text-sm leading-relaxed text-(--color-ink-muted)">
                   {step.body}
                 </p>
               </li>

@@ -53,8 +53,8 @@ export default async function SmileGalleryPage({
                 className={cn(
                   "inline-block rounded-full border px-4 py-2 text-sm font-medium transition-colors",
                   category === item.slug
-                    ? "border-[--color-action] bg-[--color-action] text-white"
-                    : "border-[--color-navy-200] bg-white text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                    ? "border-(--color-action) bg-(--color-action) text-white"
+                    : "border-(--color-navy-200) bg-white text-(--color-ink-muted) hover:bg-(--color-navy-50)",
                 )}
               >
                 {item.label}
@@ -80,14 +80,14 @@ export default async function SmileGalleryPage({
                 return (
                   <li
                     key={item.id}
-                    className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white"
+                    className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white"
                   >
-                    <div className="grid grid-cols-2 gap-px bg-[--color-hairline]">
+                    <div className="grid grid-cols-2 gap-px bg-(--color-hairline)">
                       {[
                         { label: "Before", media: before },
                         { label: "After", media: after },
                       ].map((panel) => (
-                        <div key={panel.label} className="relative aspect-square bg-[--color-sand]">
+                        <div key={panel.label} className="relative aspect-square bg-(--color-sand)">
                           {panel.media ? (
                             <Image
                               src={panel.media.imageUrl}
@@ -99,7 +99,7 @@ export default async function SmileGalleryPage({
                           ) : (
                             <div className="flex h-full items-center justify-center">
                               <ImageIcon
-                                className="size-6 text-[--color-navy-300]"
+                                className="size-6 text-(--color-navy-300)"
                                 aria-hidden="true"
                               />
                             </div>
@@ -114,17 +114,17 @@ export default async function SmileGalleryPage({
                     <div className="p-5">
                       <h2 className="text-base font-semibold">{item.title}</h2>
                       {item.concern ? (
-                        <p className="mt-1 text-sm text-[--color-ink-subtle]">
+                        <p className="mt-1 text-sm text-(--color-ink-subtle)">
                           Concern: {item.concern}
                         </p>
                       ) : null}
                       {item.treatmentDescription ? (
-                        <p className="mt-2 text-sm leading-relaxed text-[--color-ink-muted]">
+                        <p className="mt-2 text-sm leading-relaxed text-(--color-ink-muted)">
                           {item.treatmentDescription}
                         </p>
                       ) : null}
                       {item.doctorName ? (
-                        <p className="mt-3 text-xs text-[--color-ink-subtle]">
+                        <p className="mt-3 text-xs text-(--color-ink-subtle)">
                           Treated by {item.doctorName}
                         </p>
                       ) : null}
@@ -135,13 +135,13 @@ export default async function SmileGalleryPage({
             </ul>
           )}
 
-          <div className="mt-10 flex items-start gap-3 rounded-[--radius-card] border border-[--color-hairline] bg-[--color-surface-sunken] p-6">
+          <div className="mt-10 flex items-start gap-3 rounded-(--radius-card) border border-(--color-hairline) bg-(--color-surface-sunken) p-6">
             <ShieldCheck
-              className="mt-0.5 size-5 shrink-0 text-[--color-accent]"
+              className="mt-0.5 size-5 shrink-0 text-(--color-accent)"
               aria-hidden="true"
             />
-            <div className="text-sm leading-relaxed text-[--color-ink-muted]">
-              <p className="font-medium text-[--color-ink]">About these images</p>
+            <div className="text-sm leading-relaxed text-(--color-ink-muted)">
+              <p className="font-medium text-(--color-ink)">About these images</p>
               <p className="mt-1">{disclaimers.results}</p>
               <p className="mt-2">
                 Photographs are not retouched to change the result. Lighting and angle are matched

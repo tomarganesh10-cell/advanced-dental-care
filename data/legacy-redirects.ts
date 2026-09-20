@@ -91,9 +91,6 @@ const map: Array<[string, string]> = [
   ["/reviews", "/testimonials"],
   ["/videos", "/video-testimonials"],
   ["/video-gallery", "/video-testimonials"],
-  ["/dental-tourism", "/dental-tourism"],
-  ["/international-patients", "/international-patients"],
-  ["/technology", "/technology"],
   ["/facilities", "/technology"],
   ["/blogs", "/blog"],
   ["/news", "/blog"],
@@ -103,10 +100,14 @@ const map: Array<[string, string]> = [
   ["/sitemap.html", "/sitemap.xml"],
 ];
 
-export const legacyRedirects: LegacyRedirect[] = map.map(([source, destination]) => ({
-  source,
-  destination,
-  permanent: true,
-}));
+export const legacyRedirects: LegacyRedirect[] = map
+  // A source that equals its destination is not a migration, it is an infinite
+  // redirect loop: the URL already lives at its final address and needs no rule.
+  .filter(([source, destination]) => source !== destination)
+  .map(([source, destination]) => ({
+    source,
+    destination,
+    permanent: true,
+  }));
 
 export default legacyRedirects;

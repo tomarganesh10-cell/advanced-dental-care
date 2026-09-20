@@ -91,10 +91,10 @@ export function InternationalForm() {
 
   if (reference) {
     return (
-      <div className="rounded-[--radius-card] border border-[--color-teal-200] bg-[--color-teal-50] p-8 text-center">
-        <CheckCircle2 className="mx-auto size-10 text-[--color-teal-700]" aria-hidden="true" />
+      <div className="rounded-(--radius-card) border border-(--color-teal-200) bg-(--color-teal-50) p-8 text-center">
+        <CheckCircle2 className="mx-auto size-10 text-(--color-teal-700)" aria-hidden="true" />
         <h2 className="mt-4 text-xl">Enquiry received</h2>
-        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-[--color-ink-muted]">
+        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-(--color-ink-muted)">
           We have emailed you a list of the records that help us assess your case — recent X-rays or
           a CBCT scan, photographs, and your medical history. Send those back and we will arrange an
           online consultation in your timezone.
@@ -247,7 +247,7 @@ export function InternationalForm() {
         description="Required so we can reply. We will not add you to any marketing list."
       />
       {fieldErrors.consentToContact ? (
-        <p role="alert" className="text-xs font-medium text-[--color-danger]">
+        <p role="alert" className="text-xs font-medium text-(--color-danger)">
           {fieldErrors.consentToContact}
         </p>
       ) : null}
@@ -282,7 +282,7 @@ export function InternationalForm() {
         Request an international consultation
       </Button>
 
-      <p className="text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="text-xs leading-relaxed text-(--color-ink-subtle)">
         Any plan or estimate we prepare before examining you in person is provisional and may
         change. We will say clearly what is fixed and what is not.
       </p>

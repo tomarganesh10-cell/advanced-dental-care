@@ -24,16 +24,16 @@ export function LocationMap() {
 
   return (
     <div className="container-page">
-      <div className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+      <div className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
         <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)]">
           <div className="p-7 md:p-9">
-            <p className="mb-2.5 text-xs font-semibold tracking-[0.16em] text-[--color-accent] uppercase">
+            <p className="mb-2.5 text-xs font-semibold tracking-[0.16em] text-(--color-accent) uppercase">
               Visit the clinic
             </p>
             <h2 className="text-2xl md:text-3xl">Sector 18-A, Chandigarh</h2>
 
-            <address className="mt-5 flex items-start gap-3 text-base text-[--color-ink-muted] not-italic">
-              <MapPin className="mt-1 size-5 shrink-0 text-[--color-action]" aria-hidden="true" />
+            <address className="mt-5 flex items-start gap-3 text-base text-(--color-ink-muted) not-italic">
+              <MapPin className="mt-1 size-5 shrink-0 text-(--color-action)" aria-hidden="true" />
               <span>
                 {contact.address.line1}
                 <br />
@@ -45,8 +45,8 @@ export function LocationMap() {
               </span>
             </address>
 
-            <div className="mt-6 border-t border-[--color-hairline] pt-5">
-              <p className="mb-3 text-xs font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+            <div className="mt-6 border-t border-(--color-hairline) pt-5">
+              <p className="mb-3 text-xs font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
                 Opening hours
               </p>
               <OpeningHoursList claim={openingHours} />
@@ -64,14 +64,14 @@ export function LocationMap() {
               </Button>
             </div>
 
-            <p className="mt-5 flex items-start gap-2 text-xs leading-relaxed text-[--color-ink-subtle]">
+            <p className="mt-5 flex items-start gap-2 text-xs leading-relaxed text-(--color-ink-subtle)">
               <Car className="mt-px size-3.5 shrink-0" aria-hidden="true" />
               Sector 18-A is in central Chandigarh, close to the Sector 17 market. Ask reception
               about parking when you book.
             </p>
           </div>
 
-          <div className="min-h-[22rem] bg-[--color-sand] lg:min-h-full">
+          <div className="min-h-[22rem] bg-(--color-sand) lg:min-h-full">
             <iframe
               title={`Map showing ${contact.address.formatted}`}
               src={embedSrc}

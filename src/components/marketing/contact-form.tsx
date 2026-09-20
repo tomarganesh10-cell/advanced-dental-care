@@ -88,10 +88,10 @@ export function ContactForm() {
 
   if (done) {
     return (
-      <div className="rounded-[--radius-card] border border-[--color-teal-200] bg-[--color-teal-50] p-8 text-center">
-        <CheckCircle2 className="mx-auto size-10 text-[--color-teal-700]" aria-hidden="true" />
+      <div className="rounded-(--radius-card) border border-(--color-teal-200) bg-(--color-teal-50) p-8 text-center">
+        <CheckCircle2 className="mx-auto size-10 text-(--color-teal-700)" aria-hidden="true" />
         <h2 className="mt-4 text-xl">Enquiry received</h2>
-        <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-[--color-ink-muted]">
+        <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-(--color-ink-muted)">
           Someone from the clinic will be in touch. If it is urgent, please call us rather than
           waiting for a reply.
         </p>
@@ -107,7 +107,7 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
       <fieldset>
-        <legend className="mb-3 text-sm font-medium text-[--color-ink]">I would like to…</legend>
+        <legend className="mb-3 text-sm font-medium text-(--color-ink)">I would like to…</legend>
         <div className="grid gap-2 sm:grid-cols-2">
           {INTENTS.map((option) => (
             <label
@@ -115,8 +115,8 @@ export function ContactForm() {
               className={cn(
                 "flex cursor-pointer items-center gap-2.5 rounded-xl border p-3.5 text-sm transition-colors",
                 intent === option.value
-                  ? "border-[--color-action] bg-[--color-medical-50] font-medium text-[--color-action]"
-                  : "border-[--color-navy-200] text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                  ? "border-(--color-action) bg-(--color-medical-50) font-medium text-(--color-action)"
+                  : "border-(--color-navy-200) text-(--color-ink-muted) hover:bg-(--color-navy-50)",
               )}
             >
               <input
@@ -125,7 +125,7 @@ export function ContactForm() {
                 value={option.value}
                 checked={intent === option.value}
                 onChange={(e) => setIntent(e.target.value)}
-                className="size-4 accent-[--color-action]"
+                className="size-4 accent-(--color-action)"
               />
               {option.label}
             </label>
@@ -221,7 +221,7 @@ export function ContactForm() {
         Send enquiry
       </Button>
 
-      <p className="text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="text-xs leading-relaxed text-(--color-ink-subtle)">
         We use your details to answer this enquiry and, if you become a patient, to provide your
         care. We do not sell them. See our{" "}
         <Link href="/privacy-policy" className="underline underline-offset-4">

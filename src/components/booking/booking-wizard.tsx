@@ -313,7 +313,7 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
     <div className="mx-auto max-w-3xl">
       <ProgressBar current={step} />
 
-      <div className="mt-8 rounded-[--radius-card] border border-[--color-hairline] bg-white p-6 shadow-[--shadow-subtle] md:p-8">
+      <div className="mt-8 rounded-(--radius-card) border border-(--color-hairline) bg-white p-6 shadow-(--shadow-subtle) md:p-8">
         {/* Step 1 — treatment */}
         {step === 1 ? (
           <div>
@@ -338,14 +338,14 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                   className={cn(
                     "rounded-xl border p-4 text-left transition-colors",
                     serviceSlug === service.slug
-                      ? "border-[--color-action] bg-[--color-medical-50] ring-1 ring-[--color-action]"
-                      : "border-[--color-navy-200] hover:border-[--color-medical-300] hover:bg-[--color-navy-50]",
+                      ? "border-(--color-action) bg-(--color-medical-50) ring-1 ring-(--color-action)"
+                      : "border-(--color-navy-200) hover:border-(--color-medical-300) hover:bg-(--color-navy-50)",
                   )}
                 >
-                  <span className="block text-sm font-semibold text-[--color-primary]">
+                  <span className="block text-sm font-semibold text-(--color-primary)">
                     {service.name}
                   </span>
-                  <span className="mt-1 block text-xs leading-relaxed text-[--color-ink-subtle]">
+                  <span className="mt-1 block text-xs leading-relaxed text-(--color-ink-subtle)">
                     {service.summary}
                   </span>
                 </button>
@@ -364,7 +364,7 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
             />
 
             {doctorsLoading ? (
-              <div className="mt-6 flex items-center gap-2 text-sm text-[--color-ink-subtle]">
+              <div className="mt-6 flex items-center gap-2 text-sm text-(--color-ink-subtle)">
                 <Loader2 className="size-4 animate-spin" aria-hidden="true" />
                 Loading dentists…
               </div>
@@ -388,19 +388,19 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                   className={cn(
                     "flex w-full items-start gap-3 rounded-xl border p-4 text-left transition-colors",
                     doctorId === ""
-                      ? "border-[--color-action] bg-[--color-medical-50] ring-1 ring-[--color-action]"
-                      : "border-[--color-navy-200] hover:bg-[--color-navy-50]",
+                      ? "border-(--color-action) bg-(--color-medical-50) ring-1 ring-(--color-action)"
+                      : "border-(--color-navy-200) hover:bg-(--color-navy-50)",
                   )}
                 >
                   <CalendarDays
-                    className="mt-0.5 size-5 shrink-0 text-[--color-action]"
+                    className="mt-0.5 size-5 shrink-0 text-(--color-action)"
                     aria-hidden="true"
                   />
                   <span>
-                    <span className="block text-sm font-semibold text-[--color-primary]">
+                    <span className="block text-sm font-semibold text-(--color-primary)">
                       First available
                     </span>
-                    <span className="mt-0.5 block text-xs text-[--color-ink-subtle]">
+                    <span className="mt-0.5 block text-xs text-(--color-ink-subtle)">
                       Usually the soonest appointment
                     </span>
                   </span>
@@ -415,25 +415,25 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                     className={cn(
                       "flex w-full items-start gap-3 rounded-xl border p-4 text-left transition-colors",
                       doctorId === doctor.id
-                        ? "border-[--color-action] bg-[--color-medical-50] ring-1 ring-[--color-action]"
-                        : "border-[--color-navy-200] hover:bg-[--color-navy-50]",
+                        ? "border-(--color-action) bg-(--color-medical-50) ring-1 ring-(--color-action)"
+                        : "border-(--color-navy-200) hover:bg-(--color-navy-50)",
                     )}
                   >
                     <UserRound
-                      className="mt-0.5 size-5 shrink-0 text-[--color-navy-400]"
+                      className="mt-0.5 size-5 shrink-0 text-(--color-navy-400)"
                       aria-hidden="true"
                     />
                     <span>
-                      <span className="block text-sm font-semibold text-[--color-primary]">
+                      <span className="block text-sm font-semibold text-(--color-primary)">
                         {doctor.displayName}
                         {doctor.isVisiting ? (
-                          <span className="ml-2 rounded-full bg-[--color-navy-100] px-2 py-0.5 text-[10px] font-medium tracking-wide text-[--color-navy-700] uppercase">
+                          <span className="ml-2 rounded-full bg-(--color-navy-100) px-2 py-0.5 text-[10px] font-medium tracking-wide text-(--color-navy-700) uppercase">
                             Visiting
                           </span>
                         ) : null}
                       </span>
                       {doctor.specialties.length > 0 ? (
-                        <span className="mt-0.5 block text-xs text-[--color-ink-subtle]">
+                        <span className="mt-0.5 block text-xs text-(--color-ink-subtle)">
                           {doctor.specialties.join(", ")}
                         </span>
                       ) : null}
@@ -467,8 +467,8 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                     className={cn(
                       "flex w-16 shrink-0 flex-col items-center gap-0.5 rounded-xl border px-2 py-3 transition-colors",
                       selectedDate === date.value
-                        ? "border-[--color-action] bg-[--color-action] text-white"
-                        : "border-[--color-navy-200] hover:bg-[--color-navy-50]",
+                        ? "border-(--color-action) bg-(--color-action) text-white"
+                        : "border-(--color-navy-200) hover:bg-(--color-navy-50)",
                     )}
                   >
                     <span className="text-[10px] font-medium tracking-wide uppercase opacity-80">
@@ -483,7 +483,7 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
 
             <div className="mt-5">
               {slotsLoading ? (
-                <div className="flex items-center gap-2 py-8 text-sm text-[--color-ink-subtle]">
+                <div className="flex items-center gap-2 py-8 text-sm text-(--color-ink-subtle)">
                   <Loader2 className="size-4 animate-spin" aria-hidden="true" />
                   Checking availability…
                 </div>
@@ -527,8 +527,8 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                         "rounded-lg border px-2 py-2.5 text-center transition-colors",
                         activeSlot?.startsAt === slot.startsAt &&
                           activeSlot?.doctorId === slot.doctorId
-                          ? "border-[--color-action] bg-[--color-action] text-white"
-                          : "border-[--color-navy-200] hover:border-[--color-medical-300] hover:bg-[--color-navy-50]",
+                          ? "border-(--color-action) bg-(--color-action) text-white"
+                          : "border-(--color-navy-200) hover:border-(--color-medical-300) hover:bg-(--color-navy-50)",
                       )}
                     >
                       <span className="block text-sm font-semibold tabular-nums">{slot.label}</span>
@@ -568,8 +568,8 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                     className={cn(
                       "flex-1 rounded-xl border px-4 py-3 text-sm font-medium transition-colors",
                       isNewPatient === option.value
-                        ? "border-[--color-action] bg-[--color-medical-50] text-[--color-action]"
-                        : "border-[--color-navy-200] text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                        ? "border-(--color-action) bg-(--color-medical-50) text-(--color-action)"
+                        : "border-(--color-navy-200) text-(--color-ink-muted) hover:bg-(--color-navy-50)",
                     )}
                   >
                     {option.label}
@@ -681,17 +681,17 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
               ) : null}
             </div>
 
-            <p className="mt-5 text-sm text-[--color-ink-subtle]">
+            <p className="mt-5 text-sm text-(--color-ink-subtle)">
               Did not receive it?{" "}
               <button
                 type="button"
                 onClick={() => void handleStartBooking()}
-                className="font-medium text-[--color-action] underline underline-offset-4"
+                className="font-medium text-(--color-action) underline underline-offset-4"
               >
                 Send a new code
               </button>{" "}
               or call{" "}
-              <a href={`tel:${contact.phone.e164}`} className="font-medium text-[--color-action]">
+              <a href={`tel:${contact.phone.e164}`} className="font-medium text-(--color-action)">
                 {contact.phone.display}
               </a>
               .
@@ -702,45 +702,45 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
         {/* Step 6 — done */}
         {step === 6 && confirmation ? (
           <div className="py-4 text-center">
-            <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-[--color-teal-100]">
-              <CheckCircle2 className="size-7 text-[--color-teal-700]" aria-hidden="true" />
+            <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-(--color-teal-100)">
+              <CheckCircle2 className="size-7 text-(--color-teal-700)" aria-hidden="true" />
             </div>
 
             <h2 className="mt-5 text-2xl">Appointment requested</h2>
 
-            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[--color-ink-muted]">
+            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-(--color-ink-muted)">
               Reception will confirm your appointment shortly — you will get a WhatsApp message when
               they do. Until then this time is held for you.
             </p>
 
-            <dl className="mx-auto mt-6 max-w-sm space-y-2.5 rounded-xl bg-[--color-surface-sunken] p-5 text-left text-sm">
+            <dl className="mx-auto mt-6 max-w-sm space-y-2.5 rounded-xl bg-(--color-surface-sunken) p-5 text-left text-sm">
               <div className="flex justify-between gap-4">
-                <dt className="text-[--color-ink-subtle]">Reference</dt>
+                <dt className="text-(--color-ink-subtle)">Reference</dt>
                 <dd className="font-semibold tabular-nums">{confirmation.reference}</dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-[--color-ink-subtle]">Date</dt>
+                <dt className="text-(--color-ink-subtle)">Date</dt>
                 <dd className="font-medium">{confirmation.dateLabel}</dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-[--color-ink-subtle]">Time</dt>
+                <dt className="text-(--color-ink-subtle)">Time</dt>
                 <dd className="font-medium">{confirmation.timeLabel} IST</dd>
               </div>
               {selectedService ? (
                 <div className="flex justify-between gap-4">
-                  <dt className="text-[--color-ink-subtle]">Treatment</dt>
+                  <dt className="text-(--color-ink-subtle)">Treatment</dt>
                   <dd className="text-right font-medium">{selectedService.name}</dd>
                 </div>
               ) : null}
               {activeSlot ? (
                 <div className="flex justify-between gap-4">
-                  <dt className="text-[--color-ink-subtle]">Dentist</dt>
+                  <dt className="text-(--color-ink-subtle)">Dentist</dt>
                   <dd className="text-right font-medium">{activeSlot.doctorName}</dd>
                 </div>
               ) : null}
             </dl>
 
-            <p className="mt-5 text-xs text-[--color-ink-subtle]">
+            <p className="mt-5 text-xs text-(--color-ink-subtle)">
               Please arrive about 10 minutes early. To change or cancel, call{" "}
               {contact.phone.display}.
             </p>
@@ -759,7 +759,7 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
 
         {/* Navigation */}
         {step < 6 ? (
-          <div className="mt-8 flex items-center justify-between gap-3 border-t border-[--color-hairline] pt-6">
+          <div className="mt-8 flex items-center justify-between gap-3 border-t border-(--color-hairline) pt-6">
             <Button
               variant="ghost"
               onClick={() => setStep((s) => Math.max(1, s - 1) as Step)}
@@ -803,13 +803,13 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
 
       {/* Running summary, so the patient always knows what they are booking. */}
       {step > 1 && step < 6 && selectedService ? (
-        <div className="mt-4 rounded-xl border border-[--color-hairline] bg-[--color-surface-sunken] px-5 py-3.5 text-sm">
-          <span className="font-medium text-[--color-ink]">{selectedService.name}</span>
+        <div className="mt-4 rounded-xl border border-(--color-hairline) bg-(--color-surface-sunken) px-5 py-3.5 text-sm">
+          <span className="font-medium text-(--color-ink)">{selectedService.name}</span>
           {selectedDoctor ? (
-            <span className="text-[--color-ink-subtle]"> · {selectedDoctor.displayName}</span>
+            <span className="text-(--color-ink-subtle)"> · {selectedDoctor.displayName}</span>
           ) : null}
           {activeSlot ? (
-            <span className="text-[--color-ink-subtle]">
+            <span className="text-(--color-ink-subtle)">
               {" "}
               · {activeSlot.label} on {dates.find((d) => d.value === selectedDate)?.weekday}{" "}
               {dates.find((d) => d.value === selectedDate)?.day}{" "}
@@ -832,13 +832,13 @@ function ProgressBar({ current }: { current: Step }) {
           <div
             className={cn(
               "h-1 rounded-full transition-colors",
-              current >= step ? "bg-[--color-action]" : "bg-[--color-navy-200]",
+              current >= step ? "bg-(--color-action)" : "bg-(--color-navy-200)",
             )}
           />
           <p
             className={cn(
               "mt-1.5 hidden text-[11px] font-medium sm:block",
-              current >= step ? "text-[--color-action]" : "text-[--color-ink-subtle]",
+              current >= step ? "text-(--color-action)" : "text-(--color-ink-subtle)",
             )}
           >
             {STEP_LABELS[step]}
@@ -861,14 +861,14 @@ function StepHeading({
   return (
     <div className="flex items-start gap-3.5">
       <span
-        className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[--color-medical-50] text-[--color-action]"
+        className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-(--color-medical-50) text-(--color-action)"
         aria-hidden="true"
       >
         {icon}
       </span>
       <div>
         <h2 className="text-xl">{title}</h2>
-        <p className="mt-1 text-sm leading-relaxed text-[--color-ink-subtle]">{description}</p>
+        <p className="mt-1 text-sm leading-relaxed text-(--color-ink-subtle)">{description}</p>
       </div>
     </div>
   );

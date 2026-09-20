@@ -110,7 +110,7 @@ export default async function PaymentsPage({
       <PageHeader title="Payments" description="Only server-verified payments count as received." />
 
       {unreconciled > 0 ? (
-        <div className="mb-5 flex items-start gap-3 rounded-[--radius-card] border border-amber-200 bg-amber-50 p-4">
+        <div className="mb-5 flex items-start gap-3 rounded-(--radius-card) border border-amber-200 bg-amber-50 p-4">
           <AlertTriangle className="mt-0.5 size-4 shrink-0 text-amber-700" aria-hidden="true" />
           <div className="text-sm text-amber-900">
             <p className="font-semibold text-amber-950">
@@ -149,8 +149,8 @@ export default async function PaymentsPage({
             className={cn(
               "rounded-full border px-3.5 py-1.5 text-sm font-medium",
               filterKey === item.key
-                ? "border-[--color-action] bg-[--color-action] text-white"
-                : "border-[--color-navy-200] bg-white text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                ? "border-(--color-action) bg-(--color-action) text-white"
+                : "border-(--color-navy-200) bg-white text-(--color-ink-muted) hover:bg-(--color-navy-50)",
             )}
           >
             {item.label}
@@ -161,10 +161,10 @@ export default async function PaymentsPage({
       {payments.length === 0 ? (
         <EmptyState title="No payments in this view" />
       ) : (
-        <div className="overflow-x-auto rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <div className="overflow-x-auto rounded-(--radius-card) border border-(--color-hairline) bg-white">
           <table className="w-full min-w-[48rem] text-sm">
             <caption className="sr-only">Payments</caption>
-            <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+            <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
               <tr>
                 <th scope="col" className="px-4 py-2.5 text-left font-medium">
                   Reference
@@ -186,13 +186,13 @@ export default async function PaymentsPage({
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[--color-hairline]">
+            <tbody className="divide-y divide-(--color-hairline)">
               {payments.map((payment) => (
                 <tr key={payment.id}>
                   <td className="px-4 py-2.5 font-medium tabular-nums">
                     {payment.reference}
                     {payment.invoice ? (
-                      <span className="block text-xs text-[--color-ink-subtle]">
+                      <span className="block text-xs text-(--color-ink-subtle)">
                         {payment.invoice.number}
                       </span>
                     ) : null}
@@ -201,25 +201,25 @@ export default async function PaymentsPage({
                     {payment.patient ? (
                       <Link
                         href={`/admin/patients/${payment.patient.id}`}
-                        className="text-[--color-action] hover:underline"
+                        className="text-(--color-action) hover:underline"
                       >
                         {payment.patient.fullName}
                       </Link>
                     ) : (
-                      <span className="text-[--color-ink-subtle]">—</span>
+                      <span className="text-(--color-ink-subtle)">—</span>
                     )}
                   </td>
                   <td className="px-4 py-2.5 text-right font-medium tabular-nums">
                     {formatPaise(payment.amountPaise)}
                   </td>
-                  <td className="px-4 py-2.5 text-[--color-ink-muted]">
+                  <td className="px-4 py-2.5 text-(--color-ink-muted)">
                     {payment.method.toLowerCase().replace(/_/g, " ")}
                   </td>
-                  <td className="px-4 py-2.5 text-xs text-[--color-ink-subtle]">
+                  <td className="px-4 py-2.5 text-xs text-(--color-ink-subtle)">
                     {payment.verifiedAt ? (
                       formatClinicDateTime(payment.verifiedAt)
                     ) : (
-                      <span className="text-[--color-danger]">Not verified</span>
+                      <span className="text-(--color-danger)">Not verified</span>
                     )}
                   </td>
                   <td className="px-4 py-2.5">
@@ -227,7 +227,7 @@ export default async function PaymentsPage({
                       {payment.status.toLowerCase().replace(/_/g, " ")}
                     </Badge>
                     {payment.failureReason ? (
-                      <span className="mt-1 block max-w-[14rem] text-xs text-[--color-ink-subtle]">
+                      <span className="mt-1 block max-w-[14rem] text-xs text-(--color-ink-subtle)">
                         {payment.failureReason}
                       </span>
                     ) : null}
@@ -241,14 +241,14 @@ export default async function PaymentsPage({
 
       {pageCount > 1 ? (
         <nav aria-label="Pagination" className="mt-4 flex items-center justify-between text-sm">
-          <p className="text-[--color-ink-subtle]">
+          <p className="text-(--color-ink-subtle)">
             Page {page} of {pageCount}
           </p>
           <div className="flex gap-2">
             {page > 1 ? (
               <Link
                 href={`/admin/payments?filter=${filterKey}&page=${page - 1}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Previous
               </Link>
@@ -256,7 +256,7 @@ export default async function PaymentsPage({
             {page < pageCount ? (
               <Link
                 href={`/admin/payments?filter=${filterKey}&page=${page + 1}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Next
               </Link>
@@ -265,7 +265,7 @@ export default async function PaymentsPage({
         </nav>
       ) : null}
 
-      <p className="mt-4 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-4 text-xs leading-relaxed text-(--color-ink-subtle)">
         A payment counts as received only once the signature has been verified server-side and
         Razorpay has independently confirmed the capture. The <strong>Verified</strong> column is
         what reports total, not the status.

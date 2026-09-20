@@ -50,10 +50,10 @@ export default async function StaffPage() {
       {staff.length === 0 ? (
         <EmptyState title="No staff records" />
       ) : (
-        <div className="overflow-x-auto rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <div className="overflow-x-auto rounded-(--radius-card) border border-(--color-hairline) bg-white">
           <table className="w-full min-w-[48rem] text-sm">
             <caption className="sr-only">Staff accounts</caption>
-            <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+            <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
               <tr>
                 <th scope="col" className="px-4 py-2.5 text-left font-medium">
                   Name
@@ -75,7 +75,7 @@ export default async function StaffPage() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[--color-hairline]">
+            <tbody className="divide-y divide-(--color-hairline)">
               {staff.map((member) => {
                 const grants = member.permissionGrants.filter(
                   (grant) => !grant.expiresAt || grant.expiresAt.getTime() > Date.now(),
@@ -85,7 +85,7 @@ export default async function StaffPage() {
                   <tr key={member.id} className={member.isActive ? "" : "opacity-60"}>
                     <td className="px-4 py-3">
                       <span className="font-medium">{member.fullName}</span>
-                      <span className="block text-xs text-[--color-ink-subtle]">
+                      <span className="block text-xs text-(--color-ink-subtle)">
                         {member.staffCode}
                         {member.designation ? ` · ${member.designation}` : ""}
                       </span>
@@ -96,7 +96,7 @@ export default async function StaffPage() {
                       </Badge>
                       {grants.length > 0 ? (
                         <span
-                          className="mt-1 block text-xs text-[--color-ink-subtle]"
+                          className="mt-1 block text-xs text-(--color-ink-subtle)"
                           title={grants
                             .map((g) => `${g.allow ? "+" : "−"} ${g.permission}`)
                             .join("\n")}
@@ -106,7 +106,7 @@ export default async function StaffPage() {
                         </span>
                       ) : null}
                     </td>
-                    <td className="px-4 py-3 text-[--color-ink-muted]">
+                    <td className="px-4 py-3 text-(--color-ink-muted)">
                       {member.email ? (
                         <span className="block truncate text-xs">{member.email}</span>
                       ) : null}
@@ -114,12 +114,12 @@ export default async function StaffPage() {
                         <span className="block text-xs">{formatPhone(member.phone)}</span>
                       ) : null}
                     </td>
-                    <td className="px-4 py-3 text-[--color-ink-subtle]">
+                    <td className="px-4 py-3 text-(--color-ink-subtle)">
                       {member.joiningDate
                         ? formatClinicDate(member.joiningDate, "d MMM yyyy")
                         : "—"}
                     </td>
-                    <td className="px-4 py-3 text-xs text-[--color-ink-subtle]">
+                    <td className="px-4 py-3 text-xs text-(--color-ink-subtle)">
                       {member.user?.lastLoginAt
                         ? formatClinicDate(member.user.lastLoginAt, "d MMM yyyy")
                         : "Never"}
@@ -146,17 +146,17 @@ export default async function StaffPage() {
       {/* The permission model, spelled out where the people it governs are
           listed — so "why can't reception see that" has an answer on screen. */}
       <section className="mt-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           What each role can do
         </h2>
         <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {(Object.keys(ROLE_LABELS) as StaffRoleName[]).map((role) => (
             <div
               key={role}
-              className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-4"
+              className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-4"
             >
               <dt className="text-sm font-semibold">{ROLE_LABELS[role]}</dt>
-              <dd className="mt-1 text-xs leading-relaxed text-[--color-ink-subtle]">
+              <dd className="mt-1 text-xs leading-relaxed text-(--color-ink-subtle)">
                 {ROLE_DESCRIPTIONS[role]}
               </dd>
             </div>
@@ -164,7 +164,7 @@ export default async function StaffPage() {
         </dl>
       </section>
 
-      <p className="mt-6 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-6 text-xs leading-relaxed text-(--color-ink-subtle)">
         Creating and editing staff from this screen is not yet built — see docs/STATUS.md. Accounts
         are currently created by an administrator through the seed or directly. Every staff member
         must have their own login: the audit trail is worthless if several people share one.

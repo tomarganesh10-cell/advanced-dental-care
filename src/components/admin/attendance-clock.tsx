@@ -39,8 +39,8 @@ export function AttendanceClock({
   const state = !checkedInAt ? "out" : !checkedOutAt ? "in" : "done";
 
   return (
-    <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-6">
-      <p className="text-sm text-[--color-ink-subtle]">Welcome back,</p>
+    <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-6">
+      <p className="text-sm text-(--color-ink-subtle)">Welcome back,</p>
       <h2 className="text-xl">{fullName.split(" ")[0]}</h2>
 
       <div className="mt-5">
@@ -51,7 +51,7 @@ export function AttendanceClock({
           </Button>
         ) : state === "in" ? (
           <>
-            <div className="mb-3 flex items-center gap-2 rounded-lg bg-[--color-teal-50] p-3 text-sm text-[--color-teal-900]">
+            <div className="mb-3 flex items-center gap-2 rounded-lg bg-(--color-teal-50) p-3 text-sm text-(--color-teal-900)">
               <CheckCircle2 className="size-4 shrink-0" aria-hidden="true" />
               <span>
                 Checked in at <strong>{checkedInAt}</strong>
@@ -70,7 +70,7 @@ export function AttendanceClock({
             </Button>
           </>
         ) : (
-          <div className="flex items-center gap-2 rounded-lg bg-[--color-navy-50] p-3 text-sm text-[--color-navy-900]">
+          <div className="flex items-center gap-2 rounded-lg bg-(--color-navy-50) p-3 text-sm text-(--color-navy-900)">
             <Clock className="size-4 shrink-0" aria-hidden="true" />
             <span>
               {checkedInAt} – {checkedOutAt}. Shift recorded.
@@ -83,14 +83,14 @@ export function AttendanceClock({
         <p
           role="status"
           className={`mt-3 rounded-lg p-2.5 text-sm ${
-            message.ok ? "bg-[--color-teal-50] text-[--color-teal-900]" : "bg-red-50 text-red-800"
+            message.ok ? "bg-(--color-teal-50) text-(--color-teal-900)" : "bg-red-50 text-red-800"
           }`}
         >
           {message.text}
         </p>
       ) : null}
 
-      <dl className="mt-6 grid grid-cols-2 gap-3 border-t border-[--color-hairline] pt-5 text-sm sm:grid-cols-5">
+      <dl className="mt-6 grid grid-cols-2 gap-3 border-t border-(--color-hairline) pt-5 text-sm sm:grid-cols-5">
         {[
           { label: "Present", value: monthSummary.present },
           { label: "Late", value: monthSummary.late },
@@ -99,12 +99,12 @@ export function AttendanceClock({
           { label: "Hours", value: monthSummary.hours },
         ].map((item) => (
           <div key={item.label}>
-            <dt className="text-xs text-[--color-ink-subtle]">{item.label}</dt>
+            <dt className="text-xs text-(--color-ink-subtle)">{item.label}</dt>
             <dd className="mt-0.5 font-semibold tabular-nums">{item.value}</dd>
           </div>
         ))}
       </dl>
-      <p className="mt-2 text-xs text-[--color-ink-subtle]">This month</p>
+      <p className="mt-2 text-xs text-(--color-ink-subtle)">This month</p>
     </div>
   );
 }

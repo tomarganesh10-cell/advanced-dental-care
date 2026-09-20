@@ -62,7 +62,7 @@ export default async function DocumentsPage() {
       />
 
       {!features.storage ? (
-        <div className="mb-5 flex items-start gap-3 rounded-[--radius-card] border border-amber-200 bg-amber-50 p-4">
+        <div className="mb-5 flex items-start gap-3 rounded-(--radius-card) border border-amber-200 bg-amber-50 p-4">
           <Lock className="mt-0.5 size-4 shrink-0 text-amber-700" aria-hidden="true" />
           <p className="text-sm text-amber-900">
             <strong>Document storage is not configured.</strong> Set the storage bucket and
@@ -84,10 +84,10 @@ export default async function DocumentsPage() {
           description="Upload is not yet built — see docs/STATUS.md."
         />
       ) : (
-        <div className="overflow-x-auto rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <div className="overflow-x-auto rounded-(--radius-card) border border-(--color-hairline) bg-white">
           <table className="w-full min-w-[44rem] text-sm">
             <caption className="sr-only">Patient documents</caption>
-            <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+            <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
               <tr>
                 <th scope="col" className="px-4 py-2.5 text-left font-medium">
                   Document
@@ -109,28 +109,28 @@ export default async function DocumentsPage() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[--color-hairline]">
+            <tbody className="divide-y divide-(--color-hairline)">
               {documents.map((document) => (
                 <tr key={document.id}>
                   <td className="px-4 py-2.5 font-medium">{document.title}</td>
                   <td className="px-4 py-2.5">
                     <Link
                       href={`/admin/patients/${document.patient.id}`}
-                      className="text-[--color-action] hover:underline"
+                      className="text-(--color-action) hover:underline"
                     >
                       {document.patient.fullName}
                     </Link>
-                    <span className="block text-xs text-[--color-ink-subtle]">
+                    <span className="block text-xs text-(--color-ink-subtle)">
                       {document.patient.patientNumber}
                     </span>
                   </td>
-                  <td className="px-4 py-2.5 text-[--color-ink-muted]">
+                  <td className="px-4 py-2.5 text-(--color-ink-muted)">
                     {KIND_LABELS[document.kind] ?? document.kind}
                   </td>
-                  <td className="px-4 py-2.5 text-right text-[--color-ink-subtle] tabular-nums">
+                  <td className="px-4 py-2.5 text-right text-(--color-ink-subtle) tabular-nums">
                     {formatBytes(document.sizeBytes)}
                   </td>
-                  <td className="px-4 py-2.5 text-xs text-[--color-ink-subtle]">
+                  <td className="px-4 py-2.5 text-xs text-(--color-ink-subtle)">
                     {formatClinicDate(document.takenAt ?? document.createdAt, "d MMM yyyy")}
                   </td>
                   <td className="px-4 py-2.5">
@@ -145,9 +145,9 @@ export default async function DocumentsPage() {
         </div>
       )}
 
-      <div className="mt-6 flex items-start gap-3 rounded-[--radius-card] border border-[--color-hairline] bg-[--color-surface-sunken] p-4">
-        <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[--color-accent]" aria-hidden="true" />
-        <p className="text-xs leading-relaxed text-[--color-ink-subtle]">
+      <div className="mt-6 flex items-start gap-3 rounded-(--radius-card) border border-(--color-hairline) bg-(--color-surface-sunken) p-4">
+        <ShieldCheck className="mt-0.5 size-4 shrink-0 text-(--color-accent)" aria-hidden="true" />
+        <p className="text-xs leading-relaxed text-(--color-ink-subtle)">
           Documents default to <strong>not shared</strong>. A scan appearing in a patient&apos;s
           portal before anyone has explained it produces anxiety rather than informed patients, so
           sharing is an explicit decision. Patients remain entitled to their full record on request.

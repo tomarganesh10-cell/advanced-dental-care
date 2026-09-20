@@ -106,8 +106,8 @@ export default async function AuditLogPage({
             className={cn(
               "rounded-full border px-3.5 py-1.5 text-sm font-medium",
               filterKey === item.key
-                ? "border-[--color-action] bg-[--color-action] text-white"
-                : "border-[--color-navy-200] bg-white text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                ? "border-(--color-action) bg-(--color-action) text-white"
+                : "border-(--color-navy-200) bg-white text-(--color-ink-muted) hover:bg-(--color-navy-50)",
             )}
           >
             {item.label}
@@ -118,10 +118,10 @@ export default async function AuditLogPage({
       {entries.length === 0 ? (
         <EmptyState title="No entries in this view" />
       ) : (
-        <div className="overflow-x-auto rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <div className="overflow-x-auto rounded-(--radius-card) border border-(--color-hairline) bg-white">
           <table className="w-full min-w-[46rem] text-sm">
             <caption className="sr-only">Audit log entries</caption>
-            <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+            <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
               <tr>
                 <th scope="col" className="px-4 py-2.5 text-left font-medium">
                   When
@@ -140,16 +140,16 @@ export default async function AuditLogPage({
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[--color-hairline]">
+            <tbody className="divide-y divide-(--color-hairline)">
               {entries.map((entry) => (
                 <tr key={entry.id}>
-                  <td className="px-4 py-2.5 whitespace-nowrap text-[--color-ink-muted] tabular-nums">
+                  <td className="px-4 py-2.5 whitespace-nowrap text-(--color-ink-muted) tabular-nums">
                     {formatClinicDateTime(entry.createdAt)}
                   </td>
                   <td className="px-4 py-2.5">
                     <span className="font-medium">{entry.actorLabel ?? "System"}</span>
                     {entry.actorRole ? (
-                      <span className="block text-xs text-[--color-ink-subtle]">
+                      <span className="block text-xs text-(--color-ink-subtle)">
                         {entry.actorRole.toLowerCase().replace(/_/g, " ")}
                       </span>
                     ) : null}
@@ -159,18 +159,18 @@ export default async function AuditLogPage({
                       {entry.action.toLowerCase().replace(/_/g, " ")}
                     </Badge>
                   </td>
-                  <td className="px-4 py-2.5 text-[--color-ink-muted]">
+                  <td className="px-4 py-2.5 text-(--color-ink-muted)">
                     {entry.entity}
                     {entry.entityId ? (
                       <Link
                         href={`/admin/audit?entityId=${entry.entityId}`}
-                        className="block font-mono text-[11px] text-[--color-action] hover:underline"
+                        className="block font-mono text-[11px] text-(--color-action) hover:underline"
                       >
                         {entry.entityId.slice(0, 8)}…
                       </Link>
                     ) : null}
                   </td>
-                  <td className="px-4 py-2.5 font-mono text-xs text-[--color-ink-subtle]">
+                  <td className="px-4 py-2.5 font-mono text-xs text-(--color-ink-subtle)">
                     {entry.ipAddress ?? "—"}
                   </td>
                 </tr>
@@ -182,14 +182,14 @@ export default async function AuditLogPage({
 
       {pageCount > 1 ? (
         <nav aria-label="Pagination" className="mt-4 flex items-center justify-between text-sm">
-          <p className="text-[--color-ink-subtle]">
+          <p className="text-(--color-ink-subtle)">
             Page {page} of {pageCount}
           </p>
           <div className="flex gap-2">
             {page > 1 ? (
               <Link
                 href={`/admin/audit?filter=${filterKey}&page=${page - 1}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Previous
               </Link>
@@ -197,7 +197,7 @@ export default async function AuditLogPage({
             {page < pageCount ? (
               <Link
                 href={`/admin/audit?filter=${filterKey}&page=${page + 1}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Next
               </Link>
@@ -206,9 +206,9 @@ export default async function AuditLogPage({
         </nav>
       ) : null}
 
-      <div className="mt-6 flex items-start gap-3 rounded-[--radius-card] border border-[--color-hairline] bg-[--color-surface-sunken] p-4">
-        <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[--color-accent]" aria-hidden="true" />
-        <p className="text-xs leading-relaxed text-[--color-ink-subtle]">
+      <div className="mt-6 flex items-start gap-3 rounded-(--radius-card) border border-(--color-hairline) bg-(--color-surface-sunken) p-4">
+        <ShieldCheck className="mt-0.5 size-4 shrink-0 text-(--color-accent)" aria-hidden="true" />
+        <p className="text-xs leading-relaxed text-(--color-ink-subtle)">
           These entries cannot be edited or deleted from anywhere in this application. Clinical
           content is deliberately excluded — the log records that a diagnosis was changed and by
           whom, never what it said, so this screen cannot become a second route into the record it

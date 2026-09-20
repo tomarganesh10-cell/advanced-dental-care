@@ -138,8 +138,8 @@ export default async function InvoicesPage({
             className={cn(
               "rounded-full border px-3.5 py-1.5 text-sm font-medium",
               filterKey === item.key
-                ? "border-[--color-action] bg-[--color-action] text-white"
-                : "border-[--color-navy-200] bg-white text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                ? "border-(--color-action) bg-(--color-action) text-white"
+                : "border-(--color-navy-200) bg-white text-(--color-ink-muted) hover:bg-(--color-navy-50)",
             )}
           >
             {item.label}
@@ -153,10 +153,10 @@ export default async function InvoicesPage({
           description="Invoices are created when treatment is billed."
         />
       ) : (
-        <div className="overflow-x-auto rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <div className="overflow-x-auto rounded-(--radius-card) border border-(--color-hairline) bg-white">
           <table className="w-full min-w-[46rem] text-sm">
             <caption className="sr-only">Invoices</caption>
-            <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+            <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
               <tr>
                 <th scope="col" className="px-4 py-2.5 text-left font-medium">
                   Invoice
@@ -181,7 +181,7 @@ export default async function InvoicesPage({
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[--color-hairline]">
+            <tbody className="divide-y divide-(--color-hairline)">
               {invoices.map((invoice) => {
                 const isOverdue =
                   invoice.dueAt &&
@@ -195,37 +195,37 @@ export default async function InvoicesPage({
                     <td className="px-4 py-2.5">
                       <Link
                         href={`/admin/patients/${invoice.patient.id}`}
-                        className="text-[--color-action] hover:underline"
+                        className="text-(--color-action) hover:underline"
                       >
                         {invoice.patient.fullName}
                       </Link>
-                      <span className="block text-xs text-[--color-ink-subtle]">
+                      <span className="block text-xs text-(--color-ink-subtle)">
                         {invoice.patient.patientNumber}
                       </span>
                     </td>
                     <td className="px-4 py-2.5 text-right tabular-nums">
                       {formatPaise(invoice.totalPaise)}
                     </td>
-                    <td className="px-4 py-2.5 text-right text-[--color-ink-muted] tabular-nums">
+                    <td className="px-4 py-2.5 text-right text-(--color-ink-muted) tabular-nums">
                       {formatPaise(invoice.paidPaise)}
                     </td>
                     <td
                       className={cn(
                         "px-4 py-2.5 text-right font-medium tabular-nums",
                         invoice.balancePaise > 0
-                          ? "text-[--color-ink]"
-                          : "text-[--color-ink-subtle]",
+                          ? "text-(--color-ink)"
+                          : "text-(--color-ink-subtle)",
                       )}
                     >
                       {formatPaise(invoice.balancePaise)}
                     </td>
                     <td className="px-4 py-2.5">
                       {invoice.dueAt ? (
-                        <span className={isOverdue ? "font-medium text-[--color-danger]" : ""}>
+                        <span className={isOverdue ? "font-medium text-(--color-danger)" : ""}>
                           {formatClinicDate(invoice.dueAt, "d MMM yyyy")}
                         </span>
                       ) : (
-                        <span className="text-[--color-ink-subtle]">—</span>
+                        <span className="text-(--color-ink-subtle)">—</span>
                       )}
                     </td>
                     <td className="px-4 py-2.5">
@@ -243,14 +243,14 @@ export default async function InvoicesPage({
 
       {pageCount > 1 ? (
         <nav aria-label="Pagination" className="mt-4 flex items-center justify-between text-sm">
-          <p className="text-[--color-ink-subtle]">
+          <p className="text-(--color-ink-subtle)">
             Page {page} of {pageCount}
           </p>
           <div className="flex gap-2">
             {page > 1 ? (
               <Link
                 href={`/admin/invoices?filter=${filterKey}&page=${page - 1}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Previous
               </Link>
@@ -258,7 +258,7 @@ export default async function InvoicesPage({
             {page < pageCount ? (
               <Link
                 href={`/admin/invoices?filter=${filterKey}&page=${page + 1}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Next
               </Link>
@@ -267,7 +267,7 @@ export default async function InvoicesPage({
         </nav>
       ) : null}
 
-      <p className="mt-4 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-4 text-xs leading-relaxed text-(--color-ink-subtle)">
         Creating and editing invoices from this screen is not yet built — see docs/STATUS.md.
         Invoices currently originate from treatment plans and are settled by verified payments.
       </p>

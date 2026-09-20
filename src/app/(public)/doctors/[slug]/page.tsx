@@ -113,18 +113,18 @@ export default async function DoctorProfilePage({ params }: { params: Promise<{ 
       />
 
       <div className="container-page grid gap-10 pb-12 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-14">
-        <div className="aspect-4/5 overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-gradient-to-b from-[--color-navy-50] to-[--color-sand]">
+        <div className="aspect-4/5 overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-gradient-to-b from-(--color-navy-50) to-(--color-sand)">
           <div className="flex h-full items-center justify-center">
-            <UserRound className="size-16 text-[--color-navy-300]" aria-hidden="true" />
+            <UserRound className="size-16 text-(--color-navy-300)" aria-hidden="true" />
           </div>
         </div>
 
         <div>
           <h1 className="text-3xl md:text-4xl">{profile.name}</h1>
-          <p className="mt-2 text-lg text-[--color-ink-muted]">{profile.designation}</p>
+          <p className="mt-2 text-lg text-(--color-ink-muted)">{profile.designation}</p>
 
           {profile.isVisiting ? (
-            <p className="mt-2 inline-block rounded-full bg-[--color-navy-100] px-3 py-1 text-xs font-medium text-[--color-navy-800]">
+            <p className="mt-2 inline-block rounded-full bg-(--color-navy-100) px-3 py-1 text-xs font-medium text-(--color-navy-800)">
               Visiting consultant — availability varies
             </p>
           ) : null}
@@ -163,14 +163,14 @@ export default async function DoctorProfilePage({ params }: { params: Promise<{ 
 
           {profile.specialInterests.length > 0 ? (
             <div className="mt-6">
-              <h2 className="text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+              <h2 className="text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
                 Areas of practice
               </h2>
               <ul className="mt-2.5 flex flex-wrap gap-2">
                 {profile.specialInterests.map((interest) => (
                   <li
                     key={interest}
-                    className="rounded-full bg-[--color-navy-50] px-3 py-1.5 text-sm text-[--color-navy-800]"
+                    className="rounded-full bg-(--color-navy-50) px-3 py-1.5 text-sm text-(--color-navy-800)"
                   >
                     {interest}
                   </li>
@@ -197,7 +197,7 @@ export default async function DoctorProfilePage({ params }: { params: Promise<{ 
             saying plainly that we publish them once verified.
           */}
           {profile.qualifications.length === 0 ? (
-            <p className="mt-6 rounded-lg border border-[--color-hairline] bg-[--color-surface-sunken] p-4 text-xs leading-relaxed text-[--color-ink-subtle]">
+            <p className="mt-6 rounded-lg border border-(--color-hairline) bg-(--color-surface-sunken) p-4 text-xs leading-relaxed text-(--color-ink-subtle)">
               Qualifications and council registration are published here once verified against the
               original documents. Ask reception if you would like to see them before your
               appointment — you are entitled to.
@@ -234,14 +234,14 @@ function ProfileRow({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <span className="mt-0.5 text-[--color-accent]" aria-hidden="true">
+      <span className="mt-0.5 text-(--color-accent)" aria-hidden="true">
         {icon}
       </span>
       <div>
-        <dt className="text-xs font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <dt className="text-xs font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           {label}
         </dt>
-        <dd className="mt-0.5 text-sm text-[--color-ink]">{children}</dd>
+        <dd className="mt-0.5 text-sm text-(--color-ink)">{children}</dd>
       </div>
     </div>
   );

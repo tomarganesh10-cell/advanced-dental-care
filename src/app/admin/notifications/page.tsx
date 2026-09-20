@@ -120,7 +120,7 @@ export default async function NotificationsPage({
       />
 
       {stale > 0 ? (
-        <div className="mb-5 flex items-start gap-3 rounded-[--radius-card] border-2 border-red-300 bg-red-50 p-4">
+        <div className="mb-5 flex items-start gap-3 rounded-(--radius-card) border-2 border-red-300 bg-red-50 p-4">
           <AlertTriangle className="mt-0.5 size-5 shrink-0 text-red-700" aria-hidden="true" />
           <div className="text-sm">
             <p className="font-semibold text-red-900">
@@ -164,8 +164,8 @@ export default async function NotificationsPage({
             className={cn(
               "rounded-full border px-3.5 py-1.5 text-sm font-medium",
               filterKey === item.key
-                ? "border-[--color-action] bg-[--color-action] text-white"
-                : "border-[--color-navy-200] bg-white text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                ? "border-(--color-action) bg-(--color-action) text-white"
+                : "border-(--color-navy-200) bg-white text-(--color-ink-muted) hover:bg-(--color-navy-50)",
             )}
           >
             {item.label}
@@ -179,7 +179,7 @@ export default async function NotificationsPage({
           description="Messages appear here as appointments are booked and confirmed."
         />
       ) : (
-        <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <ul className="divide-y divide-(--color-hairline) overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
           {messages.map((message) => (
             <li key={message.id} className="p-4">
               <div className="flex flex-wrap items-start justify-between gap-3">
@@ -196,7 +196,7 @@ export default async function NotificationsPage({
                     {message.patient ? (
                       <Link
                         href={`/admin/patients/${message.patient.id}`}
-                        className="text-xs text-[--color-action] hover:underline"
+                        className="text-xs text-(--color-action) hover:underline"
                       >
                         {message.patient.fullName}
                       </Link>
@@ -204,29 +204,29 @@ export default async function NotificationsPage({
                   </div>
 
                   {message.subject ? (
-                    <p className="mt-1.5 text-sm font-medium text-[--color-ink]">
+                    <p className="mt-1.5 text-sm font-medium text-(--color-ink)">
                       {message.subject}
                     </p>
                   ) : null}
 
-                  <p className="mt-1 text-sm leading-relaxed text-[--color-ink-muted]">
+                  <p className="mt-1 text-sm leading-relaxed text-(--color-ink-muted)">
                     {truncate(message.body.replace(/\n+/g, " "), 160)}
                   </p>
 
                   {message.errorMessage ? (
-                    <p className="mt-1.5 text-xs text-[--color-danger]">
+                    <p className="mt-1.5 text-xs text-(--color-danger)">
                       {message.errorMessage} (attempt {message.attempts} of {message.maxAttempts})
                     </p>
                   ) : null}
 
                   {message.suppressionReason ? (
-                    <p className="mt-1.5 text-xs text-[--color-ink-subtle]">
+                    <p className="mt-1.5 text-xs text-(--color-ink-subtle)">
                       Not sent: {message.suppressionReason}
                     </p>
                   ) : null}
                 </div>
 
-                <div className="shrink-0 text-right text-xs text-[--color-ink-subtle]">
+                <div className="shrink-0 text-right text-xs text-(--color-ink-subtle)">
                   <p>{formatClinicDateTime(message.createdAt)}</p>
                   {message.sentAt ? (
                     <p className="mt-0.5">Sent {formatClinicDateTime(message.sentAt)}</p>
@@ -242,14 +242,14 @@ export default async function NotificationsPage({
 
       {pageCount > 1 ? (
         <nav aria-label="Pagination" className="mt-4 flex items-center justify-between text-sm">
-          <p className="text-[--color-ink-subtle]">
+          <p className="text-(--color-ink-subtle)">
             Page {page} of {pageCount}
           </p>
           <div className="flex gap-2">
             {page > 1 ? (
               <Link
                 href={`/admin/notifications?filter=${filterKey}&page=${page - 1}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Previous
               </Link>
@@ -257,7 +257,7 @@ export default async function NotificationsPage({
             {page < pageCount ? (
               <Link
                 href={`/admin/notifications?filter=${filterKey}&page=${page + 1}`}
-                className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-1.5 font-medium hover:bg-[--color-navy-50]"
+                className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-1.5 font-medium hover:bg-(--color-navy-50)"
               >
                 Next
               </Link>
@@ -266,7 +266,7 @@ export default async function NotificationsPage({
         </nav>
       ) : null}
 
-      <p className="mt-4 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-4 text-xs leading-relaxed text-(--color-ink-subtle)">
         <strong>Suppressed</strong> means deliberately not sent — usually because the patient has
         not consented to WhatsApp, or has opted out. That is correct behaviour, not a fault.{" "}
         <strong>Failed</strong> means the provider rejected it; check the error.

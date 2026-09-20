@@ -62,11 +62,11 @@ export default async function TestimonialsAdminPage() {
           {testimonials.map((item) => (
             <li
               key={item.id}
-              className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5"
+              className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-5"
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
-                  <Quote className="size-4 text-[--color-navy-200]" aria-hidden="true" />
+                  <Quote className="size-4 text-(--color-navy-200)" aria-hidden="true" />
 
                   {item.rating ? (
                     <div className="mt-1.5 flex gap-0.5" aria-label={`${item.rating} out of 5`}>
@@ -76,7 +76,7 @@ export default async function TestimonialsAdminPage() {
                           className={
                             index < (item.rating ?? 0)
                               ? "size-3.5 fill-amber-400 text-amber-400"
-                              : "size-3.5 text-[--color-navy-200]"
+                              : "size-3.5 text-(--color-navy-200)"
                           }
                           aria-hidden="true"
                         />
@@ -84,22 +84,22 @@ export default async function TestimonialsAdminPage() {
                     </div>
                   ) : null}
 
-                  <blockquote className="mt-2 max-w-2xl text-sm leading-relaxed text-[--color-ink-muted]">
+                  <blockquote className="mt-2 max-w-2xl text-sm leading-relaxed text-(--color-ink-muted)">
                     {item.quote}
                   </blockquote>
 
                   <p className="mt-2 text-sm">
                     <span className="font-medium">{item.authorName}</span>
                     {item.authorLocation ? (
-                      <span className="text-[--color-ink-subtle]"> · {item.authorLocation}</span>
+                      <span className="text-(--color-ink-subtle)"> · {item.authorLocation}</span>
                     ) : null}
                     {item.serviceSlug ? (
-                      <span className="text-[--color-ink-subtle]"> · {item.serviceSlug}</span>
+                      <span className="text-(--color-ink-subtle)"> · {item.serviceSlug}</span>
                     ) : null}
                   </p>
 
                   {item.consentEvidence ? (
-                    <p className="mt-1.5 text-xs text-[--color-ink-subtle]">
+                    <p className="mt-1.5 text-xs text-(--color-ink-subtle)">
                       Consent: {item.consentEvidence}
                     </p>
                   ) : null}
@@ -118,7 +118,7 @@ export default async function TestimonialsAdminPage() {
                       Video
                     </Badge>
                   ) : null}
-                  <p className="text-xs text-[--color-ink-subtle]">
+                  <p className="text-xs text-(--color-ink-subtle)">
                     {formatClinicDate(item.createdAt, "d MMM yyyy")}
                   </p>
                 </div>
@@ -128,7 +128,7 @@ export default async function TestimonialsAdminPage() {
         </ul>
       )}
 
-      <p className="mt-6 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-6 text-xs leading-relaxed text-(--color-ink-subtle)">
         A testimonial is published only when both the consent flag and the published flag are set —
         enforced in the query the public page uses. Editing from this screen is not yet built; see
         docs/STATUS.md.

@@ -25,8 +25,8 @@ export function Section({
       className={cn(
         "py-16 md:py-24",
         tone === "muted" && "bg-white",
-        tone === "sunken" && "bg-[--color-surface-sunken]",
-        tone === "dark" && "bg-[--color-navy-900] text-[--color-navy-100]",
+        tone === "sunken" && "bg-(--color-surface-sunken)",
+        tone === "dark" && "bg-(--color-navy-900) text-(--color-navy-100)",
         className,
       )}
     >
@@ -56,7 +56,7 @@ export function SectionHeading({
         <p
           className={cn(
             "mb-2.5 text-xs font-semibold tracking-[0.16em] uppercase",
-            tone === "dark" ? "text-[--color-teal-300]" : "text-[--color-accent]",
+            tone === "dark" ? "text-(--color-teal-300)" : "text-(--color-accent)",
           )}
         >
           {eyebrow}
@@ -69,7 +69,7 @@ export function SectionHeading({
         <p
           className={cn(
             "mt-4 text-base leading-relaxed md:text-lg",
-            tone === "dark" ? "text-[--color-navy-200]" : "text-[--color-ink-muted]",
+            tone === "dark" ? "text-(--color-navy-200)" : "text-(--color-ink-muted)",
           )}
         >
           {description}

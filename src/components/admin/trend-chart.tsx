@@ -36,7 +36,7 @@ export interface TrendPoint {
 export function AppointmentTrendChart({ data }: { data: TrendPoint[] }) {
   if (data.length === 0) {
     return (
-      <p className="py-12 text-center text-sm text-[--color-ink-subtle]">
+      <p className="py-12 text-center text-sm text-(--color-ink-subtle)">
         No appointments in this period.
       </p>
     );
@@ -100,7 +100,7 @@ export interface SourcePoint {
 export function SourceChart({ data }: { data: SourcePoint[] }) {
   if (data.length === 0) {
     return (
-      <p className="py-12 text-center text-sm text-[--color-ink-subtle]">
+      <p className="py-12 text-center text-sm text-(--color-ink-subtle)">
         No enquiries in this period.
       </p>
     );

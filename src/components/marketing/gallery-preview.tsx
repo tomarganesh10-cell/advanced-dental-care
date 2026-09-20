@@ -27,14 +27,14 @@ export async function GalleryPreview() {
           return (
             <li
               key={item.id}
-              className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white"
+              className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white"
             >
-              <div className="grid grid-cols-2 gap-px bg-[--color-hairline]">
+              <div className="grid grid-cols-2 gap-px bg-(--color-hairline)">
                 {[
                   { label: "Before", media: before },
                   { label: "After", media: after },
                 ].map((panel) => (
-                  <div key={panel.label} className="relative aspect-square bg-[--color-sand]">
+                  <div key={panel.label} className="relative aspect-square bg-(--color-sand)">
                     {panel.media ? (
                       <Image
                         src={panel.media.imageUrl}
@@ -45,7 +45,7 @@ export async function GalleryPreview() {
                       />
                     ) : (
                       <div className="flex h-full items-center justify-center">
-                        <ImageIcon className="size-6 text-[--color-navy-300]" aria-hidden="true" />
+                        <ImageIcon className="size-6 text-(--color-navy-300)" aria-hidden="true" />
                       </div>
                     )}
                     <span className="absolute bottom-2 left-2 rounded bg-black/65 px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-white uppercase">
@@ -58,10 +58,10 @@ export async function GalleryPreview() {
               <div className="p-5">
                 <h3 className="text-base font-semibold">{item.title}</h3>
                 {item.concern ? (
-                  <p className="mt-1 text-sm text-[--color-ink-subtle]">Concern: {item.concern}</p>
+                  <p className="mt-1 text-sm text-(--color-ink-subtle)">Concern: {item.concern}</p>
                 ) : null}
                 {item.summary ? (
-                  <p className="mt-2 text-sm leading-relaxed text-[--color-ink-muted]">
+                  <p className="mt-2 text-sm leading-relaxed text-(--color-ink-muted)">
                     {item.summary}
                   </p>
                 ) : null}
@@ -83,7 +83,7 @@ export async function GalleryPreview() {
           Required alongside any before/after imagery. Results shown are from
           specific patients and are not a prediction for anyone else.
         */}
-        <p className="max-w-2xl text-center text-xs leading-relaxed text-[--color-ink-subtle]">
+        <p className="max-w-2xl text-center text-xs leading-relaxed text-(--color-ink-subtle)">
           {disclaimers.results}
         </p>
       </div>

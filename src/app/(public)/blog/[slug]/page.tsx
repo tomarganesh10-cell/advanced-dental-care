@@ -95,21 +95,21 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         {post.category ? (
           <Link
             href={`/blog?category=${post.category.slug}`}
-            className="text-xs font-semibold tracking-wide text-[--color-accent] uppercase"
+            className="text-xs font-semibold tracking-wide text-(--color-accent) uppercase"
           >
             {post.category.name}
           </Link>
         ) : null}
 
         <h1 className="mt-3 text-3xl leading-tight md:text-4xl">{post.title}</h1>
-        <p className="mt-4 text-lg leading-relaxed text-[--color-ink-muted]">{post.summary}</p>
+        <p className="mt-4 text-lg leading-relaxed text-(--color-ink-muted)">{post.summary}</p>
 
         {/*
           Authorship, review status and dates sit at the top, not buried at the
           bottom. For health content, who wrote it and when it was last checked
           is part of the information, not metadata.
         */}
-        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-y border-[--color-hairline] py-4 text-sm text-[--color-ink-subtle]">
+        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-y border-(--color-hairline) py-4 text-sm text-(--color-ink-subtle)">
           <span className="flex items-center gap-1.5">
             <UserRound className="size-4" aria-hidden="true" />
             {post.authorDoctor ? (
@@ -139,7 +139,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
 
         {post.medicalReviewer && post.medicallyReviewedAt ? (
-          <p className="mt-4 flex items-start gap-2 rounded-lg bg-[--color-teal-50] p-4 text-sm text-[--color-teal-900]">
+          <p className="mt-4 flex items-start gap-2 rounded-lg bg-(--color-teal-50) p-4 text-sm text-(--color-teal-900)">
             <ShieldCheck className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
             <span>
               Clinically reviewed by{" "}
@@ -155,7 +155,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         ) : null}
 
         <div
-          className="prose-clinic mt-8 [&_a]:text-[--color-action] [&_a]:underline [&_a]:underline-offset-4 [&_h2]:mt-9 [&_h2]:mb-3 [&_h2]:text-xl [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-base [&_li]:mt-1.5 [&_ol]:mt-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:pl-5"
+          className="prose-clinic mt-8 [&_a]:text-(--color-action) [&_a]:underline [&_a]:underline-offset-4 [&_h2]:mt-9 [&_h2]:mb-3 [&_h2]:text-xl [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-base [&_li]:mt-1.5 [&_ol]:mt-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:pl-5"
           dangerouslySetInnerHTML={{ __html: html }}
         />
 
@@ -166,7 +166,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
         ) : null}
 
-        <p className="mt-10 rounded-[--radius-card] border border-[--color-hairline] bg-[--color-surface-sunken] p-5 text-xs leading-relaxed text-[--color-ink-subtle]">
+        <p className="mt-10 rounded-(--radius-card) border border-(--color-hairline) bg-(--color-surface-sunken) p-5 text-xs leading-relaxed text-(--color-ink-subtle)">
           {disclaimers.medical}
         </p>
       </article>

@@ -54,7 +54,7 @@ export default function TechnologyPage() {
               {systems.map((system) => (
                 <li
                   key={system}
-                  className="rounded-full border border-[--color-hairline] bg-white px-5 py-2.5 text-sm font-medium"
+                  className="rounded-full border border-(--color-hairline) bg-white px-5 py-2.5 text-sm font-medium"
                 >
                   {system}
                 </li>

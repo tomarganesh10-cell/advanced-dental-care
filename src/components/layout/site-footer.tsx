@@ -28,7 +28,7 @@ export function SiteFooter() {
   const featuredCategories = SERVICE_CATEGORIES.slice(0, 3);
 
   return (
-    <footer className="no-print border-t border-[--color-navy-800] bg-[--color-navy-900] text-[--color-navy-200]">
+    <footer className="no-print border-t border-(--color-navy-800) bg-(--color-navy-900) text-(--color-navy-200)">
       <div className="container-page py-14">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Identity + contact */}
@@ -43,7 +43,7 @@ export function SiteFooter() {
             <address className="space-y-2.5 text-sm not-italic">
               <p className="flex items-start gap-2.5">
                 <MapPin
-                  className="mt-0.5 size-4 shrink-0 text-[--color-teal-400]"
+                  className="mt-0.5 size-4 shrink-0 text-(--color-teal-400)"
                   aria-hidden="true"
                 />
                 <span>
@@ -53,13 +53,13 @@ export function SiteFooter() {
                 </span>
               </p>
               <p className="flex items-center gap-2.5">
-                <Phone className="size-4 shrink-0 text-[--color-teal-400]" aria-hidden="true" />
+                <Phone className="size-4 shrink-0 text-(--color-teal-400)" aria-hidden="true" />
                 <a href={`tel:${contact.phone.e164}`} className="hover:text-white hover:underline">
                   {contact.phone.display}
                 </a>
               </p>
               <p className="flex items-center gap-2.5">
-                <Mail className="size-4 shrink-0 text-[--color-teal-400]" aria-hidden="true" />
+                <Mail className="size-4 shrink-0 text-(--color-teal-400)" aria-hidden="true" />
                 <a
                   href={`mailto:${contact.email.primary}`}
                   className="break-all hover:text-white hover:underline"
@@ -93,7 +93,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/services"
-                  className="font-medium text-[--color-teal-300] hover:underline"
+                  className="font-medium text-(--color-teal-300) hover:underline"
                 >
                   All treatments →
                 </Link>
@@ -129,7 +129,7 @@ export function SiteFooter() {
             <div className="space-y-2">
               <Link
                 href="/book-appointment"
-                className="flex h-11 w-full items-center justify-center rounded-full bg-[--color-action] px-5 text-sm font-semibold text-white hover:bg-[--color-medical-600]"
+                className="flex h-11 w-full items-center justify-center rounded-full bg-(--color-action) px-5 text-sm font-semibold text-white hover:bg-(--color-medical-600)"
               >
                 Book an appointment
               </Link>
@@ -137,7 +137,7 @@ export function SiteFooter() {
                 href={`https://wa.me/${contact.phone.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-11 w-full items-center justify-center rounded-full border border-[--color-navy-600] px-5 text-sm font-semibold text-white hover:bg-[--color-navy-800]"
+                className="flex h-11 w-full items-center justify-center rounded-full border border-(--color-navy-600) px-5 text-sm font-semibold text-white hover:bg-(--color-navy-800)"
               >
                 WhatsApp us
               </a>
@@ -150,11 +150,11 @@ export function SiteFooter() {
           a health website, and the distinction between general information and
           a consultation has to be stated, not implied.
         */}
-        <div className="mt-10 rounded-[--radius-card] border border-[--color-navy-700] bg-[--color-navy-950]/60 p-5">
-          <p className="text-xs leading-relaxed text-[--color-navy-300]">{footerDisclaimer}</p>
+        <div className="mt-10 rounded-(--radius-card) border border-(--color-navy-700) bg-(--color-navy-950)/60 p-5">
+          <p className="text-xs leading-relaxed text-(--color-navy-300)">{footerDisclaimer}</p>
         </div>
 
-        <div className="mt-8 flex flex-col gap-4 border-t border-[--color-navy-800] pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-4 border-t border-(--color-navy-800) pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {identity.legalName}. All rights reserved.
           </p>
@@ -167,7 +167,7 @@ export function SiteFooter() {
               </li>
             ))}
             <li>
-              <Link href="/staff-login" className="text-[--color-navy-400] hover:text-white">
+              <Link href="/staff-login" className="text-(--color-navy-400) hover:text-white">
                 Staff login
               </Link>
             </li>

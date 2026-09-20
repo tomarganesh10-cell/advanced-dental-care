@@ -54,13 +54,13 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       <div className="container-page grid gap-10 pb-12 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-16">
         <div>
           {category ? (
-            <p className="mb-2.5 text-xs font-semibold tracking-[0.16em] text-[--color-accent] uppercase">
+            <p className="mb-2.5 text-xs font-semibold tracking-[0.16em] text-(--color-accent) uppercase">
               {category.name}
             </p>
           ) : null}
 
           <h1 className="text-3xl md:text-4xl lg:text-[2.75rem]">{service.name}</h1>
-          <p className="mt-4 text-lg leading-relaxed text-[--color-ink-muted]">{service.summary}</p>
+          <p className="mt-4 text-lg leading-relaxed text-(--color-ink-muted)">{service.summary}</p>
 
           <div className="prose-clinic mt-6">
             {service.body.map((paragraph, index) => (
@@ -87,32 +87,32 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         {/* Side panel */}
         <aside className="space-y-5 lg:pt-12">
           {service.typicalVisits ? (
-            <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5">
-              <p className="flex items-center gap-2 text-xs font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+            <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-5">
+              <p className="flex items-center gap-2 text-xs font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
                 <Clock className="size-3.5" aria-hidden="true" />
                 Typical course of treatment
               </p>
-              <p className="mt-2 text-base font-medium text-[--color-primary]">
+              <p className="mt-2 text-base font-medium text-(--color-primary)">
                 {service.typicalVisits}
               </p>
-              <p className="mt-1.5 text-xs leading-relaxed text-[--color-ink-subtle]">
+              <p className="mt-1.5 text-xs leading-relaxed text-(--color-ink-subtle)">
                 An estimate only. Your own plan depends on what the examination finds.
               </p>
             </div>
           ) : null}
 
-          <div className="rounded-[--radius-card] border border-[--color-hairline] bg-[--color-surface-sunken] p-5">
-            <h2 className="text-sm font-semibold text-[--color-primary]">
+          <div className="rounded-(--radius-card) border border-(--color-hairline) bg-(--color-surface-sunken) p-5">
+            <h2 className="text-sm font-semibold text-(--color-primary)">
               This may be right for you if
             </h2>
             <ul className="mt-3 space-y-2">
               {service.indications.map((indication) => (
                 <li
                   key={indication}
-                  className="flex items-start gap-2 text-sm text-[--color-ink-muted]"
+                  className="flex items-start gap-2 text-sm text-(--color-ink-muted)"
                 >
                   <CheckCircle2
-                    className="mt-0.5 size-4 shrink-0 text-[--color-accent]"
+                    className="mt-0.5 size-4 shrink-0 text-(--color-accent)"
                     aria-hidden="true"
                   />
                   {indication}
@@ -133,17 +133,17 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             description="So you know what each visit involves before you commit to the first one."
           />
 
-          <ol className="mt-10 space-y-6 border-l-2 border-[--color-navy-100] pl-6 md:pl-8">
+          <ol className="mt-10 space-y-6 border-l-2 border-(--color-navy-100) pl-6 md:pl-8">
             {service.steps.map((step, index) => (
               <li key={step.title} className="relative">
                 <span
-                  className="absolute -left-[2.1rem] flex size-7 items-center justify-center rounded-full bg-[--color-action] text-xs font-semibold text-white md:-left-[2.6rem]"
+                  className="absolute -left-[2.1rem] flex size-7 items-center justify-center rounded-full bg-(--color-action) text-xs font-semibold text-white md:-left-[2.6rem]"
                   aria-hidden="true"
                 >
                   {index + 1}
                 </span>
                 <h3 className="text-base font-semibold">{step.title}</h3>
-                <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-[--color-ink-muted]">
+                <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-(--color-ink-muted)">
                   {step.description}
                 </p>
               </li>
@@ -173,7 +173,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             <div className="mt-6">
               <Link
                 href="/services"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[--color-action]"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-(--color-action)"
               >
                 All treatments
                 <ArrowRight className="size-4" aria-hidden="true" />
@@ -185,7 +185,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
       <Section tone="muted">
         <BookingCta />
-        <p className="container-page mt-8 max-w-3xl text-center text-xs leading-relaxed text-[--color-ink-subtle]">
+        <p className="container-page mt-8 max-w-3xl text-center text-xs leading-relaxed text-(--color-ink-subtle)">
           {disclaimers.medical}
         </p>
       </Section>

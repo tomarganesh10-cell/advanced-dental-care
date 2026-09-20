@@ -76,8 +76,8 @@ export default async function BlogPage({
                 className={cn(
                   "inline-block rounded-full border px-4 py-2 text-sm font-medium",
                   !category
-                    ? "border-[--color-action] bg-[--color-action] text-white"
-                    : "border-[--color-navy-200] bg-white text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                    ? "border-(--color-action) bg-(--color-action) text-white"
+                    : "border-(--color-navy-200) bg-white text-(--color-ink-muted) hover:bg-(--color-navy-50)",
                 )}
               >
                 All
@@ -90,8 +90,8 @@ export default async function BlogPage({
                   className={cn(
                     "inline-block rounded-full border px-4 py-2 text-sm font-medium",
                     category === item.slug
-                      ? "border-[--color-action] bg-[--color-action] text-white"
-                      : "border-[--color-navy-200] bg-white text-[--color-ink-muted] hover:bg-[--color-navy-50]",
+                      ? "border-(--color-action) bg-(--color-action) text-white"
+                      : "border-(--color-navy-200) bg-white text-(--color-ink-muted) hover:bg-(--color-navy-50)",
                   )}
                 >
                   {item.name}
@@ -115,19 +115,19 @@ export default async function BlogPage({
                 <li key={post.id}>
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="flex h-full flex-col rounded-[--radius-card] border border-[--color-hairline] bg-white p-6 transition-shadow hover:shadow-[--shadow-card]"
+                    className="flex h-full flex-col rounded-(--radius-card) border border-(--color-hairline) bg-white p-6 transition-shadow hover:shadow-(--shadow-card)"
                   >
                     {post.category ? (
-                      <span className="text-xs font-semibold tracking-wide text-[--color-accent] uppercase">
+                      <span className="text-xs font-semibold tracking-wide text-(--color-accent) uppercase">
                         {post.category.name}
                       </span>
                     ) : null}
                     <h2 className="mt-2 text-lg leading-snug font-semibold">{post.title}</h2>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-[--color-ink-muted]">
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-(--color-ink-muted)">
                       {post.summary}
                     </p>
 
-                    <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-[--color-hairline] pt-3 text-xs text-[--color-ink-subtle]">
+                    <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-(--color-hairline) pt-3 text-xs text-(--color-ink-subtle)">
                       {post.publishedAt ? (
                         <span className="flex items-center gap-1">
                           <CalendarDays className="size-3" aria-hidden="true" />
@@ -136,7 +136,7 @@ export default async function BlogPage({
                       ) : null}
                       {post.readingMinutes ? <span>{post.readingMinutes} min read</span> : null}
                       {post.medicallyReviewedAt ? (
-                        <span className="flex items-center gap-1 text-[--color-teal-700]">
+                        <span className="flex items-center gap-1 text-(--color-teal-700)">
                           <ShieldCheck className="size-3" aria-hidden="true" />
                           Clinically reviewed
                         </span>

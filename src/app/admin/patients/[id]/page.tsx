@@ -71,7 +71,7 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
       {/* Safety flags first. Whatever else is on this page, an allergy or an
           anticoagulant needs to be seen before anything is planned. */}
       {patient.clinicalAlert ? (
-        <div className="mb-5 flex items-start gap-3 rounded-[--radius-card] border-2 border-red-300 bg-red-50 p-4">
+        <div className="mb-5 flex items-start gap-3 rounded-(--radius-card) border-2 border-red-300 bg-red-50 p-4">
           <ShieldAlert className="mt-0.5 size-5 shrink-0 text-red-700" aria-hidden="true" />
           <div>
             <p className="text-sm font-semibold text-red-900">Clinical alert</p>
@@ -83,11 +83,11 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
         {/* Left: identity and contact */}
         <div className="space-y-4">
-          <section className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5">
+          <section className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-5">
             <h2 className="mb-3 text-sm font-semibold">Contact</h2>
             <dl className="space-y-2.5 text-sm">
               <Row icon={<Phone className="size-3.5" />} label="Mobile">
-                <a href={`tel:${patient.phone}`} className="text-[--color-action] hover:underline">
+                <a href={`tel:${patient.phone}`} className="text-(--color-action) hover:underline">
                   {formatPhone(patient.phone)}
                 </a>
               </Row>
@@ -100,7 +100,7 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
                 <Row icon={<Mail className="size-3.5" />} label="Email">
                   <a
                     href={`mailto:${patient.email}`}
-                    className="break-all text-[--color-action] hover:underline"
+                    className="break-all text-(--color-action) hover:underline"
                   >
                     {patient.email}
                   </a>
@@ -121,8 +121,8 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
             </dl>
 
             {patient.emergencyContactName ? (
-              <div className="mt-4 border-t border-[--color-hairline] pt-3">
-                <p className="text-xs font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+              <div className="mt-4 border-t border-(--color-hairline) pt-3">
+                <p className="text-xs font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
                   Emergency contact
                 </p>
                 <p className="mt-1 text-sm">
@@ -132,7 +132,7 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
                 {patient.emergencyContactPhone ? (
                   <a
                     href={`tel:${patient.emergencyContactPhone}`}
-                    className="text-sm text-[--color-action] hover:underline"
+                    className="text-sm text-(--color-action) hover:underline"
                   >
                     {formatPhone(patient.emergencyContactPhone)}
                   </a>
@@ -140,14 +140,14 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
               </div>
             ) : null}
 
-            <p className="mt-4 border-t border-[--color-hairline] pt-3 text-xs text-[--color-ink-subtle]">
+            <p className="mt-4 border-t border-(--color-hairline) pt-3 text-xs text-(--color-ink-subtle)">
               Portal account: {patient.hasPortalAccount ? "active" : "not yet used"}
             </p>
           </section>
 
           {/* Medical history — clinical staff only */}
           {clinical ? (
-            <section className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5">
+            <section className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-5">
               <h2 className="mb-3 text-sm font-semibold">Medical history</h2>
 
               {clinical.medicalHistory ? (
@@ -188,10 +188,10 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
 
                   {clinical.medicalHistory.currentMedications.length > 0 ? (
                     <div className="mt-3">
-                      <p className="text-xs font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+                      <p className="text-xs font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
                         Current medications
                       </p>
-                      <p className="mt-1 text-sm text-[--color-ink-muted]">
+                      <p className="mt-1 text-sm text-(--color-ink-muted)">
                         {clinical.medicalHistory.currentMedications.join(", ")}
                       </p>
                     </div>
@@ -199,17 +199,17 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
 
                   {clinical.medicalHistory.medicalConditions.length > 0 ? (
                     <div className="mt-3">
-                      <p className="text-xs font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+                      <p className="text-xs font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
                         Conditions
                       </p>
-                      <p className="mt-1 text-sm text-[--color-ink-muted]">
+                      <p className="mt-1 text-sm text-(--color-ink-muted)">
                         {clinical.medicalHistory.medicalConditions.join(", ")}
                       </p>
                     </div>
                   ) : null}
 
                   {clinical.medicalHistory.lastReviewedAt ? (
-                    <p className="mt-3 text-xs text-[--color-ink-subtle]">
+                    <p className="mt-3 text-xs text-(--color-ink-subtle)">
                       Last reviewed{" "}
                       {formatClinicDate(clinical.medicalHistory.lastReviewedAt, "d MMM yyyy")}
                     </p>
@@ -229,7 +229,7 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
           ) : (
             /* A non-clinical role sees that a record exists without its
                contents. Pretending there is nothing here would be misleading. */
-            <section className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5">
+            <section className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-5">
               <NoAccessState
                 title="Clinical record not shown"
                 description="Your role covers appointments and contact details. Medical history and clinical notes are restricted to clinical staff."
@@ -243,14 +243,14 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
           {/* Appointments */}
           <section>
             <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-              <CalendarDays className="size-4 text-[--color-ink-subtle]" aria-hidden="true" />
+              <CalendarDays className="size-4 text-(--color-ink-subtle)" aria-hidden="true" />
               Appointments
             </h2>
 
             {timeline.appointments.length === 0 ? (
               <EmptyState title="No appointments yet" />
             ) : (
-              <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+              <ul className="divide-y divide-(--color-hairline) overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
                 {timeline.appointments.slice(0, 8).map((appointment) => (
                   <li
                     key={appointment.id}
@@ -259,11 +259,11 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
                     <span className="font-medium tabular-nums">
                       {formatClinicDate(appointment.startsAt, "d MMM yyyy")}
                     </span>
-                    <span className="text-[--color-ink-muted]">
+                    <span className="text-(--color-ink-muted)">
                       {appointment.serviceName ?? "Consultation"}
                     </span>
                     {appointment.doctor ? (
-                      <span className="text-xs text-[--color-ink-subtle]">
+                      <span className="text-xs text-(--color-ink-subtle)">
                         {appointment.doctor.displayName}
                       </span>
                     ) : null}
@@ -280,7 +280,7 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
           {clinical ? (
             <section>
               <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-                <Stethoscope className="size-4 text-[--color-ink-subtle]" aria-hidden="true" />
+                <Stethoscope className="size-4 text-(--color-ink-subtle)" aria-hidden="true" />
                 Clinical notes
               </h2>
 
@@ -291,13 +291,13 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
                   {clinical.notes.slice(0, 10).map((note) => (
                     <li
                       key={note.id}
-                      className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-4"
+                      className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-4"
                     >
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <p className="text-sm font-medium">
                           {formatClinicDateTime(note.createdAt)}
                         </p>
-                        <div className="flex items-center gap-2 text-xs text-[--color-ink-subtle]">
+                        <div className="flex items-center gap-2 text-xs text-(--color-ink-subtle)">
                           {note.doctorName ?? note.authorName ?? "Unknown author"}
                           {note.lockedAt ? (
                             <span title="Locked — corrections are added as amendments">
@@ -327,13 +327,13 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
                       </dl>
 
                       {note.privateNote ? (
-                        <p className="mt-2.5 rounded-lg bg-[--color-navy-50] p-2.5 text-xs text-[--color-navy-900]">
+                        <p className="mt-2.5 rounded-lg bg-(--color-navy-50) p-2.5 text-xs text-(--color-navy-900)">
                           <span className="font-semibold">Private note:</span> {note.privateNote}
                         </p>
                       ) : null}
 
                       {note.followUpDate ? (
-                        <p className="mt-2 text-xs text-[--color-ink-subtle]">
+                        <p className="mt-2 text-xs text-(--color-ink-subtle)">
                           Follow up {formatClinicDate(note.followUpDate, "d MMM yyyy")}
                         </p>
                       ) : null}
@@ -348,21 +348,21 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
           {clinical && clinical.treatmentPlans.length > 0 ? (
             <section>
               <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-                <FileText className="size-4 text-[--color-ink-subtle]" aria-hidden="true" />
+                <FileText className="size-4 text-(--color-ink-subtle)" aria-hidden="true" />
                 Treatment plans
               </h2>
-              <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+              <ul className="divide-y divide-(--color-hairline) overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
                 {clinical.treatmentPlans.map((plan) => (
                   <li
                     key={plan.id}
                     className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm"
                   >
                     <span className="font-medium">{plan.title}</span>
-                    <span className="text-xs text-[--color-ink-subtle]">
+                    <span className="text-xs text-(--color-ink-subtle)">
                       {plan.itemCount} item(s)
                     </span>
                     {canSeeMoney ? (
-                      <span className="text-[--color-ink-muted]">
+                      <span className="text-(--color-ink-muted)">
                         {formatPaise(plan.estimatedTotalPaise)}
                       </span>
                     ) : null}
@@ -379,20 +379,20 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
           {clinical && clinical.prescriptions.length > 0 ? (
             <section>
               <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-                <Pill className="size-4 text-[--color-ink-subtle]" aria-hidden="true" />
+                <Pill className="size-4 text-(--color-ink-subtle)" aria-hidden="true" />
                 Prescriptions
               </h2>
-              <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+              <ul className="divide-y divide-(--color-hairline) overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
                 {clinical.prescriptions.map((prescription) => (
                   <li
                     key={prescription.id}
                     className="flex flex-wrap items-center gap-x-3 px-4 py-3 text-sm"
                   >
                     <span className="font-medium tabular-nums">{prescription.reference}</span>
-                    <span className="text-[--color-ink-muted]">
+                    <span className="text-(--color-ink-muted)">
                       {formatClinicDate(prescription.issuedAt, "d MMM yyyy")}
                     </span>
-                    <span className="text-xs text-[--color-ink-subtle]">
+                    <span className="text-xs text-(--color-ink-subtle)">
                       {prescription.itemCount} medication(s)
                       {prescription.doctorName ? ` · ${prescription.doctorName}` : ""}
                     </span>
@@ -406,17 +406,17 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
           {canSeeMoney && timeline.invoices.length > 0 ? (
             <section>
               <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-                <ReceiptText className="size-4 text-[--color-ink-subtle]" aria-hidden="true" />
+                <ReceiptText className="size-4 text-(--color-ink-subtle)" aria-hidden="true" />
                 Invoices
               </h2>
-              <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+              <ul className="divide-y divide-(--color-hairline) overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
                 {timeline.invoices.map((invoice) => (
                   <li
                     key={invoice.id}
                     className="flex flex-wrap items-center gap-x-3 px-4 py-3 text-sm"
                   >
                     <span className="font-medium tabular-nums">{invoice.number}</span>
-                    <span className="text-[--color-ink-muted]">
+                    <span className="text-(--color-ink-muted)">
                       {formatPaise(invoice.totalPaise)}
                     </span>
                     <Badge
@@ -454,13 +454,13 @@ function Row({
   return (
     <div className="flex gap-2">
       {icon ? (
-        <span className="mt-1 shrink-0 text-[--color-ink-subtle]" aria-hidden="true">
+        <span className="mt-1 shrink-0 text-(--color-ink-subtle)" aria-hidden="true">
           {icon}
         </span>
       ) : null}
       <div className="min-w-0">
-        <dt className="text-xs text-[--color-ink-subtle]">{label}</dt>
-        <dd className="text-[--color-ink]">{children}</dd>
+        <dt className="text-xs text-(--color-ink-subtle)">{label}</dt>
+        <dd className="text-(--color-ink)">{children}</dd>
       </div>
     </div>
   );
@@ -469,8 +469,8 @@ function Row({
 function NoteRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex gap-2">
-      <dt className="w-24 shrink-0 text-xs text-[--color-ink-subtle]">{label}</dt>
-      <dd className="text-[--color-ink-muted]">{children}</dd>
+      <dt className="w-24 shrink-0 text-xs text-(--color-ink-subtle)">{label}</dt>
+      <dd className="text-(--color-ink-muted)">{children}</dd>
     </div>
   );
 }

@@ -120,7 +120,7 @@ export default async function ClinicalPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <section>
-          <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
             Follow-ups due
           </h2>
           {dueFollowUps.length === 0 ? (
@@ -129,28 +129,28 @@ export default async function ClinicalPage() {
               description="Follow-up dates set on notes appear here."
             />
           ) : (
-            <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+            <ul className="divide-y divide-(--color-hairline) overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
               {dueFollowUps.map((note) => (
                 <li key={note.id} className="px-4 py-3 text-sm">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <Link
                       href={`/admin/patients/${note.patient.id}`}
-                      className="font-medium text-[--color-action] hover:underline"
+                      className="font-medium text-(--color-action) hover:underline"
                     >
                       {note.patient.fullName}
                     </Link>
-                    <span className="text-xs text-[--color-danger]">
+                    <span className="text-xs text-(--color-danger)">
                       due {note.followUpDate ? formatClinicDate(note.followUpDate, "d MMM") : ""}
                     </span>
                   </div>
                   {note.diagnosis ? (
-                    <p className="mt-1 text-xs text-[--color-ink-muted]">
+                    <p className="mt-1 text-xs text-(--color-ink-muted)">
                       {truncate(note.diagnosis, 90)}
                     </p>
                   ) : null}
                   <a
                     href={`tel:${note.patient.phone}`}
-                    className="mt-1 inline-block text-xs text-[--color-ink-subtle] hover:underline"
+                    className="mt-1 inline-block text-xs text-(--color-ink-subtle) hover:underline"
                   >
                     {note.patient.phone}
                   </a>
@@ -161,19 +161,19 @@ export default async function ClinicalPage() {
         </section>
 
         <section>
-          <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
             Open treatment plans
           </h2>
           {openPlans.length === 0 ? (
             <EmptyState title="No open plans" />
           ) : (
-            <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+            <ul className="divide-y divide-(--color-hairline) overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
               {openPlans.map((plan) => (
                 <li key={plan.id} className="px-4 py-3 text-sm">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <Link
                       href={`/admin/patients/${plan.patient.id}`}
-                      className="font-medium text-[--color-action] hover:underline"
+                      className="font-medium text-(--color-action) hover:underline"
                     >
                       {plan.patient.fullName}
                     </Link>
@@ -181,11 +181,11 @@ export default async function ClinicalPage() {
                       {plan.status.toLowerCase().replace(/_/g, " ")}
                     </Badge>
                   </div>
-                  <p className="mt-0.5 text-xs text-[--color-ink-muted]">
+                  <p className="mt-0.5 text-xs text-(--color-ink-muted)">
                     {plan.title} · {plan._count.items} step(s)
                   </p>
                   {!plan.isVisibleToPatient ? (
-                    <p className="mt-1 text-xs text-[--color-ink-subtle]">
+                    <p className="mt-1 text-xs text-(--color-ink-subtle)">
                       Not yet shared with the patient
                     </p>
                   ) : null}
@@ -197,16 +197,16 @@ export default async function ClinicalPage() {
       </div>
 
       <section className="mt-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           Recent notes
         </h2>
         {notes.length === 0 ? (
           <EmptyState title="No clinical notes yet" />
         ) : (
-          <div className="overflow-x-auto rounded-[--radius-card] border border-[--color-hairline] bg-white">
+          <div className="overflow-x-auto rounded-(--radius-card) border border-(--color-hairline) bg-white">
             <table className="w-full min-w-[42rem] text-sm">
               <caption className="sr-only">Recent clinical notes</caption>
-              <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+              <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
                 <tr>
                   <th scope="col" className="px-4 py-2.5 text-left font-medium">
                     When
@@ -225,10 +225,10 @@ export default async function ClinicalPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[--color-hairline]">
+              <tbody className="divide-y divide-(--color-hairline)">
                 {notes.map((note) => (
                   <tr key={note.id}>
-                    <td className="px-4 py-2.5 text-xs whitespace-nowrap text-[--color-ink-subtle]">
+                    <td className="px-4 py-2.5 text-xs whitespace-nowrap text-(--color-ink-subtle)">
                       {formatClinicDateTime(note.createdAt)}
                       {note.lockedAt ? (
                         <Lock
@@ -240,23 +240,23 @@ export default async function ClinicalPage() {
                     <td className="px-4 py-2.5">
                       <Link
                         href={`/admin/patients/${note.patient.id}`}
-                        className="font-medium text-[--color-action] hover:underline"
+                        className="font-medium text-(--color-action) hover:underline"
                       >
                         {note.patient.fullName}
                       </Link>
                     </td>
-                    <td className="px-4 py-2.5 text-[--color-ink-muted]">
+                    <td className="px-4 py-2.5 text-(--color-ink-muted)">
                       {note.diagnosis ? truncate(note.diagnosis, 60) : "—"}
                       {note.toothNumbers.length > 0 ? (
-                        <span className="block text-xs text-[--color-ink-subtle]">
+                        <span className="block text-xs text-(--color-ink-subtle)">
                           {note.toothNumbers.join(", ")}
                         </span>
                       ) : null}
                     </td>
-                    <td className="px-4 py-2.5 text-[--color-ink-muted]">
+                    <td className="px-4 py-2.5 text-(--color-ink-muted)">
                       {note.procedure ? truncate(note.procedure, 50) : "—"}
                     </td>
-                    <td className="px-4 py-2.5 text-xs text-[--color-ink-subtle]">
+                    <td className="px-4 py-2.5 text-xs text-(--color-ink-subtle)">
                       {note.doctor?.displayName ?? "—"}
                     </td>
                   </tr>
@@ -267,7 +267,7 @@ export default async function ClinicalPage() {
         )}
       </section>
 
-      <p className="mt-6 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-6 text-xs leading-relaxed text-(--color-ink-subtle)">
         {canManagePlans
           ? "Authoring notes and prescriptions from this screen is not yet built — see docs/STATUS.md. The data model, permissions and audit trail are in place."
           : "You have read access to the clinical record. Authoring is limited to clinicians."}{" "}

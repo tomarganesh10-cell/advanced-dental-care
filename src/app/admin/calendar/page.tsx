@@ -100,20 +100,20 @@ export default async function CalendarPage({
             <Link
               href={`/admin/calendar?date=${shiftDate(dateString, -1)}`}
               aria-label="Previous day"
-              className="flex size-9 items-center justify-center rounded-lg border border-[--color-navy-200] bg-white hover:bg-[--color-navy-50]"
+              className="flex size-9 items-center justify-center rounded-lg border border-(--color-navy-200) bg-white hover:bg-(--color-navy-50)"
             >
               <ChevronLeft className="size-4" />
             </Link>
             <Link
               href="/admin/calendar"
-              className="rounded-lg border border-[--color-navy-200] bg-white px-3 py-2 text-sm font-medium hover:bg-[--color-navy-50]"
+              className="rounded-lg border border-(--color-navy-200) bg-white px-3 py-2 text-sm font-medium hover:bg-(--color-navy-50)"
             >
               Today
             </Link>
             <Link
               href={`/admin/calendar?date=${shiftDate(dateString, 1)}`}
               aria-label="Next day"
-              className="flex size-9 items-center justify-center rounded-lg border border-[--color-navy-200] bg-white hover:bg-[--color-navy-50]"
+              className="flex size-9 items-center justify-center rounded-lg border border-(--color-navy-200) bg-white hover:bg-(--color-navy-50)"
             >
               <ChevronRight className="size-4" />
             </Link>
@@ -122,7 +122,7 @@ export default async function CalendarPage({
       />
 
       {holiday && !holiday.opens ? (
-        <div className="mb-4 rounded-[--radius-card] border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+        <div className="mb-4 rounded-(--radius-card) border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
           <strong>Clinic closed:</strong> {holiday.name}
         </div>
       ) : null}
@@ -133,21 +133,21 @@ export default async function CalendarPage({
           description="Add a dentist and their working hours before the calendar can show anything."
         />
       ) : (
-        <div className="overflow-x-auto rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <div className="overflow-x-auto rounded-(--radius-card) border border-(--color-hairline) bg-white">
           <div className="min-w-[44rem]">
             {/* Column headers */}
             <div
-              className="grid border-b border-[--color-hairline] bg-[--color-surface-sunken]"
+              className="grid border-b border-(--color-hairline) bg-(--color-surface-sunken)"
               style={{ gridTemplateColumns: `4rem repeat(${doctors.length}, minmax(0, 1fr))` }}
             >
-              <div className="px-2 py-2.5 text-xs font-medium text-[--color-ink-subtle]">Time</div>
+              <div className="px-2 py-2.5 text-xs font-medium text-(--color-ink-subtle)">Time</div>
               {doctors.map((doctor) => (
                 <div
                   key={doctor.id}
-                  className="border-l border-[--color-hairline] px-3 py-2.5 text-sm font-semibold"
+                  className="border-l border-(--color-hairline) px-3 py-2.5 text-sm font-semibold"
                 >
                   {doctor.displayName}
-                  <span className="ml-1.5 text-xs font-normal text-[--color-ink-subtle] tabular-nums">
+                  <span className="ml-1.5 text-xs font-normal text-(--color-ink-subtle) tabular-nums">
                     {appointments.filter((a) => a.doctorId === doctor.id).length}
                   </span>
                 </div>
@@ -167,7 +167,7 @@ export default async function CalendarPage({
                 {hours.map((minutes) => (
                   <div
                     key={minutes}
-                    className="absolute right-2 -translate-y-1/2 text-[11px] text-[--color-ink-subtle] tabular-nums"
+                    className="absolute right-2 -translate-y-1/2 text-[11px] text-(--color-ink-subtle) tabular-nums"
                     style={{ top: `${(minutes - DAY_START_MINUTES) / MINUTES_PER_PIXEL}px` }}
                   >
                     {String(Math.floor(minutes / 60)).padStart(2, "0")}:00
@@ -176,12 +176,12 @@ export default async function CalendarPage({
               </div>
 
               {doctors.map((doctor) => (
-                <div key={doctor.id} className="relative border-l border-[--color-hairline]">
+                <div key={doctor.id} className="relative border-l border-(--color-hairline)">
                   {/* Hour lines */}
                   {hours.map((minutes) => (
                     <div
                       key={minutes}
-                      className="absolute inset-x-0 border-t border-[--color-hairline]/60"
+                      className="absolute inset-x-0 border-t border-(--color-hairline)/60"
                       style={{ top: `${(minutes - DAY_START_MINUTES) / MINUTES_PER_PIXEL}px` }}
                       aria-hidden="true"
                     />
@@ -203,15 +203,15 @@ export default async function CalendarPage({
                           key={appointment.id}
                           href={`/admin/patients/${appointment.patient.id}`}
                           className={cn(
-                            "absolute inset-x-1 overflow-hidden rounded border-l-4 px-2 py-1 text-[11px] leading-tight shadow-[--shadow-subtle] transition-shadow hover:shadow-[--shadow-card]",
+                            "absolute inset-x-1 overflow-hidden rounded border-l-4 px-2 py-1 text-[11px] leading-tight shadow-(--shadow-subtle) transition-shadow hover:shadow-(--shadow-card)",
                             appointment.status === "COMPLETED"
-                              ? "border-l-[--color-teal-500] bg-[--color-teal-50]"
+                              ? "border-l-(--color-teal-500) bg-(--color-teal-50)"
                               : appointment.status === "NO_SHOW"
                                 ? "border-l-red-500 bg-red-50"
                                 : appointment.status === "IN_PROGRESS" ||
                                     appointment.status === "CHECKED_IN"
-                                  ? "border-l-[--color-action] bg-[--color-medical-50]"
-                                  : "border-l-[--color-navy-400] bg-[--color-navy-50]",
+                                  ? "border-l-(--color-action) bg-(--color-medical-50)"
+                                  : "border-l-(--color-navy-400) bg-(--color-navy-50)",
                           )}
                           style={{ top: `${top}px`, height: `${height}px` }}
                         >
@@ -220,7 +220,7 @@ export default async function CalendarPage({
                           </span>
                           <span className="block truncate">{appointment.patient.fullName}</span>
                           {height > 44 ? (
-                            <span className="block truncate text-[--color-ink-subtle]">
+                            <span className="block truncate text-(--color-ink-subtle)">
                               {appointment.serviceName ?? "Consultation"}
                             </span>
                           ) : null}

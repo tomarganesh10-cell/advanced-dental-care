@@ -160,7 +160,7 @@ export function PayInvoiceButton({
 
   if (state === "done") {
     return (
-      <p className="flex items-center gap-2 text-sm font-medium text-[--color-teal-700]">
+      <p className="flex items-center gap-2 text-sm font-medium text-(--color-teal-700)">
         <CheckCircle2 className="size-4" aria-hidden="true" />
         Payment received
       </p>
@@ -188,7 +188,7 @@ export function PayInvoiceButton({
       </Button>
 
       {error ? (
-        <p role="alert" className="max-w-sm text-xs leading-relaxed text-[--color-danger]">
+        <p role="alert" className="max-w-sm text-xs leading-relaxed text-(--color-danger)">
           {error}
         </p>
       ) : null}

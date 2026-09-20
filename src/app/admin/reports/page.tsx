@@ -108,41 +108,41 @@ export default async function ReportsPage() {
       </div>
 
       <section className="mb-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           Appointments, last 30 days
         </h2>
-        <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-4">
+        <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-4">
           <AppointmentTrendChart data={trend} />
         </div>
       </section>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <section>
-          <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
             Where enquiries come from, last 90 days
           </h2>
-          <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-4">
+          <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-4">
             <SourceChart data={sources} />
           </div>
-          <p className="mt-2 text-xs leading-relaxed text-[--color-ink-subtle]">
+          <p className="mt-2 text-xs leading-relaxed text-(--color-ink-subtle)">
             The booked bar is shaded by conversion rate. A long pale bar is a source producing
             volume that does not convert — usually a targeting problem rather than a volume one.
           </p>
         </section>
 
         <section>
-          <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
             Treatments booked this month
           </h2>
-          <div className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+          <div className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
             {byTreatment.length === 0 ? (
-              <p className="p-6 text-center text-sm text-[--color-ink-subtle]">
+              <p className="p-6 text-center text-sm text-(--color-ink-subtle)">
                 No appointments this month.
               </p>
             ) : (
               <table className="w-full text-sm">
                 <caption className="sr-only">Appointments by treatment this month</caption>
-                <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+                <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
                   <tr>
                     <th scope="col" className="px-4 py-2.5 text-left font-medium">
                       Treatment
@@ -152,7 +152,7 @@ export default async function ReportsPage() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[--color-hairline]">
+                <tbody className="divide-y divide-(--color-hairline)">
                   {byTreatment.map((row) => (
                     <tr key={row.serviceName ?? "none"}>
                       <td className="px-4 py-2.5">{row.serviceName ?? "Not specified"}</td>
@@ -169,18 +169,18 @@ export default async function ReportsPage() {
       </div>
 
       <section className="mt-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           Completed appointments by clinician, this month
         </h2>
-        <div className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <div className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
           {doctorLoad.length === 0 ? (
-            <p className="p-6 text-center text-sm text-[--color-ink-subtle]">
+            <p className="p-6 text-center text-sm text-(--color-ink-subtle)">
               Nothing completed this month yet.
             </p>
           ) : (
             <table className="w-full text-sm">
               <caption className="sr-only">Completed appointments by clinician</caption>
-              <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+              <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
                 <tr>
                   <th scope="col" className="px-4 py-2.5 text-left font-medium">
                     Clinician
@@ -190,7 +190,7 @@ export default async function ReportsPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[--color-hairline]">
+              <tbody className="divide-y divide-(--color-hairline)">
                 {doctorLoad.map((row) => (
                   <tr key={row.name}>
                     <td className="px-4 py-2.5">{row.name}</td>
@@ -203,7 +203,7 @@ export default async function ReportsPage() {
         </div>
       </section>
 
-      <p className="mt-6 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-6 text-xs leading-relaxed text-(--color-ink-subtle)">
         Date-range filtering beyond the fixed windows above is not yet built — see docs/STATUS.md.
         Revenue counts only payments that passed server-side verification.
       </p>

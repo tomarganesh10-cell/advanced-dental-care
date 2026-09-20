@@ -52,22 +52,22 @@ export function TrustBar() {
   });
 
   return (
-    <div className="border-y border-[--color-hairline] bg-white">
+    <div className="border-y border-(--color-hairline) bg-white">
       <div className="container-page">
-        <ul className="grid divide-y divide-[--color-hairline] sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+        <ul className="grid divide-y divide-(--color-hairline) sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
           {items.slice(0, 4).map((item) => (
             <li key={item.label} className="flex items-start gap-3.5 px-1 py-6 lg:px-6">
               <span
-                className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-full bg-[--color-teal-50] text-[--color-accent]"
+                className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-full bg-(--color-teal-50) text-(--color-accent)"
                 aria-hidden="true"
               >
                 {item.icon}
               </span>
               <div>
-                <p className="font-[family-name:--font-display] text-lg font-semibold text-[--color-primary]">
+                <p className="font-[family-name:--font-display] text-lg font-semibold text-(--color-primary)">
                   {item.value}
                 </p>
-                <p className="mt-0.5 text-sm leading-snug text-[--color-ink-subtle]">
+                <p className="mt-0.5 text-sm leading-snug text-(--color-ink-subtle)">
                   {item.label}
                 </p>
               </div>

@@ -48,14 +48,14 @@ export function WhyChoose() {
         {REASONS.map((reason) => (
           <li key={reason.title} className="flex gap-4">
             <span
-              className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white text-[--color-action] shadow-[--shadow-subtle]"
+              className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white text-(--color-action) shadow-(--shadow-subtle)"
               aria-hidden="true"
             >
               <reason.icon className="size-5" />
             </span>
             <div>
               <h3 className="text-base font-semibold">{reason.title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[--color-ink-muted]">
+              <p className="mt-1.5 text-sm leading-relaxed text-(--color-ink-muted)">
                 {reason.body}
               </p>
             </div>

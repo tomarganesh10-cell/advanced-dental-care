@@ -27,22 +27,22 @@ export interface FieldProps {
 export function Field({ label, htmlFor, hint, error, required, children, className }: FieldProps) {
   return (
     <div className={cn("space-y-1.5", className)}>
-      <label htmlFor={htmlFor} className="block text-sm font-medium text-[--color-ink]">
+      <label htmlFor={htmlFor} className="block text-sm font-medium text-(--color-ink)">
         {label}
         {required ? (
-          <span className="ml-1 text-[--color-danger]" aria-hidden="true">
+          <span className="ml-1 text-(--color-danger)" aria-hidden="true">
             *
           </span>
         ) : (
-          <span className="ml-1.5 text-xs font-normal text-[--color-ink-subtle]">(optional)</span>
+          <span className="ml-1.5 text-xs font-normal text-(--color-ink-subtle)">(optional)</span>
         )}
       </label>
       {children}
-      {hint && !error ? <p className="text-xs text-[--color-ink-subtle]">{hint}</p> : null}
+      {hint && !error ? <p className="text-xs text-(--color-ink-subtle)">{hint}</p> : null}
       {error ? (
         <p
           role="alert"
-          className="flex items-start gap-1.5 text-xs font-medium text-[--color-danger]"
+          className="flex items-start gap-1.5 text-xs font-medium text-(--color-danger)"
         >
           <AlertCircle className="mt-px size-3.5 shrink-0" aria-hidden="true" />
           {error}
@@ -53,7 +53,7 @@ export function Field({ label, htmlFor, hint, error, required, children, classNa
 }
 
 const controlBase =
-  "w-full rounded-lg border bg-white px-3.5 text-[15px] text-[--color-ink] transition-colors placeholder:text-[--color-ink-subtle]/70 disabled:cursor-not-allowed disabled:bg-[--color-surface-sunken] disabled:opacity-70";
+  "w-full rounded-lg border bg-white px-3.5 text-[15px] text-(--color-ink) transition-colors placeholder:text-(--color-ink-subtle)/70 disabled:cursor-not-allowed disabled:bg-(--color-surface-sunken) disabled:opacity-70";
 
 export function Input({ className, ...props }: ComponentProps<"input">) {
   return (
@@ -61,7 +61,7 @@ export function Input({ className, ...props }: ComponentProps<"input">) {
       className={cn(
         controlBase,
         "h-11",
-        props["aria-invalid"] ? "border-[--color-danger]" : "border-[--color-navy-200]",
+        props["aria-invalid"] ? "border-(--color-danger)" : "border-(--color-navy-200)",
         className,
       )}
       {...props}
@@ -75,7 +75,7 @@ export function Textarea({ className, ...props }: ComponentProps<"textarea">) {
       className={cn(
         controlBase,
         "min-h-24 py-2.5 leading-relaxed",
-        props["aria-invalid"] ? "border-[--color-danger]" : "border-[--color-navy-200]",
+        props["aria-invalid"] ? "border-(--color-danger)" : "border-(--color-navy-200)",
         className,
       )}
       {...props}
@@ -89,7 +89,7 @@ export function Select({ className, children, ...props }: ComponentProps<"select
       className={cn(
         controlBase,
         "h-11 pr-9",
-        props["aria-invalid"] ? "border-[--color-danger]" : "border-[--color-navy-200]",
+        props["aria-invalid"] ? "border-(--color-danger)" : "border-(--color-navy-200)",
         className,
       )}
       {...props}
@@ -115,15 +115,15 @@ export function CheckboxField({ label, description, className, id, ...props }: C
         id={inputId}
         type="checkbox"
         aria-describedby={descriptionId}
-        className="mt-0.5 size-4.5 shrink-0 rounded border-[--color-navy-300] accent-[--color-action]"
+        className="mt-0.5 size-4.5 shrink-0 rounded border-(--color-navy-300) accent-(--color-action)"
         {...props}
       />
       <div className="space-y-0.5">
-        <label htmlFor={inputId} className="block text-sm leading-snug text-[--color-ink]">
+        <label htmlFor={inputId} className="block text-sm leading-snug text-(--color-ink)">
           {label}
         </label>
         {description ? (
-          <p id={descriptionId} className="text-xs text-[--color-ink-subtle]">
+          <p id={descriptionId} className="text-xs text-(--color-ink-subtle)">
             {description}
           </p>
         ) : null}

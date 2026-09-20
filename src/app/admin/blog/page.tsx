@@ -56,10 +56,10 @@ export default async function BlogAdminPage() {
           description="Articles migrated from the previous site are held as drafts until a clinician has re-reviewed them."
         />
       ) : (
-        <div className="overflow-x-auto rounded-[--radius-card] border border-[--color-hairline] bg-white">
+        <div className="overflow-x-auto rounded-(--radius-card) border border-(--color-hairline) bg-white">
           <table className="w-full min-w-[44rem] text-sm">
             <caption className="sr-only">Blog articles</caption>
-            <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+            <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
               <tr>
                 <th scope="col" className="px-4 py-2.5 text-left font-medium">
                   Title
@@ -78,14 +78,14 @@ export default async function BlogAdminPage() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[--color-hairline]">
+            <tbody className="divide-y divide-(--color-hairline)">
               {posts.map((post) => (
                 <tr key={post.id}>
                   <td className="px-4 py-3">
                     {post.isPublished ? (
                       <Link
                         href={`/blog/${post.slug}`}
-                        className="font-medium text-[--color-action] hover:underline"
+                        className="font-medium text-(--color-action) hover:underline"
                       >
                         {post.title}
                       </Link>
@@ -93,26 +93,26 @@ export default async function BlogAdminPage() {
                       <span className="font-medium">{post.title}</span>
                     )}
                     {post.category ? (
-                      <span className="block text-xs text-[--color-ink-subtle]">
+                      <span className="block text-xs text-(--color-ink-subtle)">
                         {post.category.name}
                       </span>
                     ) : null}
                   </td>
-                  <td className="px-4 py-3 text-[--color-ink-muted]">
+                  <td className="px-4 py-3 text-(--color-ink-muted)">
                     {post.authorDoctor?.displayName ?? post.authorName ?? "—"}
                   </td>
                   <td className="px-4 py-3">
                     {post.medicalReviewer && post.medicallyReviewedAt ? (
-                      <span className="inline-flex items-center gap-1.5 text-xs text-[--color-teal-700]">
+                      <span className="inline-flex items-center gap-1.5 text-xs text-(--color-teal-700)">
                         <ShieldCheck className="size-3.5" aria-hidden="true" />
                         {post.medicalReviewer.displayName},{" "}
                         {formatClinicDate(post.medicallyReviewedAt, "d MMM yyyy")}
                       </span>
                     ) : (
-                      <span className="text-xs text-[--color-ink-subtle]">Not reviewed</span>
+                      <span className="text-xs text-(--color-ink-subtle)">Not reviewed</span>
                     )}
                   </td>
-                  <td className="px-4 py-3 text-[--color-ink-subtle]">
+                  <td className="px-4 py-3 text-(--color-ink-subtle)">
                     {post.publishedAt ? formatClinicDate(post.publishedAt, "d MMM yyyy") : "—"}
                   </td>
                   <td className="px-4 py-3">
@@ -127,7 +127,7 @@ export default async function BlogAdminPage() {
         </div>
       )}
 
-      <p className="mt-6 text-xs leading-relaxed text-[--color-ink-subtle]">
+      <p className="mt-6 text-xs leading-relaxed text-(--color-ink-subtle)">
         Health content should name the clinician who checked it and when — patients and search
         engines both treat unattributed medical advice as less trustworthy, and rightly. The
         authoring UI is not yet built; see docs/STATUS.md.

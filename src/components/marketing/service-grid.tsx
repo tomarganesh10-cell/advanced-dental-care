@@ -33,27 +33,27 @@ export function ServiceGrid({
         <li key={service.slug}>
           <Link
             href={`/services/${service.slug}`}
-            className="group flex h-full flex-col rounded-[--radius-card] border border-[--color-hairline] bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[--color-medical-200] hover:shadow-[--shadow-card]"
+            className="group flex h-full flex-col rounded-(--radius-card) border border-(--color-hairline) bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-(--color-medical-200) hover:shadow-(--shadow-card)"
           >
             <span
-              className="mb-4 flex size-11 items-center justify-center rounded-xl bg-[--color-medical-50] text-[--color-action] transition-colors group-hover:bg-[--color-medical-100]"
+              className="mb-4 flex size-11 items-center justify-center rounded-xl bg-(--color-medical-50) text-(--color-action) transition-colors group-hover:bg-(--color-medical-100)"
               aria-hidden="true"
             >
               <Icon name={service.icon} className="size-5" />
             </span>
 
             <h3 className="text-lg font-semibold">{service.name}</h3>
-            <p className="mt-2 flex-1 text-sm leading-relaxed text-[--color-ink-muted]">
+            <p className="mt-2 flex-1 text-sm leading-relaxed text-(--color-ink-muted)">
               {service.summary}
             </p>
 
             {service.typicalVisits ? (
-              <p className="mt-3 text-xs text-[--color-ink-subtle]">
+              <p className="mt-3 text-xs text-(--color-ink-subtle)">
                 Typically {service.typicalVisits}
               </p>
             ) : null}
 
-            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[--color-action]">
+            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-(--color-action)">
               Learn more
               <ArrowRight
                 className="size-4 transition-transform group-hover:translate-x-0.5"

@@ -30,7 +30,7 @@ export default function ContactPage() {
 
       <Section className="pt-0">
         <div className="container-page grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-14">
-          <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-6 md:p-8">
+          <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-6 md:p-8">
             <ContactForm />
           </div>
 
@@ -41,7 +41,7 @@ export default function ContactPage() {
               action={
                 <a
                   href={`tel:${contact.phone.e164}`}
-                  className="text-base font-semibold text-[--color-action]"
+                  className="text-base font-semibold text-(--color-action)"
                 >
                   {contact.phone.display}
                 </a>
@@ -71,7 +71,7 @@ export default function ContactPage() {
               action={
                 <a
                   href={`mailto:${contact.email.primary}`}
-                  className="text-sm font-semibold break-all text-[--color-action]"
+                  className="text-sm font-semibold break-all text-(--color-action)"
                 >
                   {contact.email.primary}
                 </a>
@@ -82,7 +82,7 @@ export default function ContactPage() {
               icon={<MapPin className="size-4" />}
               title="Visit"
               action={
-                <address className="text-sm leading-relaxed text-[--color-ink-muted] not-italic">
+                <address className="text-sm leading-relaxed text-(--color-ink-muted) not-italic">
                   {contact.address.line1}
                   <br />
                   {contact.address.line2}
@@ -92,8 +92,8 @@ export default function ContactPage() {
               }
             />
 
-            <div className="rounded-[--radius-card] border border-[--color-hairline] bg-[--color-surface-sunken] p-5">
-              <p className="mb-3 text-xs font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+            <div className="rounded-(--radius-card) border border-(--color-hairline) bg-(--color-surface-sunken) p-5">
+              <p className="mb-3 text-xs font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
                 Clinic hours
               </p>
               <OpeningHoursList claim={openingHours} />
@@ -121,19 +121,19 @@ function ContactCard({
   note?: string;
 }) {
   return (
-    <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5">
+    <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-5">
       <div className="flex items-center gap-2.5">
         <span
-          className="flex size-8 items-center justify-center rounded-lg bg-[--color-navy-50] text-[--color-navy-700]"
+          className="flex size-8 items-center justify-center rounded-lg bg-(--color-navy-50) text-(--color-navy-700)"
           aria-hidden="true"
         >
           {icon}
         </span>
-        <p className="text-sm font-semibold text-[--color-primary]">{title}</p>
+        <p className="text-sm font-semibold text-(--color-primary)">{title}</p>
       </div>
       <div className="mt-2.5">{action}</div>
       {note ? (
-        <p className="mt-2 text-xs leading-relaxed text-[--color-ink-subtle]">{note}</p>
+        <p className="mt-2 text-xs leading-relaxed text-(--color-ink-subtle)">{note}</p>
       ) : null}
     </div>
   );

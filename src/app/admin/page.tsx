@@ -119,7 +119,7 @@ export default async function AdminOverviewPage() {
 
       {/* Today */}
       <section aria-label="Today" className="mb-6">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           Today
         </h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -145,7 +145,7 @@ export default async function AdminOverviewPage() {
 
       {/* This month */}
       <section aria-label="This month" className="mb-6">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+        <h2 className="mb-3 text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
           This month
         </h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -177,7 +177,7 @@ export default async function AdminOverviewPage() {
       {/* Message queue health — a silently stuck queue means patients stop
           getting reminders, which shows up weeks later as a no-show problem. */}
       {summary.messaging.failed > 0 || summary.messaging.queued > 20 ? (
-        <div className="mb-6 flex items-start gap-3 rounded-[--radius-card] border border-amber-200 bg-amber-50 p-4">
+        <div className="mb-6 flex items-start gap-3 rounded-(--radius-card) border border-amber-200 bg-amber-50 p-4">
           <Send className="mt-0.5 size-4 shrink-0 text-amber-700" aria-hidden="true" />
           <div className="text-sm">
             <p className="font-medium text-amber-950">Message queue needs a look</p>
@@ -199,10 +199,10 @@ export default async function AdminOverviewPage() {
       {canSeeAppointments ? (
         <section aria-label="Today's appointments">
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-sm font-semibold tracking-wide text-[--color-ink-subtle] uppercase">
+            <h2 className="text-sm font-semibold tracking-wide text-(--color-ink-subtle) uppercase">
               {principal.role === "DOCTOR" ? "Your schedule today" : "Today's schedule"}
             </h2>
-            <Link href="/admin/appointments" className="text-sm font-medium text-[--color-action]">
+            <Link href="/admin/appointments" className="text-sm font-medium text-(--color-action)">
               All appointments
             </Link>
           </div>
@@ -213,10 +213,10 @@ export default async function AdminOverviewPage() {
               description="New bookings will appear here as they come in."
             />
           ) : (
-            <div className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
+            <div className="overflow-hidden rounded-(--radius-card) border border-(--color-hairline) bg-white">
               <table className="w-full text-sm">
                 <caption className="sr-only">Appointments scheduled today</caption>
-                <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
+                <thead className="border-b border-(--color-hairline) bg-(--color-surface-sunken)">
                   <tr>
                     <th scope="col" className="px-4 py-2.5 text-left font-medium">
                       Time
@@ -241,27 +241,27 @@ export default async function AdminOverviewPage() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[--color-hairline]">
+                <tbody className="divide-y divide-(--color-hairline)">
                   {todaysAppointments.map((appointment) => (
-                    <tr key={appointment.id} className="hover:bg-[--color-navy-50]/50">
+                    <tr key={appointment.id} className="hover:bg-(--color-navy-50)/50">
                       <td className="px-4 py-3 font-medium tabular-nums">
                         {formatClinicTime(appointment.startsAt)}
                       </td>
                       <td className="px-4 py-3">
                         <Link
                           href={`/admin/appointments/${appointment.id}`}
-                          className="font-medium text-[--color-action] hover:underline"
+                          className="font-medium text-(--color-action) hover:underline"
                         >
                           {appointment.patient.fullName}
                         </Link>
-                        <span className="block text-xs text-[--color-ink-subtle]">
+                        <span className="block text-xs text-(--color-ink-subtle)">
                           {appointment.patient.patientNumber}
                         </span>
                       </td>
-                      <td className="hidden px-4 py-3 text-[--color-ink-muted] sm:table-cell">
+                      <td className="hidden px-4 py-3 text-(--color-ink-muted) sm:table-cell">
                         {appointment.serviceName ?? "—"}
                       </td>
-                      <td className="hidden px-4 py-3 text-[--color-ink-muted] md:table-cell">
+                      <td className="hidden px-4 py-3 text-(--color-ink-muted) md:table-cell">
                         {appointment.doctor?.displayName ?? "Unassigned"}
                       </td>
                       <td className="px-4 py-3">

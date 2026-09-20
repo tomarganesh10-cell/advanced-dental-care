@@ -34,9 +34,9 @@ export async function Testimonials({ limit = 6 }: { limit?: number }) {
         {testimonials.map((testimonial) => (
           <li
             key={testimonial.id}
-            className="flex flex-col rounded-[--radius-card] border border-[--color-hairline] bg-white p-6"
+            className="flex flex-col rounded-(--radius-card) border border-(--color-hairline) bg-white p-6"
           >
-            <Quote className="size-6 text-[--color-navy-200]" aria-hidden="true" />
+            <Quote className="size-6 text-(--color-navy-200)" aria-hidden="true" />
 
             {testimonial.rating ? (
               <div className="mt-3 flex gap-0.5" aria-label={`${testimonial.rating} out of 5`}>
@@ -46,7 +46,7 @@ export async function Testimonials({ limit = 6 }: { limit?: number }) {
                     className={
                       index < (testimonial.rating ?? 0)
                         ? "size-3.5 fill-amber-400 text-amber-400"
-                        : "size-3.5 text-[--color-navy-200]"
+                        : "size-3.5 text-(--color-navy-200)"
                     }
                     aria-hidden="true"
                   />
@@ -54,14 +54,14 @@ export async function Testimonials({ limit = 6 }: { limit?: number }) {
               </div>
             ) : null}
 
-            <blockquote className="mt-3 flex-1 text-sm leading-relaxed text-[--color-ink-muted]">
+            <blockquote className="mt-3 flex-1 text-sm leading-relaxed text-(--color-ink-muted)">
               {testimonial.quote}
             </blockquote>
 
-            <figcaption className="mt-4 border-t border-[--color-hairline] pt-3 text-sm">
-              <span className="font-medium text-[--color-ink]">{testimonial.authorName}</span>
+            <figcaption className="mt-4 border-t border-(--color-hairline) pt-3 text-sm">
+              <span className="font-medium text-(--color-ink)">{testimonial.authorName}</span>
               {testimonial.authorLocation ? (
-                <span className="text-[--color-ink-subtle]"> · {testimonial.authorLocation}</span>
+                <span className="text-(--color-ink-subtle)"> · {testimonial.authorLocation}</span>
               ) : null}
             </figcaption>
           </li>
@@ -74,7 +74,7 @@ export async function Testimonials({ limit = 6 }: { limit?: number }) {
             href={reviewsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-semibold text-[--color-action] underline underline-offset-4"
+            className="text-sm font-semibold text-(--color-action) underline underline-offset-4"
           >
             Read all reviews on Google
           </a>

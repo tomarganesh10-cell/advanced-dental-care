@@ -16,16 +16,16 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-[--color-action] text-white shadow-[--shadow-subtle] hover:bg-[--color-action-hover]",
+          "bg-(--color-action) text-white shadow-(--shadow-subtle) hover:bg-(--color-action-hover)",
         secondary:
-          "bg-[--color-primary] text-white shadow-[--shadow-subtle] hover:bg-[--color-primary-hover]",
+          "bg-(--color-primary) text-white shadow-(--shadow-subtle) hover:bg-(--color-primary-hover)",
         outline:
-          "border border-[--color-navy-200] bg-white text-[--color-primary] hover:bg-[--color-navy-50]",
-        ghost: "text-[--color-primary] hover:bg-[--color-navy-50]",
-        accent: "bg-[--color-accent] text-white hover:bg-[--color-teal-700]",
+          "border border-(--color-navy-200) bg-white text-(--color-primary) hover:bg-(--color-navy-50)",
+        ghost: "text-(--color-primary) hover:bg-(--color-navy-50)",
+        accent: "bg-(--color-accent) text-white hover:bg-(--color-teal-700)",
         whatsapp: "bg-[#128C7E] text-white hover:bg-[#0f7568]",
-        danger: "bg-[--color-danger] text-white hover:bg-[#8f1c13]",
-        link: "text-[--color-action] underline underline-offset-4 hover:text-[--color-action-hover]",
+        danger: "bg-(--color-danger) text-white hover:bg-[#8f1c13]",
+        link: "text-(--color-action) underline underline-offset-4 hover:text-(--color-action-hover)",
       },
       size: {
         sm: "h-9 px-4 text-[13px]",

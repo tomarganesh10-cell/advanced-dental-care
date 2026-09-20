@@ -41,14 +41,14 @@ export function AdminShell({ nav, user, badges = {}, children }: AdminShellProps
   }
 
   return (
-    <div className="min-h-dvh bg-[--color-surface-sunken]">
+    <div className="min-h-dvh bg-(--color-surface-sunken)">
       {/* Top bar */}
-      <header className="sticky top-0 z-30 border-b border-[--color-hairline] bg-white">
+      <header className="sticky top-0 z-30 border-b border-(--color-hairline) bg-white">
         <div className="flex h-14 items-center gap-3 px-4">
           <button
             type="button"
             onClick={() => setSidebarOpen((open) => !open)}
-            className="flex size-9 items-center justify-center rounded-lg border border-[--color-navy-200] lg:hidden"
+            className="flex size-9 items-center justify-center rounded-lg border border-(--color-navy-200) lg:hidden"
             aria-label={sidebarOpen ? "Close menu" : "Open menu"}
             aria-expanded={sidebarOpen}
           >
@@ -57,25 +57,25 @@ export function AdminShell({ nav, user, badges = {}, children }: AdminShellProps
 
           <Link
             href="/admin"
-            className="font-[family-name:--font-display] font-semibold text-[--color-primary]"
+            className="font-[family-name:--font-display] font-semibold text-(--color-primary)"
           >
             Advanced Dental
-            <span className="ml-2 rounded bg-[--color-navy-100] px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-[--color-navy-700] uppercase">
+            <span className="ml-2 rounded bg-(--color-navy-100) px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-(--color-navy-700) uppercase">
               Clinic
             </span>
           </Link>
 
           <div className="ml-auto flex items-center gap-3">
             <div className="hidden text-right sm:block">
-              <p className="text-sm leading-tight font-medium text-[--color-ink]">
+              <p className="text-sm leading-tight font-medium text-(--color-ink)">
                 {user.fullName}
               </p>
-              <p className="text-[11px] text-[--color-ink-subtle]">{user.roleLabel}</p>
+              <p className="text-[11px] text-(--color-ink-subtle)">{user.roleLabel}</p>
             </div>
             <button
               type="button"
               onClick={() => void signOut()}
-              className="flex size-9 items-center justify-center rounded-lg border border-[--color-navy-200] text-[--color-ink-muted] hover:bg-[--color-navy-50]"
+              className="flex size-9 items-center justify-center rounded-lg border border-(--color-navy-200) text-(--color-ink-muted) hover:bg-(--color-navy-50)"
               aria-label="Sign out"
               title="Sign out"
             >
@@ -90,13 +90,13 @@ export function AdminShell({ nav, user, badges = {}, children }: AdminShellProps
         <nav
           aria-label="Admin"
           className={cn(
-            "fixed inset-y-0 top-14 z-20 w-64 overflow-y-auto border-r border-[--color-hairline] bg-white px-3 py-4 transition-transform lg:sticky lg:top-14 lg:h-[calc(100dvh-3.5rem)] lg:translate-x-0",
+            "fixed inset-y-0 top-14 z-20 w-64 overflow-y-auto border-r border-(--color-hairline) bg-white px-3 py-4 transition-transform lg:sticky lg:top-14 lg:h-[calc(100dvh-3.5rem)] lg:translate-x-0",
             sidebarOpen ? "translate-x-0" : "-translate-x-full",
           )}
         >
           {nav.map((group) => (
             <div key={group.label} className="mb-5">
-              <p className="mb-1.5 px-3 text-[10px] font-semibold tracking-[0.12em] text-[--color-ink-subtle] uppercase">
+              <p className="mb-1.5 px-3 text-[10px] font-semibold tracking-[0.12em] text-(--color-ink-subtle) uppercase">
                 {group.label}
               </p>
               <ul className="space-y-0.5">
@@ -113,14 +113,14 @@ export function AdminShell({ nav, user, badges = {}, children }: AdminShellProps
                         className={cn(
                           "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                           isActive
-                            ? "bg-[--color-medical-50] text-[--color-action]"
-                            : "text-[--color-ink-muted] hover:bg-[--color-navy-50] hover:text-[--color-primary]",
+                            ? "bg-(--color-medical-50) text-(--color-action)"
+                            : "text-(--color-ink-muted) hover:bg-(--color-navy-50) hover:text-(--color-primary)",
                         )}
                       >
                         <Icon name={item.icon} className="size-4 shrink-0" aria-hidden="true" />
                         <span className="flex-1">{item.label}</span>
                         {badge && badge > 0 ? (
-                          <span className="rounded-full bg-[--color-action] px-1.5 py-0.5 text-[10px] font-semibold text-white tabular-nums">
+                          <span className="rounded-full bg-(--color-action) px-1.5 py-0.5 text-[10px] font-semibold text-white tabular-nums">
                             {badge > 99 ? "99+" : badge}
                           </span>
                         ) : null}

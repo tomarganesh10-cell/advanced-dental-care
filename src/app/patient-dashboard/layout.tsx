@@ -15,12 +15,12 @@ export default async function PortalLayout({ children }: { children: React.React
   const principal = await requirePatientPage();
 
   return (
-    <div className="flex min-h-dvh flex-col bg-[--color-surface-sunken]">
-      <header className="border-b border-[--color-hairline] bg-white">
+    <div className="flex min-h-dvh flex-col bg-(--color-surface-sunken)">
+      <header className="border-b border-(--color-hairline) bg-white">
         <div className="container-page flex h-16 items-center justify-between gap-4">
           <Link
             href="/"
-            className="font-[family-name:--font-display] font-semibold text-[--color-primary]"
+            className="font-[family-name:--font-display] font-semibold text-(--color-primary)"
           >
             {identity.shortName}
           </Link>
@@ -28,11 +28,11 @@ export default async function PortalLayout({ children }: { children: React.React
           <div className="flex items-center gap-4">
             <div className="hidden text-right sm:block">
               <p className="text-sm leading-tight font-medium">{principal.fullName}</p>
-              <p className="text-[11px] text-[--color-ink-subtle]">{principal.patientNumber}</p>
+              <p className="text-[11px] text-(--color-ink-subtle)">{principal.patientNumber}</p>
             </div>
             <a
               href={`tel:${contact.phone.e164}`}
-              className="rounded-full border border-[--color-navy-200] px-3.5 py-1.5 text-sm font-medium text-[--color-action]"
+              className="rounded-full border border-(--color-navy-200) px-3.5 py-1.5 text-sm font-medium text-(--color-action)"
             >
               Call clinic
             </a>
@@ -46,8 +46,8 @@ export default async function PortalLayout({ children }: { children: React.React
         {children}
       </main>
 
-      <footer className="border-t border-[--color-hairline] bg-white py-5">
-        <p className="container-page text-center text-xs leading-relaxed text-[--color-ink-subtle]">
+      <footer className="border-t border-(--color-hairline) bg-white py-5">
+        <p className="container-page text-center text-xs leading-relaxed text-(--color-ink-subtle)">
           Your records are private to you and the clinicians treating you.{" "}
           <Link href="/patient-rights" className="underline underline-offset-2">
             Your data rights

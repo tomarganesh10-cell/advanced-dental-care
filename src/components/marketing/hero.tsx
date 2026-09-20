@@ -27,7 +27,7 @@ const HERO_SERVICES = [
  */
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[--color-navy-900]">
+    <section className="relative overflow-hidden bg-(--color-navy-900)">
       {/* Soft radial wash — subtle depth without the gradient-everywhere look. */}
       <div
         aria-hidden="true"
@@ -36,7 +36,7 @@ export function Hero() {
 
       <div className="container-page relative grid gap-12 py-16 md:py-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:items-center lg:gap-16 lg:py-24">
         <div>
-          <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-medium tracking-wide text-[--color-teal-200]">
+          <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-medium tracking-wide text-(--color-teal-200)">
             <MapPin className="size-3.5" aria-hidden="true" />
             {contact.address.line2}, {contact.address.city}
           </p>
@@ -45,7 +45,7 @@ export function Hero() {
             {identity.tagline}
           </h1>
 
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-[--color-navy-200]">
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-(--color-navy-200)">
             A multi-specialist dental practice in Chandigarh. Every treatment plan starts with an
             examination and an honest conversation about your options — including the option to do
             nothing yet.
@@ -55,7 +55,7 @@ export function Hero() {
             {HERO_SERVICES.map((service) => (
               <li
                 key={service}
-                className="rounded-full border border-white/12 bg-white/[0.06] px-3 py-1 text-[13px] text-[--color-navy-100]"
+                className="rounded-full border border-white/12 bg-white/[0.06] px-3 py-1 text-[13px] text-(--color-navy-100)"
               >
                 {service}
               </li>
@@ -99,13 +99,13 @@ export function Hero() {
 
         {/* Visual column */}
         <div className="relative">
-          <div className="relative aspect-4/5 overflow-hidden rounded-[--radius-card] border border-white/10 bg-gradient-to-b from-[--color-navy-700] to-[--color-navy-800] shadow-[--shadow-lifted]">
+          <div className="relative aspect-4/5 overflow-hidden rounded-(--radius-card) border border-white/10 bg-gradient-to-b from-(--color-navy-700) to-(--color-navy-800) shadow-(--shadow-lifted)">
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-8 text-center">
               <div className="flex size-16 items-center justify-center rounded-full bg-white/10">
-                <ShieldCheck className="size-8 text-[--color-teal-300]" aria-hidden="true" />
+                <ShieldCheck className="size-8 text-(--color-teal-300)" aria-hidden="true" />
               </div>
               <p className="text-sm font-medium text-white">Clinical photography</p>
-              <p className="max-w-xs text-xs leading-relaxed text-[--color-navy-300]">
+              <p className="max-w-xs text-xs leading-relaxed text-(--color-navy-300)">
                 Replace with a professional photograph of Dr. Anshu Gupta and the surgery. See
                 docs/CONTENT_AUDIT.md for the asset checklist.
               </p>
@@ -113,11 +113,11 @@ export function Hero() {
           </div>
 
           {/* Floating card — the one piece of decoration that carries information. */}
-          <div className="absolute -bottom-5 -left-4 hidden max-w-[15rem] rounded-xl border border-[--color-hairline] bg-white p-4 shadow-[--shadow-lifted] sm:block">
-            <p className="text-xs font-semibold tracking-wide text-[--color-accent] uppercase">
+          <div className="absolute -bottom-5 -left-4 hidden max-w-[15rem] rounded-xl border border-(--color-hairline) bg-white p-4 shadow-(--shadow-lifted) sm:block">
+            <p className="text-xs font-semibold tracking-wide text-(--color-accent) uppercase">
               Same-day emergencies
             </p>
-            <p className="mt-1 text-sm leading-snug text-[--color-ink-muted]">
+            <p className="mt-1 text-sm leading-snug text-(--color-ink-muted)">
               In pain today? Call the clinic — we keep slots free for urgent problems.
             </p>
           </div>

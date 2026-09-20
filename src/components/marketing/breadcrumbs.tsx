@@ -15,7 +15,7 @@ export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
   return (
     <>
       <nav aria-label="Breadcrumb" className="container-page py-4">
-        <ol className="flex flex-wrap items-center gap-1.5 text-sm text-[--color-ink-subtle]">
+        <ol className="flex flex-wrap items-center gap-1.5 text-sm text-(--color-ink-subtle)">
           {trail.map((item, index) => {
             const isLast = index === trail.length - 1;
             return (
@@ -24,11 +24,11 @@ export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
                   <ChevronRight className="size-3.5 opacity-60" aria-hidden="true" />
                 ) : null}
                 {isLast ? (
-                  <span aria-current="page" className="font-medium text-[--color-ink]">
+                  <span aria-current="page" className="font-medium text-(--color-ink)">
                     {item.name}
                   </span>
                 ) : (
-                  <Link href={item.path} className="hover:text-[--color-action] hover:underline">
+                  <Link href={item.path} className="hover:text-(--color-action) hover:underline">
                     {item.name}
                   </Link>
                 )}

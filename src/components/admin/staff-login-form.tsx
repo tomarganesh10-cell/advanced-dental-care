@@ -63,7 +63,7 @@ export function StaffLoginForm() {
 
   if (mfaRequired) {
     return (
-      <div className="w-full max-w-md rounded-[--radius-card] border border-amber-200 bg-amber-50 p-7">
+      <div className="w-full max-w-md rounded-(--radius-card) border border-amber-200 bg-amber-50 p-7">
         <Lock className="size-6 text-amber-700" aria-hidden="true" />
         <h1 className="mt-4 text-xl text-amber-950">Two-factor authentication required</h1>
         <p className="mt-2 text-sm leading-relaxed text-amber-900">
@@ -80,17 +80,17 @@ export function StaffLoginForm() {
 
   return (
     <div className="w-full max-w-md">
-      <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-7 shadow-[--shadow-subtle] md:p-8">
-        <div className="flex size-11 items-center justify-center rounded-xl bg-[--color-navy-50] text-[--color-primary]">
+      <div className="rounded-(--radius-card) border border-(--color-hairline) bg-white p-7 shadow-(--shadow-subtle) md:p-8">
+        <div className="flex size-11 items-center justify-center rounded-xl bg-(--color-navy-50) text-(--color-primary)">
           <KeyRound className="size-5" aria-hidden="true" />
         </div>
 
         <h1 className="mt-5 text-2xl">Staff sign in</h1>
-        <p className="mt-2 text-sm text-[--color-ink-subtle]">
+        <p className="mt-2 text-sm text-(--color-ink-subtle)">
           For clinic staff only. Patients should use the{" "}
           <Link
             href="/patient-login"
-            className="font-medium text-[--color-action] underline underline-offset-2"
+            className="font-medium text-(--color-action) underline underline-offset-2"
           >
             patient login
           </Link>
@@ -134,7 +134,7 @@ export function StaffLoginForm() {
           </Button>
         </form>
 
-        <p className="mt-5 border-t border-[--color-hairline] pt-4 text-xs leading-relaxed text-[--color-ink-subtle]">
+        <p className="mt-5 border-t border-(--color-hairline) pt-4 text-xs leading-relaxed text-(--color-ink-subtle)">
           This system holds patient health records. Access is logged. Do not share your password or
           leave this device signed in where others can use it.
         </p>
