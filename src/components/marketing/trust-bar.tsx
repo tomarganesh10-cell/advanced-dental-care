@@ -67,7 +67,9 @@ export function TrustBar() {
                 <p className="font-[family-name:--font-display] text-lg font-semibold text-[--color-primary]">
                   {item.value}
                 </p>
-                <p className="mt-0.5 text-sm leading-snug text-[--color-ink-subtle]">{item.label}</p>
+                <p className="mt-0.5 text-sm leading-snug text-[--color-ink-subtle]">
+                  {item.label}
+                </p>
               </div>
             </li>
           ))}

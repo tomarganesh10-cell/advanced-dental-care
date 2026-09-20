@@ -192,7 +192,12 @@ describe("payment verification", () => {
         event: "payment.failed",
         payload: {
           payment: {
-            entity: { id: "pay_failed", order_id: gatewayOrderId, status: "failed", amount: 500000 },
+            entity: {
+              id: "pay_failed",
+              order_id: gatewayOrderId,
+              status: "failed",
+              amount: 500000,
+            },
           },
         },
       });

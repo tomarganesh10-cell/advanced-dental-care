@@ -53,13 +53,11 @@ export function InternationalCta() {
           <p className="mb-2.5 text-xs font-semibold tracking-[0.16em] text-[--color-teal-300] uppercase">
             International patients
           </p>
-          <h2 className="text-3xl text-white md:text-4xl">
-            Planning dental treatment from abroad
-          </h2>
+          <h2 className="text-3xl text-white md:text-4xl">Planning dental treatment from abroad</h2>
           <p className="mt-4 text-base leading-relaxed text-[--color-navy-200]">
-            Patients travel to us from across India and overseas. The assessment starts
-            before you fly, so you arrive with a plan and a realistic number of visits
-            rather than finding out on day one.
+            Patients travel to us from across India and overseas. The assessment starts before you
+            fly, so you arrive with a plan and a realistic number of visits rather than finding out
+            on day one.
           </p>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">

@@ -42,7 +42,9 @@ export default async function PortalLayout({ children }: { children: React.React
 
       <PortalNav />
 
-      <main id="main" className="container-page flex-1 py-6 md:py-8">{children}</main>
+      <main id="main" className="container-page flex-1 py-6 md:py-8">
+        {children}
+      </main>
 
       <footer className="border-t border-[--color-hairline] bg-white py-5">
         <p className="container-page text-center text-xs leading-relaxed text-[--color-ink-subtle]">

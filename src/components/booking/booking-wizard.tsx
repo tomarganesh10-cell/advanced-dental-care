@@ -70,7 +70,9 @@ const STEP_LABELS: Record<Step, string> = {
 };
 
 /** Next 60 days, as clinic-local date strings. */
-function upcomingDates(count = 60): Array<{ value: string; weekday: string; day: string; month: string }> {
+function upcomingDates(
+  count = 60,
+): Array<{ value: string; weekday: string; day: string; month: string }> {
   const formatter = new Intl.DateTimeFormat("en-IN", {
     timeZone: "Asia/Kolkata",
     weekday: "short",
@@ -104,7 +106,17 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
 
   const dates = useMemo(() => upcomingDates(), []);
   const [selectedDate, setSelectedDate] = useState(dates[0]?.value ?? "");
-  const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
+  /**
+   * The chosen slot, stored with a key describing the treatment, dentist and
+   * date it was chosen under.
+   *
+   * Validity is decided by comparing that key against the current inputs, NOT
+   * by looking the slot up in the currently loaded availability list. The list
+   * only exists while step 3 is on screen, and an earlier version that checked
+   * against it made `activeSlot` null on step 4 — so "Send verification code"
+   * silently did nothing. Caught by the end-to-end test.
+   */
+  const [selectedSlot, setSelectedSlot] = useState<{ slot: Slot; contextKey: string } | null>(null);
 
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -128,7 +140,6 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
   } | null>(null);
 
   const selectedService = BOOKABLE_SERVICES.find((s) => s.slug === serviceSlug);
-  
 
   useEffect(() => {
     trackEvent("booking_started");
@@ -183,20 +194,25 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
   // it needs no effect and cannot briefly show a stale selection.
   const availability = availabilityQuery.state.data;
   const slotsLoading = availabilityQuery.state.status === "loading";
-  const slotsError = availabilityQuery.state.status === "error" ? availabilityQuery.state.error : null;
+  const slotsError =
+    availabilityQuery.state.status === "error" ? availabilityQuery.state.error : null;
   const loadSlots = availabilityQuery.reload;
 
+  /** Changing any of these invalidates a slot chosen under the old values. */
+  const slotContextKey = `${serviceSlug}|${effectiveDoctorId}|${selectedDate}`;
+
   const activeSlot =
-    selectedSlot &&
-    availability?.slots.some(
-      (slot) => slot.startsAt === selectedSlot.startsAt && slot.doctorId === selectedSlot.doctorId,
-    )
-      ? selectedSlot
-      : null;
+    selectedSlot && selectedSlot.contextKey === slotContextKey ? selectedSlot.slot : null;
 
   // --- submit -----------------------------------------------------------
   async function handleStartBooking() {
-    if (!activeSlot || !selectedService) return;
+    // Should be unreachable — Continue is disabled without a slot — but a
+    // silent return here is exactly how the previous bug hid itself.
+    if (!activeSlot || !selectedService) {
+      setFormError("Please choose an appointment time before continuing.");
+      setStep(3);
+      return;
+    }
 
     setSubmitting(true);
     setFormError(null);
@@ -278,7 +294,15 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
 
   const canAdvance: Record<Step, boolean> = {
     1: Boolean(serviceSlug),
-    2: Boolean(doctorId) || doctors.length === 0,
+    /**
+     * Step 2 is advanceable as soon as the list has loaded.
+     *
+     * "First available" is a valid choice and deliberately leaves `doctorId`
+     * empty, so requiring a truthy id here left anyone taking the recommended
+     * option with a permanently disabled Continue button — a dead end in the
+     * middle of the booking flow. Caught by the end-to-end test.
+     */
+    2: !doctorsLoading,
     3: Boolean(activeSlot),
     4: fullName.trim().length >= 2 && phone.trim().length >= 6,
     5: code.length === 6,
@@ -304,6 +328,8 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                 <button
                   key={service.slug}
                   type="button"
+                  data-testid="booking-treatment"
+                  data-slug={service.slug}
                   onClick={() => {
                     setServiceSlug(service.slug);
                     setDoctorId("");
@@ -366,7 +392,10 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                       : "border-[--color-navy-200] hover:bg-[--color-navy-50]",
                   )}
                 >
-                  <CalendarDays className="mt-0.5 size-5 shrink-0 text-[--color-action]" aria-hidden="true" />
+                  <CalendarDays
+                    className="mt-0.5 size-5 shrink-0 text-[--color-action]"
+                    aria-hidden="true"
+                  />
                   <span>
                     <span className="block text-sm font-semibold text-[--color-primary]">
                       First available
@@ -390,7 +419,10 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                         : "border-[--color-navy-200] hover:bg-[--color-navy-50]",
                     )}
                   >
-                    <UserRound className="mt-0.5 size-5 shrink-0 text-[--color-navy-400]" aria-hidden="true" />
+                    <UserRound
+                      className="mt-0.5 size-5 shrink-0 text-[--color-navy-400]"
+                      aria-hidden="true"
+                    />
                     <span>
                       <span className="block text-sm font-semibold text-[--color-primary]">
                         {doctor.displayName}
@@ -422,12 +454,14 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
               description="All times are Chandigarh time (IST)."
             />
 
-            <div className="mt-6 -mx-1 overflow-x-auto pb-2">
+            <div className="-mx-1 mt-6 overflow-x-auto pb-2">
               <div className="flex gap-2 px-1">
                 {dates.slice(0, 30).map((date) => (
                   <button
                     key={date.value}
                     type="button"
+                    data-testid="booking-date"
+                    data-date={date.value}
                     onClick={() => setSelectedDate(date.value)}
                     aria-pressed={selectedDate === date.value}
                     className={cn(
@@ -454,7 +488,11 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                   Checking availability…
                 </div>
               ) : slotsError ? (
-                <ErrorState title="Could not load times" description={slotsError} onRetry={() => void loadSlots()} />
+                <ErrorState
+                  title="Could not load times"
+                  description={slotsError}
+                  onRetry={() => void loadSlots()}
+                />
               ) : availability?.isClinicClosed ? (
                 <EmptyState
                   title="The clinic is closed that day"
@@ -479,11 +517,16 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                     <button
                       key={`${slot.startsAt}-${slot.doctorId}`}
                       type="button"
-                      onClick={() => setSelectedSlot(slot)}
-                      aria-pressed={activeSlot?.startsAt === slot.startsAt && activeSlot?.doctorId === slot.doctorId}
+                      data-testid="booking-slot"
+                      onClick={() => setSelectedSlot({ slot, contextKey: slotContextKey })}
+                      aria-pressed={
+                        activeSlot?.startsAt === slot.startsAt &&
+                        activeSlot?.doctorId === slot.doctorId
+                      }
                       className={cn(
                         "rounded-lg border px-2 py-2.5 text-center transition-colors",
-                        activeSlot?.startsAt === slot.startsAt && activeSlot?.doctorId === slot.doctorId
+                        activeSlot?.startsAt === slot.startsAt &&
+                          activeSlot?.doctorId === slot.doctorId
                           ? "border-[--color-action] bg-[--color-action] text-white"
                           : "border-[--color-navy-200] hover:border-[--color-medical-300] hover:bg-[--color-navy-50]",
                       )}
@@ -566,7 +609,12 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
                 />
               </Field>
 
-              <Field label="Email" htmlFor="email" error={fieldErrors.email} hint="For your confirmation and invoice.">
+              <Field
+                label="Email"
+                htmlFor="email"
+                error={fieldErrors.email}
+                hint="For your confirmation and invoice."
+              >
                 <Input
                   id="email"
                   name="email"
@@ -661,8 +709,8 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
             <h2 className="mt-5 text-2xl">Appointment requested</h2>
 
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[--color-ink-muted]">
-              Reception will confirm your appointment shortly — you will get a WhatsApp message
-              when they do. Until then this time is held for you.
+              Reception will confirm your appointment shortly — you will get a WhatsApp message when
+              they do. Until then this time is held for you.
             </p>
 
             <dl className="mx-auto mt-6 max-w-sm space-y-2.5 rounded-xl bg-[--color-surface-sunken] p-5 text-left text-sm">
@@ -722,12 +770,20 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
             </Button>
 
             {step === 4 ? (
-              <Button onClick={() => void handleStartBooking()} disabled={!canAdvance[4] || submitting} size="lg">
+              <Button
+                onClick={() => void handleStartBooking()}
+                disabled={!canAdvance[4] || submitting}
+                size="lg"
+              >
                 {submitting ? <Loader2 className="animate-spin" aria-hidden="true" /> : null}
                 Send verification code
               </Button>
             ) : step === 5 ? (
-              <Button onClick={() => void handleConfirm()} disabled={!canAdvance[5] || submitting} size="lg">
+              <Button
+                onClick={() => void handleConfirm()}
+                disabled={!canAdvance[5] || submitting}
+                size="lg"
+              >
                 {submitting ? <Loader2 className="animate-spin" aria-hidden="true" /> : null}
                 Confirm booking
               </Button>
@@ -755,8 +811,7 @@ export function BookingWizard({ initialServiceSlug }: { initialServiceSlug?: str
           {activeSlot ? (
             <span className="text-[--color-ink-subtle]">
               {" "}
-              · {activeSlot.label} on{" "}
-              {dates.find((d) => d.value === selectedDate)?.weekday}{" "}
+              · {activeSlot.label} on {dates.find((d) => d.value === selectedDate)?.weekday}{" "}
               {dates.find((d) => d.value === selectedDate)?.day}{" "}
               {dates.find((d) => d.value === selectedDate)?.month}
             </span>

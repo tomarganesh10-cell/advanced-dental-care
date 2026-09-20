@@ -79,7 +79,10 @@ function getClient(): S3Client {
  * nothing about any other.
  */
 export function buildStorageKey(patientId: string, kind: string, extension: string): string {
-  const safeExtension = extension.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 8);
+  const safeExtension = extension
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "")
+    .slice(0, 8);
   return `patients/${patientId}/${kind.toLowerCase()}/${randomUUID()}.${safeExtension}`;
 }
 
@@ -142,7 +145,10 @@ export async function uploadPatientDocument(input: UploadInput): Promise<UploadR
     }),
   );
 
-  logger.info({ patientId: input.patientId, kind: input.kind, storageKey }, "patient document stored");
+  logger.info(
+    { patientId: input.patientId, kind: input.kind, storageKey },
+    "patient document stored",
+  );
 
   return {
     storageKey,
@@ -171,7 +177,9 @@ export async function getSignedDownloadUrl(
       Bucket: env.STORAGE_BUCKET!,
       Key: storageKey,
       ...(options.filename
-        ? { ResponseContentDisposition: `attachment; filename="${sanitiseFilename(options.filename)}"` }
+        ? {
+            ResponseContentDisposition: `attachment; filename="${sanitiseFilename(options.filename)}"`,
+          }
         : {}),
     }),
     { expiresIn },
@@ -179,9 +187,7 @@ export async function getSignedDownloadUrl(
 }
 
 export async function deleteStoredObject(storageKey: string): Promise<void> {
-  await getClient().send(
-    new DeleteObjectCommand({ Bucket: env.STORAGE_BUCKET!, Key: storageKey }),
-  );
+  await getClient().send(new DeleteObjectCommand({ Bucket: env.STORAGE_BUCKET!, Key: storageKey }));
 }
 
 /** Checks the leading bytes against the declared content type. */
@@ -194,9 +200,7 @@ function hasValidSignature(body: Buffer, contentType: string): boolean {
   const signatures = ALLOWED_TYPES[contentType]?.magic;
   if (!signatures) return false;
 
-  return signatures.some((signature) =>
-    signature.every((byte, index) => body[index] === byte),
-  );
+  return signatures.some((signature) => signature.every((byte, index) => body[index] === byte));
 }
 
 /** Strips path separators and quotes from a filename used in a header. */

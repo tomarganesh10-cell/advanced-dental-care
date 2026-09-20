@@ -25,14 +25,14 @@ export default function TechnologyPage() {
         <h1 className="text-3xl md:text-4xl">Technology</h1>
         <div className="prose-clinic mt-5">
           <p>
-            Equipment is worth mentioning when it changes the decision, not as a list of
-            brand names. A 3D scan matters because it shows how much bone is actually there
-            before an implant is placed, and where the nerve runs. That is a different
-            conversation from &ldquo;we have the latest machine&rdquo;.
+            Equipment is worth mentioning when it changes the decision, not as a list of brand
+            names. A 3D scan matters because it shows how much bone is actually there before an
+            implant is placed, and where the nerve runs. That is a different conversation from
+            &ldquo;we have the latest machine&rdquo;.
           </p>
           <p>
-            Below is the equipment currently in use. Anything not yet verified against its
-            purchase and licensing documents is held back rather than listed.
+            Below is the equipment currently in use. Anything not yet verified against its purchase
+            and licensing documents is held back rather than listed.
           </p>
         </div>
       </div>

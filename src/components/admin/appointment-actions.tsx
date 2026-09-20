@@ -26,26 +26,64 @@ interface Action {
 const ACTIONS_BY_STATUS: Partial<Record<AppointmentStatus, Action[]>> = {
   REQUESTED: [
     { to: "CONFIRMED", label: "Confirm", icon: <Check className="size-4" />, variant: "primary" },
-    { to: "CANCELLED", label: "Decline", icon: <X className="size-4" />, variant: "ghost", needsReason: true },
+    {
+      to: "CANCELLED",
+      label: "Decline",
+      icon: <X className="size-4" />,
+      variant: "ghost",
+      needsReason: true,
+    },
   ],
   PENDING_CONFIRMATION: [
     { to: "CONFIRMED", label: "Confirm", icon: <Check className="size-4" />, variant: "primary" },
-    { to: "CANCELLED", label: "Cancel", icon: <X className="size-4" />, variant: "ghost", needsReason: true },
+    {
+      to: "CANCELLED",
+      label: "Cancel",
+      icon: <X className="size-4" />,
+      variant: "ghost",
+      needsReason: true,
+    },
   ],
   CONFIRMED: [
     { to: "CHECKED_IN", label: "Check in", icon: <LogIn className="size-4" />, variant: "primary" },
-    { to: "NO_SHOW", label: "Did not attend", icon: <UserX className="size-4" />, variant: "outline" },
-    { to: "CANCELLED", label: "Cancel", icon: <X className="size-4" />, variant: "ghost", needsReason: true },
+    {
+      to: "NO_SHOW",
+      label: "Did not attend",
+      icon: <UserX className="size-4" />,
+      variant: "outline",
+    },
+    {
+      to: "CANCELLED",
+      label: "Cancel",
+      icon: <X className="size-4" />,
+      variant: "ghost",
+      needsReason: true,
+    },
   ],
   CHECKED_IN: [
-    { to: "IN_PROGRESS", label: "With doctor", icon: <Play className="size-4" />, variant: "primary" },
-    { to: "NO_SHOW", label: "Left without being seen", icon: <UserX className="size-4" />, variant: "outline" },
+    {
+      to: "IN_PROGRESS",
+      label: "With doctor",
+      icon: <Play className="size-4" />,
+      variant: "primary",
+    },
+    {
+      to: "NO_SHOW",
+      label: "Left without being seen",
+      icon: <UserX className="size-4" />,
+      variant: "outline",
+    },
   ],
   IN_PROGRESS: [
     { to: "COMPLETED", label: "Complete", icon: <Check className="size-4" />, variant: "primary" },
   ],
   NO_SHOW: [
-    { to: "CONFIRMED", label: "Recorded in error", icon: <Check className="size-4" />, variant: "outline" },
+    {
+      to: "CONFIRMED",
+      label: "Recorded in error",
+      icon: <Check className="size-4" />,
+      variant: "outline",
+    },
   ],
 };
 

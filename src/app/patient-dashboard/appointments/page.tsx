@@ -85,9 +85,9 @@ export default async function PortalAppointmentsPage() {
           and fill the one being vacated in the same call.
         */}
         <p className="mt-3 text-xs leading-relaxed text-[--color-ink-subtle]">
-          To change or cancel an appointment, call {contact.phone.display}. Reception can
-          usually find you a better time in the same call, and it means the slot you are
-          giving up can be offered to someone waiting.
+          To change or cancel an appointment, call {contact.phone.display}. Reception can usually
+          find you a better time in the same call, and it means the slot you are giving up can be
+          offered to someone waiting.
         </p>
       </section>
 
@@ -101,7 +101,10 @@ export default async function PortalAppointmentsPage() {
         ) : (
           <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
             {past.map((appointment) => (
-              <li key={appointment.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm">
+              <li
+                key={appointment.id}
+                className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm"
+              >
                 <span className="font-medium tabular-nums">
                   {formatClinicDate(appointment.startsAt, "d MMM yyyy")}
                 </span>

@@ -61,9 +61,9 @@ export default async function BlogPage({
       <div className="container-page pb-8">
         <h1 className="text-3xl md:text-4xl">Dental health blog</h1>
         <p className="prose-clinic mt-4">
-          Written by the clinicians here and reviewed before publication. Where an article
-          discusses treatment, it names the dentist who checked it and when — health content
-          you cannot trace to a person is health content you should not rely on.
+          Written by the clinicians here and reviewed before publication. Where an article discusses
+          treatment, it names the dentist who checked it and when — health content you cannot trace
+          to a person is health content you should not rely on.
         </p>
       </div>
 

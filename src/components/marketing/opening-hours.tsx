@@ -84,7 +84,11 @@ export function OpeningHoursList({ claim, tone = "light", className }: OpeningHo
       <dl className="space-y-1.5 text-sm">
         {groups.map((group) => (
           <div key={group.label} className="flex items-baseline justify-between gap-4">
-            <dt className={cn(tone === "dark" ? "text-[--color-navy-300]" : "text-[--color-ink-muted]")}>
+            <dt
+              className={cn(
+                tone === "dark" ? "text-[--color-navy-300]" : "text-[--color-ink-muted]",
+              )}
+            >
               {group.label}
             </dt>
             <dd

@@ -39,8 +39,8 @@ export default function GlobalError({
             Something went wrong
           </h1>
           <p style={{ margin: "0 0 1.5rem", lineHeight: 1.6, color: "#4c5b6e" }}>
-            This is a problem at our end. Please try again, or call the clinic — if you were
-            booking an appointment, calling makes sure it is not missed.
+            This is a problem at our end. Please try again, or call the clinic — if you were booking
+            an appointment, calling makes sure it is not missed.
           </p>
 
           <div

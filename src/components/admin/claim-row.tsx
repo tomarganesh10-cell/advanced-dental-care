@@ -37,7 +37,11 @@ export function ClaimRow({
   const effectiveValue = stored?.value ?? claim.value;
 
   const tone =
-    effectiveStatus === "VERIFIED" ? "success" : effectiveStatus === "ARCHIVED" ? "neutral" : "warning";
+    effectiveStatus === "VERIFIED"
+      ? "success"
+      : effectiveStatus === "ARCHIVED"
+        ? "neutral"
+        : "warning";
 
   function submit(formData: FormData) {
     startTransition(async () => {
@@ -83,7 +87,10 @@ export function ClaimRow({
       </button>
 
       {open ? (
-        <form action={submit} className="space-y-3 border-t border-[--color-hairline] bg-[--color-surface-sunken] px-4 py-4">
+        <form
+          action={submit}
+          className="space-y-3 border-t border-[--color-hairline] bg-[--color-surface-sunken] px-4 py-4"
+        >
           <input type="hidden" name="key" value={claim.key} />
           <input type="hidden" name="label" value={claim.label} />
           <input type="hidden" name="source" value={claim.source} />
@@ -158,7 +165,9 @@ export function ClaimRow({
             <p
               role="status"
               className={`rounded-lg p-2.5 text-sm ${
-                message.ok ? "bg-[--color-teal-50] text-[--color-teal-900]" : "bg-red-50 text-red-800"
+                message.ok
+                  ? "bg-[--color-teal-50] text-[--color-teal-900]"
+                  : "bg-red-50 text-red-800"
               }`}
             >
               {message.text}

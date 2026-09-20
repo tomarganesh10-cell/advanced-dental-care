@@ -232,10 +232,7 @@ export interface MonthlySummary {
   totalMinutes: number;
 }
 
-export async function getMonthlySummary(
-  year: number,
-  month: number,
-): Promise<MonthlySummary[]> {
+export async function getMonthlySummary(year: number, month: number): Promise<MonthlySummary[]> {
   const start = new Date(Date.UTC(year, month - 1, 1));
   const end = new Date(Date.UTC(year, month, 1));
 

@@ -45,11 +45,13 @@ function publicWhere(now: Date) {
   };
 }
 
-export async function listPublicGalleryCases(options: {
-  category?: string;
-  limit?: number;
-  now?: Date;
-} = {}): Promise<PublicGalleryCase[]> {
+export async function listPublicGalleryCases(
+  options: {
+    category?: string;
+    limit?: number;
+    now?: Date;
+  } = {},
+): Promise<PublicGalleryCase[]> {
   const now = options.now ?? new Date();
 
   const cases = await prisma.galleryCase.findMany({

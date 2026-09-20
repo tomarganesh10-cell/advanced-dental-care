@@ -49,9 +49,16 @@ export async function loginStaff(input: StaffLoginInput): Promise<StaffLoginResu
   const email = input.email.trim().toLowerCase();
 
   if (input.ipAddress) {
-    const ipLimit = await rateLimit(`login:ip:${input.ipAddress}`, env.RATE_LIMIT_LOGIN_PER_15MIN, 900);
+    const ipLimit = await rateLimit(
+      `login:ip:${input.ipAddress}`,
+      env.RATE_LIMIT_LOGIN_PER_15MIN,
+      900,
+    );
     if (!ipLimit.allowed) {
-      throw new RateLimitError(ipLimit.retryAfterSeconds, "Too many sign-in attempts. Please wait and try again.");
+      throw new RateLimitError(
+        ipLimit.retryAfterSeconds,
+        "Too many sign-in attempts. Please wait and try again.",
+      );
     }
   }
 
@@ -109,14 +116,17 @@ export async function loginStaff(input: StaffLoginInput): Promise<StaffLoginResu
         // A lockout that never expires needs a human to clear it, which in a
         // small clinic means the one admin who is on leave. Time-boxed instead.
         lockedUntil:
-          failures >= LOCKOUT_THRESHOLD
-            ? new Date(Date.now() + LOCKOUT_MINUTES * 60 * 1000)
-            : null,
+          failures >= LOCKOUT_THRESHOLD ? new Date(Date.now() + LOCKOUT_MINUTES * 60 * 1000) : null,
       },
     });
 
     await recordAudit({
-      actor: { userId: user.id, label: email, ipAddress: input.ipAddress, userAgent: input.userAgent },
+      actor: {
+        userId: user.id,
+        label: email,
+        ipAddress: input.ipAddress,
+        userAgent: input.userAgent,
+      },
       action: "LOGIN_FAILED",
       entity: "User",
       entityId: user.id,

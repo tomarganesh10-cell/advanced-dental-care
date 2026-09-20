@@ -123,8 +123,14 @@ export default async function LandingPage({
               <h2 className="text-sm font-semibold">Who this suits</h2>
               <ul className="mt-3 space-y-2">
                 {service.indications.map((indication) => (
-                  <li key={indication} className="flex items-start gap-2 text-sm text-[--color-ink-muted]">
-                    <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[--color-accent]" aria-hidden="true" />
+                  <li
+                    key={indication}
+                    className="flex items-start gap-2 text-sm text-[--color-ink-muted]"
+                  >
+                    <CheckCircle2
+                      className="mt-0.5 size-4 shrink-0 text-[--color-accent]"
+                      aria-hidden="true"
+                    />
                     {indication}
                   </li>
                 ))}
@@ -134,8 +140,8 @@ export default async function LandingPage({
             <div className="rounded-[--radius-card] border border-[--color-hairline] bg-white p-5">
               <h2 className="text-sm font-semibold">Finding the clinic</h2>
               <p className="mt-2 text-sm leading-relaxed text-[--color-ink-muted]">
-                {contact.address.formatted}. Sector 18-A is in central Chandigarh, a short
-                drive from Sector 17 and the ISBT.
+                {contact.address.formatted}. Sector 18-A is in central Chandigarh, a short drive
+                from Sector 17 and the ISBT.
               </p>
               <a
                 href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(contact.address.formatted)}`}

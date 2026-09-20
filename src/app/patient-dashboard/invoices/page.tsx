@@ -59,7 +59,9 @@ export default async function PortalInvoicesPage() {
                     {invoice.number}
                   </p>
                   <p className="mt-0.5 text-xs text-[--color-ink-subtle]">
-                    {invoice.issuedAt ? `Issued ${formatClinicDate(invoice.issuedAt, "d MMM yyyy")}` : "Not yet issued"}
+                    {invoice.issuedAt
+                      ? `Issued ${formatClinicDate(invoice.issuedAt, "d MMM yyyy")}`
+                      : "Not yet issued"}
                     {invoice.dueAt ? ` · due ${formatClinicDate(invoice.dueAt, "d MMM yyyy")}` : ""}
                   </p>
                 </div>
@@ -78,9 +80,15 @@ export default async function PortalInvoicesPage() {
                 <caption className="sr-only">Items on invoice {invoice.number}</caption>
                 <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
                   <tr>
-                    <th scope="col" className="px-5 py-2 text-left font-medium">Treatment</th>
-                    <th scope="col" className="px-4 py-2 text-right font-medium">Qty</th>
-                    <th scope="col" className="px-5 py-2 text-right font-medium">Amount</th>
+                    <th scope="col" className="px-5 py-2 text-left font-medium">
+                      Treatment
+                    </th>
+                    <th scope="col" className="px-4 py-2 text-right font-medium">
+                      Qty
+                    </th>
+                    <th scope="col" className="px-5 py-2 text-right font-medium">
+                      Amount
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[--color-hairline]">
@@ -101,7 +109,9 @@ export default async function PortalInvoicesPage() {
                 {invoice.discountPaise > 0 ? (
                   <Line label="Discount" value={`− ${formatPaise(invoice.discountPaise)}`} />
                 ) : null}
-                {invoice.taxPaise > 0 ? <Line label="Tax" value={formatPaise(invoice.taxPaise)} /> : null}
+                {invoice.taxPaise > 0 ? (
+                  <Line label="Tax" value={formatPaise(invoice.taxPaise)} />
+                ) : null}
                 <Line label="Total" value={formatPaise(invoice.totalPaise)} emphasise />
                 {invoice.paidPaise > 0 ? (
                   <Line label="Paid" value={`− ${formatPaise(invoice.paidPaise)}`} />
@@ -140,15 +150,7 @@ export default async function PortalInvoicesPage() {
   );
 }
 
-function Line({
-  label,
-  value,
-  emphasise,
-}: {
-  label: string;
-  value: string;
-  emphasise?: boolean;
-}) {
+function Line({ label, value, emphasise }: { label: string; value: string; emphasise?: boolean }) {
   return (
     <div className="flex justify-between gap-4">
       <span className={emphasise ? "font-medium" : "text-[--color-ink-subtle]"}>{label}</span>

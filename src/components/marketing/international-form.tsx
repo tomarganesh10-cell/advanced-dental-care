@@ -95,9 +95,9 @@ export function InternationalForm() {
         <CheckCircle2 className="mx-auto size-10 text-[--color-teal-700]" aria-hidden="true" />
         <h2 className="mt-4 text-xl">Enquiry received</h2>
         <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-[--color-ink-muted]">
-          We have emailed you a list of the records that help us assess your case — recent
-          X-rays or a CBCT scan, photographs, and your medical history. Send those back and
-          we will arrange an online consultation in your timezone.
+          We have emailed you a list of the records that help us assess your case — recent X-rays or
+          a CBCT scan, photographs, and your medical history. Send those back and we will arrange an
+          online consultation in your timezone.
         </p>
         {reference !== "received" ? (
           <p className="mt-3 text-sm">
@@ -112,7 +112,12 @@ export function InternationalForm() {
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Full name" htmlFor="intl-name" required error={fieldErrors.fullName}>
-          <Input id="intl-name" autoComplete="name" value={values.fullName} onChange={update("fullName")} />
+          <Input
+            id="intl-name"
+            autoComplete="name"
+            value={values.fullName}
+            onChange={update("fullName")}
+          />
         </Field>
 
         <Field label="Email" htmlFor="intl-email" required error={fieldErrors.email}>
@@ -136,11 +141,26 @@ export function InternationalForm() {
         </Field>
 
         <Field label="WhatsApp" htmlFor="intl-whatsapp" hint="If different from your phone number.">
-          <Input id="intl-whatsapp" type="tel" value={values.whatsapp} onChange={update("whatsapp")} />
+          <Input
+            id="intl-whatsapp"
+            type="tel"
+            value={values.whatsapp}
+            onChange={update("whatsapp")}
+          />
         </Field>
 
-        <Field label="Country you are travelling from" htmlFor="intl-country" required error={fieldErrors.country}>
-          <Input id="intl-country" autoComplete="country-name" value={values.country} onChange={update("country")} />
+        <Field
+          label="Country you are travelling from"
+          htmlFor="intl-country"
+          required
+          error={fieldErrors.country}
+        >
+          <Input
+            id="intl-country"
+            autoComplete="country-name"
+            value={values.country}
+            onChange={update("country")}
+          />
         </Field>
 
         <Field label="City" htmlFor="intl-city">
@@ -148,7 +168,12 @@ export function InternationalForm() {
         </Field>
       </div>
 
-      <Field label="Treatment you are asking about" htmlFor="intl-service" required error={fieldErrors.treatmentInterest}>
+      <Field
+        label="Treatment you are asking about"
+        htmlFor="intl-service"
+        required
+        error={fieldErrors.treatmentInterest}
+      >
         <Select
           id="intl-service"
           value={values.serviceSlug}
@@ -174,16 +199,30 @@ export function InternationalForm() {
 
       {values.serviceSlug === "other" ? (
         <Field label="Please describe the treatment" htmlFor="intl-other" required>
-          <Input id="intl-other" value={values.treatmentInterest} onChange={update("treatmentInterest")} />
+          <Input
+            id="intl-other"
+            value={values.treatmentInterest}
+            onChange={update("treatmentInterest")}
+          />
         </Field>
       ) : null}
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Earliest travel date" htmlFor="intl-from">
-          <Input id="intl-from" type="date" value={values.preferredTravelFrom} onChange={update("preferredTravelFrom")} />
+          <Input
+            id="intl-from"
+            type="date"
+            value={values.preferredTravelFrom}
+            onChange={update("preferredTravelFrom")}
+          />
         </Field>
         <Field label="Latest travel date" htmlFor="intl-to">
-          <Input id="intl-to" type="date" value={values.preferredTravelTo} onChange={update("preferredTravelTo")} />
+          <Input
+            id="intl-to"
+            type="date"
+            value={values.preferredTravelTo}
+            onChange={update("preferredTravelTo")}
+          />
         </Field>
       </div>
 
@@ -192,7 +231,13 @@ export function InternationalForm() {
         htmlFor="intl-message"
         hint="What is troubling you, any previous treatment, and what you are hoping to achieve."
       >
-        <Textarea id="intl-message" rows={4} maxLength={3000} value={values.message} onChange={update("message")} />
+        <Textarea
+          id="intl-message"
+          rows={4}
+          maxLength={3000}
+          value={values.message}
+          onChange={update("message")}
+        />
       </Field>
 
       <CheckboxField
@@ -220,13 +265,20 @@ export function InternationalForm() {
       </div>
 
       {formError ? (
-        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3.5 text-sm text-red-800">
+        <p
+          role="alert"
+          className="rounded-lg border border-red-200 bg-red-50 p-3.5 text-sm text-red-800"
+        >
           {formError}
         </p>
       ) : null}
 
       <Button type="submit" size="lg" disabled={submitting} full>
-        {submitting ? <Loader2 className="animate-spin" aria-hidden="true" /> : <Send aria-hidden="true" />}
+        {submitting ? (
+          <Loader2 className="animate-spin" aria-hidden="true" />
+        ) : (
+          <Send aria-hidden="true" />
+        )}
         Request an international consultation
       </Button>
 

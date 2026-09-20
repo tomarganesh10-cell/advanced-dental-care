@@ -32,7 +32,7 @@ export function LocationMap() {
             </p>
             <h2 className="text-2xl md:text-3xl">Sector 18-A, Chandigarh</h2>
 
-            <address className="mt-5 flex items-start gap-3 text-base not-italic text-[--color-ink-muted]">
+            <address className="mt-5 flex items-start gap-3 text-base text-[--color-ink-muted] not-italic">
               <MapPin className="mt-1 size-5 shrink-0 text-[--color-action]" aria-hidden="true" />
               <span>
                 {contact.address.line1}
@@ -66,8 +66,8 @@ export function LocationMap() {
 
             <p className="mt-5 flex items-start gap-2 text-xs leading-relaxed text-[--color-ink-subtle]">
               <Car className="mt-px size-3.5 shrink-0" aria-hidden="true" />
-              Sector 18-A is in central Chandigarh, close to the Sector 17 market. Ask
-              reception about parking when you book.
+              Sector 18-A is in central Chandigarh, close to the Sector 17 market. Ask reception
+              about parking when you book.
             </p>
           </div>
 

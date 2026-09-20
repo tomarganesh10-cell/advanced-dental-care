@@ -39,7 +39,10 @@ export interface PasswordPolicyResult {
  * Length is weighted over composition rules, which is where the evidence
  * points — forced symbol rules mostly produce `Password1!`.
  */
-export function checkPasswordPolicy(password: string, context: string[] = []): PasswordPolicyResult {
+export function checkPasswordPolicy(
+  password: string,
+  context: string[] = [],
+): PasswordPolicyResult {
   const problems: string[] = [];
 
   if (password.length < 12) problems.push("Use at least 12 characters.");
@@ -58,8 +61,16 @@ export function checkPasswordPolicy(password: string, context: string[] = []): P
   }
 
   const COMMON = [
-    "password", "12345678", "qwerty", "letmein", "welcome", "admin123",
-    "dental", "clinic", "chandigarh", "dentist",
+    "password",
+    "12345678",
+    "qwerty",
+    "letmein",
+    "welcome",
+    "admin123",
+    "dental",
+    "clinic",
+    "chandigarh",
+    "dentist",
   ];
   if (COMMON.some((c) => lowered.includes(c))) {
     problems.push("That password contains a commonly guessed word.");

@@ -29,7 +29,11 @@ export const dynamic = "force-dynamic";
 export const POST = withApiHandler(async (request) => {
   const clientKey = clientKeyFromHeaders(request.headers);
 
-  const limit = await rateLimit(`booking:start:${clientKey}`, env.RATE_LIMIT_BOOKING_PER_HOUR, 3600);
+  const limit = await rateLimit(
+    `booking:start:${clientKey}`,
+    env.RATE_LIMIT_BOOKING_PER_HOUR,
+    3600,
+  );
   if (!limit.allowed) {
     throw new RateLimitError(
       limit.retryAfterSeconds,

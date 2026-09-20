@@ -139,11 +139,21 @@ export default async function PatientsPage({
             <caption className="sr-only">Patient records</caption>
             <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
               <tr>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Patient</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Contact</th>
-                <th scope="col" className="px-4 py-2.5 text-right font-medium">Visits</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Last seen</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Registered</th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Patient
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Contact
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                  Visits
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Last seen
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Registered
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[--color-hairline]">
@@ -172,7 +182,9 @@ export default async function PatientsPage({
                       <span className="block truncate text-xs">{patient.email}</span>
                     ) : null}
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums">{patient._count.appointments}</td>
+                  <td className="px-4 py-3 text-right tabular-nums">
+                    {patient._count.appointments}
+                  </td>
                   <td className="px-4 py-3 text-[--color-ink-muted]">
                     {patient.appointments[0]
                       ? formatClinicDate(patient.appointments[0].startsAt, "d MMM yyyy")

@@ -143,7 +143,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <ShieldCheck className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
             <span>
               Clinically reviewed by{" "}
-              <Link href={`/doctors/${post.medicalReviewer.slug}`} className="font-medium underline">
+              <Link
+                href={`/doctors/${post.medicalReviewer.slug}`}
+                className="font-medium underline"
+              >
                 {post.medicalReviewer.displayName}
               </Link>{" "}
               on {formatClinicDate(post.medicallyReviewedAt, "d MMMM yyyy")}.

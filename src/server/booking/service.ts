@@ -12,7 +12,11 @@ import {
   scheduleAppointmentReminders,
 } from "@/server/notifications/worker";
 import { checkSlotBookable } from "./availability";
-import { allocatePatientNumber, generateAppointmentReference, generateLeadReference } from "./references";
+import {
+  allocatePatientNumber,
+  generateAppointmentReference,
+  generateLeadReference,
+} from "./references";
 import { assertTransition } from "./state-machine";
 
 /**
@@ -156,9 +160,7 @@ async function recordConsents(
   }
 }
 
-export async function bookAppointment(
-  input: BookAppointmentInput,
-): Promise<BookAppointmentResult> {
+export async function bookAppointment(input: BookAppointmentInput): Promise<BookAppointmentResult> {
   const service = input.serviceSlug ? getService(input.serviceSlug) : undefined;
   if (input.serviceSlug && !service) {
     throw new ValidationError("That treatment is not one we offer online. Please call the clinic.");
@@ -513,7 +515,9 @@ export interface RescheduleInput {
   ignoreLeadTime?: boolean;
 }
 
-export async function rescheduleAppointment(input: RescheduleInput): Promise<BookAppointmentResult> {
+export async function rescheduleAppointment(
+  input: RescheduleInput,
+): Promise<BookAppointmentResult> {
   const original = await prisma.appointment.findUnique({
     where: { id: input.appointmentId },
     select: {
@@ -534,8 +538,14 @@ export async function rescheduleAppointment(input: RescheduleInput): Promise<Boo
 
   if (!original) throw new NotFoundError("Appointment not found.");
 
-  if (!["REQUESTED", "PENDING_CONFIRMATION", "CONFIRMED", "RESCHEDULE_REQUESTED"].includes(original.status)) {
-    throw new ConflictError(`An appointment that is ${original.status.toLowerCase()} cannot be rescheduled.`);
+  if (
+    !["REQUESTED", "PENDING_CONFIRMATION", "CONFIRMED", "RESCHEDULE_REQUESTED"].includes(
+      original.status,
+    )
+  ) {
+    throw new ConflictError(
+      `An appointment that is ${original.status.toLowerCase()} cannot be rescheduled.`,
+    );
   }
 
   const doctorId = input.doctorId ?? original.doctorId;

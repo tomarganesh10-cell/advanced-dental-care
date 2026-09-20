@@ -46,9 +46,9 @@ export function Hero() {
           </h1>
 
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-[--color-navy-200]">
-            A multi-specialist dental practice in Chandigarh. Every treatment plan starts
-            with an examination and an honest conversation about your options — including
-            the option to do nothing yet.
+            A multi-specialist dental practice in Chandigarh. Every treatment plan starts with an
+            examination and an honest conversation about your options — including the option to do
+            nothing yet.
           </p>
 
           <ul className="mt-6 flex flex-wrap gap-x-2 gap-y-2">
@@ -106,8 +106,8 @@ export function Hero() {
               </div>
               <p className="text-sm font-medium text-white">Clinical photography</p>
               <p className="max-w-xs text-xs leading-relaxed text-[--color-navy-300]">
-                Replace with a professional photograph of Dr. Anshu Gupta and the surgery.
-                See docs/CONTENT_AUDIT.md for the asset checklist.
+                Replace with a professional photograph of Dr. Anshu Gupta and the surgery. See
+                docs/CONTENT_AUDIT.md for the asset checklist.
               </p>
             </div>
           </div>

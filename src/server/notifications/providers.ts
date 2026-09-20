@@ -116,7 +116,10 @@ export async function sendWhatsApp(message: WhatsAppMessage): Promise<SendResult
     case "meta":
       return sendWhatsAppViaMeta(message);
     case "console":
-      logger.info({ channel: "whatsapp", to: message.to, body: message.body }, "WhatsApp (console)");
+      logger.info(
+        { channel: "whatsapp", to: message.to, body: message.body },
+        "WhatsApp (console)",
+      );
       return { ok: true, providerMessageId: `console-${Date.now()}` };
     case "disabled":
     default:

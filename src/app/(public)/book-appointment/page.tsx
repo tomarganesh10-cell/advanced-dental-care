@@ -25,8 +25,8 @@ export default async function BookAppointmentPage({
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <h1 className="text-3xl md:text-4xl">Book an appointment</h1>
           <p className="mt-3 text-base leading-relaxed text-[--color-ink-muted]">
-            Choose a time that suits you. Your booking is confirmed by reception, and you
-            will get a message as soon as it is.
+            Choose a time that suits you. Your booking is confirmed by reception, and you will get a
+            message as soon as it is.
           </p>
         </div>
 
@@ -80,8 +80,8 @@ export default async function BookAppointmentPage({
         </div>
 
         <p className="mx-auto mt-6 max-w-3xl text-center text-xs leading-relaxed text-[--color-ink-subtle]">
-          Online bookings need at least two hours&apos; notice. For anything urgent today,
-          please call the clinic — we keep time free for emergencies.
+          Online bookings need at least two hours&apos; notice. For anything urgent today, please
+          call the clinic — we keep time free for emergencies.
         </p>
       </div>
     </div>

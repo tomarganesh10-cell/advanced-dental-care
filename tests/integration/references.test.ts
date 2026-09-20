@@ -18,9 +18,7 @@ describe("patient number allocation", () => {
 
   it("allocates unique numbers when the counter does not exist yet", async () => {
     // The exact case that used to fail with a primary-key violation.
-    const results = await Promise.all(
-      Array.from({ length: 12 }, () => allocatePatientNumber()),
-    );
+    const results = await Promise.all(Array.from({ length: 12 }, () => allocatePatientNumber()));
 
     expect(new Set(results).size).toBe(results.length);
   });
@@ -28,9 +26,7 @@ describe("patient number allocation", () => {
   it("allocates unique numbers under concurrency once the counter exists", async () => {
     await allocatePatientNumber();
 
-    const results = await Promise.all(
-      Array.from({ length: 25 }, () => allocatePatientNumber()),
-    );
+    const results = await Promise.all(Array.from({ length: 25 }, () => allocatePatientNumber()));
 
     expect(new Set(results).size).toBe(results.length);
 

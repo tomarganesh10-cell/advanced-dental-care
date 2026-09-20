@@ -63,7 +63,10 @@ export default async function PortalTreatmentPlanPage() {
           aria-valuemax={100}
           aria-label="Treatment progress"
         >
-          <div className="h-full rounded-full bg-[--color-accent]" style={{ width: `${progress}%` }} />
+          <div
+            className="h-full rounded-full bg-[--color-accent]"
+            style={{ width: `${progress}%` }}
+          />
         </div>
       </div>
 
@@ -98,7 +101,7 @@ export default async function PortalTreatmentPlanPage() {
                     {index + 1}. {item.description}
                   </p>
                   {item.unitPricePaise > 0 ? (
-                    <span className="shrink-0 text-sm tabular-nums text-[--color-ink-muted]">
+                    <span className="shrink-0 text-sm text-[--color-ink-muted] tabular-nums">
                       {formatPaise(item.unitPricePaise * item.quantity)}
                     </span>
                   ) : null}
@@ -132,14 +135,13 @@ export default async function PortalTreatmentPlanPage() {
         <Info className="mt-0.5 size-4 shrink-0 text-[--color-ink-subtle]" aria-hidden="true" />
         <div className="text-xs leading-relaxed text-[--color-ink-subtle]">
           <p>
-            This is an estimate based on what was found at your examination. If something
-            changes during treatment — and occasionally it does — we will discuss it with you
-            before going ahead, not afterwards.
+            This is an estimate based on what was found at your examination. If something changes
+            during treatment — and occasionally it does — we will discuss it with you before going
+            ahead, not afterwards.
           </p>
           <p className="mt-2">{disclaimers.medical}</p>
           <p className="mt-2">
-            Questions about the plan? Call {contact.phone.display} and ask to speak to your
-            dentist.
+            Questions about the plan? Call {contact.phone.display} and ask to speak to your dentist.
           </p>
         </div>
       </div>

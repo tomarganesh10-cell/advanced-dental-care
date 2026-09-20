@@ -18,27 +18,27 @@ export default function TermsPage() {
       breadcrumb={{ name: "Terms of use", path: "/terms" }}
     >
       <p>
-        These terms apply to this website, the online booking system and the patient portal
-        operated by {identity.legalName}, {contact.address.formatted}.
+        These terms apply to this website, the online booking system and the patient portal operated
+        by {identity.legalName}, {contact.address.formatted}.
       </p>
 
       <h2>Using this website</h2>
       <p>
-        You may use this site to learn about our services, book appointments and manage your
-        own care. You may not attempt to access another person&apos;s records, probe the site
-        for vulnerabilities, scrape it at scale, or submit false information.
+        You may use this site to learn about our services, book appointments and manage your own
+        care. You may not attempt to access another person&apos;s records, probe the site for
+        vulnerabilities, scrape it at scale, or submit false information.
       </p>
 
       <h2>Booking appointments</h2>
       <ul>
         <li>
-          A booking made online is a <strong>request</strong> until the clinic confirms it.
-          You will receive a message when it is confirmed.
+          A booking made online is a <strong>request</strong> until the clinic confirms it. You will
+          receive a message when it is confirmed.
         </li>
         <li>You must give a mobile number you control; it is verified by a one-time code.</li>
         <li>
-          Please tell us as early as you can if you cannot attend. Repeated non-attendance may
-          mean we ask you to confirm by phone before we hold future appointments.
+          Please tell us as early as you can if you cannot attend. Repeated non-attendance may mean
+          we ask you to confirm by phone before we hold future appointments.
         </li>
         <li>
           We may need to move an appointment — for a clinical emergency, or if a clinician is
@@ -50,36 +50,34 @@ export default function TermsPage() {
       <ul>
         <li>Your portal account is personal to you. Do not share access.</li>
         <li>
-          Access uses a one-time code sent to your registered mobile number. Tell us
-          immediately if that number changes or you lose the device.
+          Access uses a one-time code sent to your registered mobile number. Tell us immediately if
+          that number changes or you lose the device.
         </li>
         <li>
-          The portal is for viewing your records and managing appointments. It is not a
-          channel for urgent clinical problems — call the clinic for those.
+          The portal is for viewing your records and managing appointments. It is not a channel for
+          urgent clinical problems — call the clinic for those.
         </li>
       </ul>
 
       <h2>Fees and payment</h2>
       <ul>
         <li>
-          Treatment costs are set out in a written estimate after examination. Prices on this
-          site, where shown, are indicative and are not an offer.
+          Treatment costs are set out in a written estimate after examination. Prices on this site,
+          where shown, are indicative and are not an offer.
         </li>
         <li>Payment is due as set out in your treatment plan.</li>
         <li>
-          Online payments are processed by a third-party payment provider. We do not receive
-          or store your card details.
+          Online payments are processed by a third-party payment provider. We do not receive or
+          store your card details.
         </li>
-        <li>
-          Refunds for treatment not yet provided are handled case by case; ask reception.
-        </li>
+        <li>Refunds for treatment not yet provided are handled case by case; ask reception.</li>
       </ul>
 
       <h2>Clinical decisions</h2>
       <p>
-        Treatment is provided on clinical judgement. We may decline to provide a requested
-        treatment where we do not believe it is in your interest, and we will explain why.
-        You may always seek a second opinion, and we will provide your records for it.
+        Treatment is provided on clinical judgement. We may decline to provide a requested treatment
+        where we do not believe it is in your interest, and we will explain why. You may always seek
+        a second opinion, and we will provide your records for it.
       </p>
 
       <h2>Content</h2>
@@ -91,15 +89,15 @@ export default function TermsPage() {
 
       <h2>Availability</h2>
       <p>
-        We aim to keep the site and portal available but cannot guarantee uninterrupted
-        service. If the booking system is unavailable, call {contact.phone.display}.
+        We aim to keep the site and portal available but cannot guarantee uninterrupted service. If
+        the booking system is unavailable, call {contact.phone.display}.
       </p>
 
       <h2>Liability</h2>
       <p>
-        Nothing in these terms limits our liability for clinical negligence or for anything
-        that cannot be limited under law. Our liability for the website itself — as distinct
-        from the care we provide — is limited to what is reasonable and foreseeable.
+        Nothing in these terms limits our liability for clinical negligence or for anything that
+        cannot be limited under law. Our liability for the website itself — as distinct from the
+        care we provide — is limited to what is reasonable and foreseeable.
       </p>
 
       <h2>Governing law</h2>

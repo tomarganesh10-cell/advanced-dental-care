@@ -23,8 +23,8 @@ export default function ContactPage() {
       <div className="container-page pb-10">
         <h1 className="text-3xl md:text-4xl">How can we help?</h1>
         <p className="prose-clinic mt-4">
-          Tell us what you need and the right person will get back to you. If you are in
-          pain today, calling will always be faster than this form.
+          Tell us what you need and the right person will get back to you. If you are in pain today,
+          calling will always be faster than this form.
         </p>
       </div>
 
@@ -82,7 +82,7 @@ export default function ContactPage() {
               icon={<MapPin className="size-4" />}
               title="Visit"
               action={
-                <address className="text-sm leading-relaxed not-italic text-[--color-ink-muted]">
+                <address className="text-sm leading-relaxed text-[--color-ink-muted] not-italic">
                   {contact.address.line1}
                   <br />
                   {contact.address.line2}
@@ -132,7 +132,9 @@ function ContactCard({
         <p className="text-sm font-semibold text-[--color-primary]">{title}</p>
       </div>
       <div className="mt-2.5">{action}</div>
-      {note ? <p className="mt-2 text-xs leading-relaxed text-[--color-ink-subtle]">{note}</p> : null}
+      {note ? (
+        <p className="mt-2 text-xs leading-relaxed text-[--color-ink-subtle]">{note}</p>
+      ) : null}
     </div>
   );
 }

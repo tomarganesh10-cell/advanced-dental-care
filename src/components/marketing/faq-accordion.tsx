@@ -15,7 +15,10 @@ export function FaqAccordion({ faqs }: { faqs: Array<{ question: string; answer:
   if (faqs.length === 0) return null;
 
   return (
-    <Accordion.Root type="multiple" className="divide-y divide-[--color-hairline] border-y border-[--color-hairline]">
+    <Accordion.Root
+      type="multiple"
+      className="divide-y divide-[--color-hairline] border-y border-[--color-hairline]"
+    >
       {faqs.map((faq, index) => (
         <Accordion.Item key={index} value={`faq-${index}`}>
           <Accordion.Header>
@@ -28,7 +31,9 @@ export function FaqAccordion({ faqs }: { faqs: Array<{ question: string; answer:
             </Accordion.Trigger>
           </Accordion.Header>
           <Accordion.Content className="overflow-hidden data-[state=closed]:animate-[accordion-up_150ms_ease-out] data-[state=open]:animate-[accordion-down_150ms_ease-out]">
-            <p className="pb-5 text-[15px] leading-relaxed text-[--color-ink-muted]">{faq.answer}</p>
+            <p className="pb-5 text-[15px] leading-relaxed text-[--color-ink-muted]">
+              {faq.answer}
+            </p>
           </Accordion.Content>
         </Accordion.Item>
       ))}

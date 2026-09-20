@@ -67,11 +67,15 @@ export default async function AttendancePage() {
     <>
       <PageHeader
         title="Attendance"
-        description={canSeeAll ? "Your shift and today's team board." : "Your shift and this month's record."}
+        description={
+          canSeeAll ? "Your shift and today's team board." : "Your shift and this month's record."
+        }
         actions={
           canExport ? (
             <Button asChild variant="outline" size="sm">
-              <a href={`/api/admin/attendance/export?year=${now.getFullYear()}&month=${now.getMonth() + 1}`}>
+              <a
+                href={`/api/admin/attendance/export?year=${now.getFullYear()}&month=${now.getMonth() + 1}`}
+              >
                 <Download aria-hidden="true" />
                 Export CSV
               </a>
@@ -106,18 +110,34 @@ export default async function AttendancePage() {
 
             {todayBoard.length === 0 && notYetIn.length === 0 ? (
               <div className="p-5">
-                <EmptyState title="No staff records yet" description="Check-ins will appear here." />
+                <EmptyState
+                  title="No staff records yet"
+                  description="Check-ins will appear here."
+                />
               </div>
             ) : (
               <table className="w-full text-sm">
                 <caption className="sr-only">Staff attendance today</caption>
                 <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
                   <tr>
-                    <th scope="col" className="px-5 py-2.5 text-left font-medium">Staff</th>
-                    <th scope="col" className="hidden px-4 py-2.5 text-left font-medium sm:table-cell">Role</th>
-                    <th scope="col" className="px-4 py-2.5 text-left font-medium">In</th>
-                    <th scope="col" className="px-4 py-2.5 text-left font-medium">Out</th>
-                    <th scope="col" className="px-4 py-2.5 text-left font-medium">Status</th>
+                    <th scope="col" className="px-5 py-2.5 text-left font-medium">
+                      Staff
+                    </th>
+                    <th
+                      scope="col"
+                      className="hidden px-4 py-2.5 text-left font-medium sm:table-cell"
+                    >
+                      Role
+                    </th>
+                    <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                      In
+                    </th>
+                    <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                      Out
+                    </th>
+                    <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                      Status
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[--color-hairline]">
@@ -182,13 +202,27 @@ export default async function AttendancePage() {
               <caption className="sr-only">Monthly attendance summary by staff member</caption>
               <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
                 <tr>
-                  <th scope="col" className="px-5 py-2.5 text-left font-medium">Staff</th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">Present</th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">Late</th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">Half day</th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">Leave</th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">Absent</th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">Hours</th>
+                  <th scope="col" className="px-5 py-2.5 text-left font-medium">
+                    Staff
+                  </th>
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                    Present
+                  </th>
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                    Late
+                  </th>
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                    Half day
+                  </th>
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                    Leave
+                  </th>
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                    Absent
+                  </th>
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                    Hours
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[--color-hairline]">

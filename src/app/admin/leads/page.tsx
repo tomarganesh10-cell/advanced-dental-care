@@ -32,7 +32,11 @@ const FILTERS: Array<{ key: string; label: string; statuses?: LeadStatus[] }> = 
   { key: "new", label: "New", statuses: ["NEW"] },
   { key: "due", label: "Follow-up due" },
   { key: "open", label: "Open", statuses: ["NEW", "CONTACTED", "QUALIFIED", "FOLLOW_UP"] },
-  { key: "booked", label: "Booked", statuses: ["APPOINTMENT_BOOKED", "VISITED", "TREATMENT_STARTED"] },
+  {
+    key: "booked",
+    label: "Booked",
+    statuses: ["APPOINTMENT_BOOKED", "VISITED", "TREATMENT_STARTED"],
+  },
   { key: "won", label: "Won", statuses: ["WON"] },
   { key: "lost", label: "Lost", statuses: ["LOST"] },
   { key: "all", label: "All" },
@@ -111,7 +115,11 @@ export default async function LeadsPage({
       />
 
       <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-        <StatCard label="New" value={countFor("NEW")} tone={countFor("NEW") > 0 ? "warning" : "default"} />
+        <StatCard
+          label="New"
+          value={countFor("NEW")}
+          tone={countFor("NEW") > 0 ? "warning" : "default"}
+        />
         <StatCard label="Contacted" value={countFor("CONTACTED")} />
         <StatCard label="Booked" value={countFor("APPOINTMENT_BOOKED")} />
         <StatCard label="Won" value={countFor("WON")} tone="success" />
@@ -146,12 +154,24 @@ export default async function LeadsPage({
             <caption className="sr-only">Enquiries</caption>
             <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
               <tr>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Enquirer</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Interest</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Source</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Owner</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Follow-up</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Status</th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Enquirer
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Interest
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Source
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Owner
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Follow-up
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Status
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[--color-hairline]">
@@ -171,7 +191,10 @@ export default async function LeadsPage({
                         {lead.fullName}
                       </Link>
                       <span className="block text-xs text-[--color-ink-subtle]">
-                        <a href={`tel:${lead.phone}`} className="inline-flex items-center gap-1 hover:underline">
+                        <a
+                          href={`tel:${lead.phone}`}
+                          className="inline-flex items-center gap-1 hover:underline"
+                        >
                           <Phone className="size-3" aria-hidden="true" />
                           {formatPhone(lead.phone)}
                         </a>
@@ -201,7 +224,9 @@ export default async function LeadsPage({
                         <span
                           className={cn(
                             "inline-flex items-center gap-1 tabular-nums",
-                            overdue ? "font-medium text-[--color-danger]" : "text-[--color-ink-muted]",
+                            overdue
+                              ? "font-medium text-[--color-danger]"
+                              : "text-[--color-ink-muted]",
                           )}
                         >
                           {overdue ? <AlertCircle className="size-3.5" aria-hidden="true" /> : null}
@@ -259,10 +284,18 @@ export default async function LeadsPage({
               <caption className="sr-only">Enquiry volume and booking rate by source</caption>
               <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
                 <tr>
-                  <th scope="col" className="px-4 py-2.5 text-left font-medium">Source</th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">Enquiries</th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">Booked</th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">Booking rate</th>
+                  <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                    Source
+                  </th>
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                    Enquiries
+                  </th>
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                    Booked
+                  </th>
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                    Booking rate
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[--color-hairline]">
@@ -280,8 +313,8 @@ export default async function LeadsPage({
             </table>
           </div>
           <p className="mt-2 text-xs text-[--color-ink-subtle]">
-            Booking rate counts enquiries that reached an appointment or beyond. A source with
-            high volume and a low rate is usually a targeting problem, not a volume problem.
+            Booking rate counts enquiries that reached an appointment or beyond. A source with high
+            volume and a low rate is usually a targeting problem, not a volume problem.
           </p>
         </section>
       ) : null}

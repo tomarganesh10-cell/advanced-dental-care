@@ -123,9 +123,17 @@ export default async function AdminOverviewPage() {
           Today
         </h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          <StatCard label="Scheduled" value={summary.today.total} icon={<CalendarCheck className="size-4" />} />
+          <StatCard
+            label="Scheduled"
+            value={summary.today.total}
+            icon={<CalendarCheck className="size-4" />}
+          />
           <StatCard label="Confirmed" value={summary.today.confirmed} />
-          <StatCard label="In clinic" value={summary.today.checkedIn} tone={summary.today.checkedIn > 0 ? "success" : "default"} />
+          <StatCard
+            label="In clinic"
+            value={summary.today.checkedIn}
+            tone={summary.today.checkedIn > 0 ? "success" : "default"}
+          />
           <StatCard label="Completed" value={summary.today.completed} />
           <StatCard
             label="Did not attend"
@@ -174,8 +182,8 @@ export default async function AdminOverviewPage() {
           <div className="text-sm">
             <p className="font-medium text-amber-950">Message queue needs a look</p>
             <p className="mt-0.5 text-amber-900">
-              {summary.messaging.queued} queued, {summary.messaging.failed} failed. Patients may
-              not be receiving confirmations or reminders.
+              {summary.messaging.queued} queued, {summary.messaging.failed} failed. Patients may not
+              be receiving confirmations or reminders.
             </p>
             <Link
               href="/admin/notifications"
@@ -210,11 +218,27 @@ export default async function AdminOverviewPage() {
                 <caption className="sr-only">Appointments scheduled today</caption>
                 <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
                   <tr>
-                    <th scope="col" className="px-4 py-2.5 text-left font-medium">Time</th>
-                    <th scope="col" className="px-4 py-2.5 text-left font-medium">Patient</th>
-                    <th scope="col" className="hidden px-4 py-2.5 text-left font-medium sm:table-cell">Treatment</th>
-                    <th scope="col" className="hidden px-4 py-2.5 text-left font-medium md:table-cell">Dentist</th>
-                    <th scope="col" className="px-4 py-2.5 text-left font-medium">Status</th>
+                    <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                      Time
+                    </th>
+                    <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                      Patient
+                    </th>
+                    <th
+                      scope="col"
+                      className="hidden px-4 py-2.5 text-left font-medium sm:table-cell"
+                    >
+                      Treatment
+                    </th>
+                    <th
+                      scope="col"
+                      className="hidden px-4 py-2.5 text-left font-medium md:table-cell"
+                    >
+                      Dentist
+                    </th>
+                    <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                      Status
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[--color-hairline]">

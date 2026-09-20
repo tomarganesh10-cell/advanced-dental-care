@@ -162,7 +162,9 @@ export function breadcrumbSchema(items: BreadcrumbItem[]): Record<string, unknow
   };
 }
 
-export function faqSchema(faqs: Array<{ question: string; answer: string }>): Record<string, unknown> {
+export function faqSchema(
+  faqs: Array<{ question: string; answer: string }>,
+): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",

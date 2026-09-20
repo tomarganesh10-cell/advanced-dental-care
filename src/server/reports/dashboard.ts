@@ -174,7 +174,10 @@ export async function getLeadSourcePerformance(days = 90, now = new Date()) {
     _count: { _all: true },
   });
 
-  const bySource = new Map<string, { source: string; total: number; booked: number; won: number }>();
+  const bySource = new Map<
+    string,
+    { source: string; total: number; booked: number; won: number }
+  >();
 
   for (const row of rows) {
     const entry = bySource.get(row.source) ?? { source: row.source, total: 0, booked: 0, won: 0 };

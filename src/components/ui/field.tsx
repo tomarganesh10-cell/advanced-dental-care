@@ -40,7 +40,10 @@ export function Field({ label, htmlFor, hint, error, required, children, classNa
       {children}
       {hint && !error ? <p className="text-xs text-[--color-ink-subtle]">{hint}</p> : null}
       {error ? (
-        <p role="alert" className="flex items-start gap-1.5 text-xs font-medium text-[--color-danger]">
+        <p
+          role="alert"
+          className="flex items-start gap-1.5 text-xs font-medium text-[--color-danger]"
+        >
           <AlertCircle className="mt-px size-3.5 shrink-0" aria-hidden="true" />
           {error}
         </p>

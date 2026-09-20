@@ -215,9 +215,7 @@ export async function scheduleLeadFollowUps(leadId: string): Promise<void> {
       variables: {
         name: firstName,
         treatment: lead.treatmentInterest ?? "dental treatment",
-        infoUrl: lead.serviceSlug
-          ? `/services/${lead.serviceSlug}`
-          : "/services",
+        infoUrl: lead.serviceSlug ? `/services/${lead.serviceSlug}` : "/services",
       },
       leadId: lead.id,
       scheduledFor: new Date(Date.now() + step.delay),

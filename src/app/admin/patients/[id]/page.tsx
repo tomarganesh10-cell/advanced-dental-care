@@ -98,7 +98,10 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
               ) : null}
               {patient.email ? (
                 <Row icon={<Mail className="size-3.5" />} label="Email">
-                  <a href={`mailto:${patient.email}`} className="break-all text-[--color-action] hover:underline">
+                  <a
+                    href={`mailto:${patient.email}`}
+                    className="break-all text-[--color-action] hover:underline"
+                  >
                     {patient.email}
                   </a>
                 </Row>
@@ -150,12 +153,24 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
               {clinical.medicalHistory ? (
                 <>
                   <div className="flex flex-wrap gap-1.5">
-                    {clinical.medicalHistory.isDiabetic ? <Badge tone="warning">Diabetic</Badge> : null}
-                    {clinical.medicalHistory.isHypertensive ? <Badge tone="warning">Hypertensive</Badge> : null}
-                    {clinical.medicalHistory.hasCardiacCondition ? <Badge tone="danger">Cardiac</Badge> : null}
-                    {clinical.medicalHistory.onBloodThinners ? <Badge tone="danger">Anticoagulant</Badge> : null}
-                    {clinical.medicalHistory.bleedingDisorder ? <Badge tone="danger">Bleeding disorder</Badge> : null}
-                    {clinical.medicalHistory.isPregnant ? <Badge tone="warning">Pregnant</Badge> : null}
+                    {clinical.medicalHistory.isDiabetic ? (
+                      <Badge tone="warning">Diabetic</Badge>
+                    ) : null}
+                    {clinical.medicalHistory.isHypertensive ? (
+                      <Badge tone="warning">Hypertensive</Badge>
+                    ) : null}
+                    {clinical.medicalHistory.hasCardiacCondition ? (
+                      <Badge tone="danger">Cardiac</Badge>
+                    ) : null}
+                    {clinical.medicalHistory.onBloodThinners ? (
+                      <Badge tone="danger">Anticoagulant</Badge>
+                    ) : null}
+                    {clinical.medicalHistory.bleedingDisorder ? (
+                      <Badge tone="danger">Bleeding disorder</Badge>
+                    ) : null}
+                    {clinical.medicalHistory.isPregnant ? (
+                      <Badge tone="warning">Pregnant</Badge>
+                    ) : null}
                     {clinical.medicalHistory.isSmoker ? <Badge tone="neutral">Smoker</Badge> : null}
                   </div>
 
@@ -195,7 +210,8 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
 
                   {clinical.medicalHistory.lastReviewedAt ? (
                     <p className="mt-3 text-xs text-[--color-ink-subtle]">
-                      Last reviewed {formatClinicDate(clinical.medicalHistory.lastReviewedAt, "d MMM yyyy")}
+                      Last reviewed{" "}
+                      {formatClinicDate(clinical.medicalHistory.lastReviewedAt, "d MMM yyyy")}
                     </p>
                   ) : (
                     <p className="mt-3 rounded-lg bg-amber-50 p-2.5 text-xs text-amber-900">
@@ -236,13 +252,20 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
             ) : (
               <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
                 {timeline.appointments.slice(0, 8).map((appointment) => (
-                  <li key={appointment.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm">
+                  <li
+                    key={appointment.id}
+                    className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm"
+                  >
                     <span className="font-medium tabular-nums">
                       {formatClinicDate(appointment.startsAt, "d MMM yyyy")}
                     </span>
-                    <span className="text-[--color-ink-muted]">{appointment.serviceName ?? "Consultation"}</span>
+                    <span className="text-[--color-ink-muted]">
+                      {appointment.serviceName ?? "Consultation"}
+                    </span>
                     {appointment.doctor ? (
-                      <span className="text-xs text-[--color-ink-subtle]">{appointment.doctor.displayName}</span>
+                      <span className="text-xs text-[--color-ink-subtle]">
+                        {appointment.doctor.displayName}
+                      </span>
                     ) : null}
                     <Badge tone={STATUS_TONES[appointment.status]} className="ml-auto">
                       {humanStatus(appointment.status)}
@@ -285,10 +308,18 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
                       </div>
 
                       <dl className="mt-2.5 space-y-1.5 text-sm">
-                        {note.chiefComplaint ? <NoteRow label="Complaint">{note.chiefComplaint}</NoteRow> : null}
-                        {note.examination ? <NoteRow label="Examination">{note.examination}</NoteRow> : null}
-                        {note.diagnosis ? <NoteRow label="Diagnosis">{note.diagnosis}</NoteRow> : null}
-                        {note.procedure ? <NoteRow label="Procedure">{note.procedure}</NoteRow> : null}
+                        {note.chiefComplaint ? (
+                          <NoteRow label="Complaint">{note.chiefComplaint}</NoteRow>
+                        ) : null}
+                        {note.examination ? (
+                          <NoteRow label="Examination">{note.examination}</NoteRow>
+                        ) : null}
+                        {note.diagnosis ? (
+                          <NoteRow label="Diagnosis">{note.diagnosis}</NoteRow>
+                        ) : null}
+                        {note.procedure ? (
+                          <NoteRow label="Procedure">{note.procedure}</NoteRow>
+                        ) : null}
                         {note.toothNumbers.length > 0 ? (
                           <NoteRow label="Teeth">{note.toothNumbers.join(", ")}</NoteRow>
                         ) : null}
@@ -322,11 +353,18 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
               </h2>
               <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
                 {clinical.treatmentPlans.map((plan) => (
-                  <li key={plan.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm">
+                  <li
+                    key={plan.id}
+                    className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm"
+                  >
                     <span className="font-medium">{plan.title}</span>
-                    <span className="text-xs text-[--color-ink-subtle]">{plan.itemCount} item(s)</span>
+                    <span className="text-xs text-[--color-ink-subtle]">
+                      {plan.itemCount} item(s)
+                    </span>
                     {canSeeMoney ? (
-                      <span className="text-[--color-ink-muted]">{formatPaise(plan.estimatedTotalPaise)}</span>
+                      <span className="text-[--color-ink-muted]">
+                        {formatPaise(plan.estimatedTotalPaise)}
+                      </span>
                     ) : null}
                     <Badge tone="neutral" className="ml-auto">
                       {plan.status.toLowerCase().replace(/_/g, " ")}
@@ -346,7 +384,10 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
               </h2>
               <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
                 {clinical.prescriptions.map((prescription) => (
-                  <li key={prescription.id} className="flex flex-wrap items-center gap-x-3 px-4 py-3 text-sm">
+                  <li
+                    key={prescription.id}
+                    className="flex flex-wrap items-center gap-x-3 px-4 py-3 text-sm"
+                  >
                     <span className="font-medium tabular-nums">{prescription.reference}</span>
                     <span className="text-[--color-ink-muted]">
                       {formatClinicDate(prescription.issuedAt, "d MMM yyyy")}
@@ -370,11 +411,22 @@ export default async function PatientRecordPage({ params }: { params: Promise<{ 
               </h2>
               <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
                 {timeline.invoices.map((invoice) => (
-                  <li key={invoice.id} className="flex flex-wrap items-center gap-x-3 px-4 py-3 text-sm">
+                  <li
+                    key={invoice.id}
+                    className="flex flex-wrap items-center gap-x-3 px-4 py-3 text-sm"
+                  >
                     <span className="font-medium tabular-nums">{invoice.number}</span>
-                    <span className="text-[--color-ink-muted]">{formatPaise(invoice.totalPaise)}</span>
+                    <span className="text-[--color-ink-muted]">
+                      {formatPaise(invoice.totalPaise)}
+                    </span>
                     <Badge
-                      tone={invoice.status === "PAID" ? "success" : invoice.status === "ISSUED" ? "warning" : "neutral"}
+                      tone={
+                        invoice.status === "PAID"
+                          ? "success"
+                          : invoice.status === "ISSUED"
+                            ? "warning"
+                            : "neutral"
+                      }
                       className="ml-auto"
                     >
                       {invoice.status.toLowerCase().replace(/_/g, " ")}

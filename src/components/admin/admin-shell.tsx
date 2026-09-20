@@ -55,7 +55,10 @@ export function AdminShell({ nav, user, badges = {}, children }: AdminShellProps
             {sidebarOpen ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>
 
-          <Link href="/admin" className="font-[family-name:--font-display] font-semibold text-[--color-primary]">
+          <Link
+            href="/admin"
+            className="font-[family-name:--font-display] font-semibold text-[--color-primary]"
+          >
             Advanced Dental
             <span className="ml-2 rounded bg-[--color-navy-100] px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-[--color-navy-700] uppercase">
               Clinic
@@ -64,7 +67,9 @@ export function AdminShell({ nav, user, badges = {}, children }: AdminShellProps
 
           <div className="ml-auto flex items-center gap-3">
             <div className="hidden text-right sm:block">
-              <p className="text-sm leading-tight font-medium text-[--color-ink]">{user.fullName}</p>
+              <p className="text-sm leading-tight font-medium text-[--color-ink]">
+                {user.fullName}
+              </p>
               <p className="text-[11px] text-[--color-ink-subtle]">{user.roleLabel}</p>
             </div>
             <button

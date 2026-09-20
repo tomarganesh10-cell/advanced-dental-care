@@ -45,7 +45,12 @@ function buildCsp(nonce: string, isDev: boolean): string {
       ...(isDev ? ["ws:", "wss:"] : []),
     ],
     // Maps embed and the Razorpay checkout iframe.
-    "frame-src": ["'self'", "https://www.google.com", "https://maps.google.com", "https://api.razorpay.com"],
+    "frame-src": [
+      "'self'",
+      "https://www.google.com",
+      "https://maps.google.com",
+      "https://api.razorpay.com",
+    ],
     "object-src": ["'none'"],
     "base-uri": ["'self'"],
     "form-action": ["'self'"],
@@ -100,7 +105,8 @@ export const config = {
      * a CSP header of their own and would only add latency.
      */
     {
-      source: "/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:png|jpg|jpeg|gif|webp|avif|svg|ico|woff|woff2)$).*)",
+      source:
+        "/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:png|jpg|jpeg|gif|webp|avif|svg|ico|woff|woff2)$).*)",
       missing: [
         { type: "header", key: "next-router-prefetch" },
         { type: "header", key: "purpose", value: "prefetch" },

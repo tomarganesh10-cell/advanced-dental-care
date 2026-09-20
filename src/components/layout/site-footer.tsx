@@ -28,7 +28,7 @@ export function SiteFooter() {
   const featuredCategories = SERVICE_CATEGORIES.slice(0, 3);
 
   return (
-    <footer className="border-t border-[--color-navy-800] bg-[--color-navy-900] text-[--color-navy-200] no-print">
+    <footer className="no-print border-t border-[--color-navy-800] bg-[--color-navy-900] text-[--color-navy-200]">
       <div className="container-page py-14">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Identity + contact */}
@@ -42,7 +42,10 @@ export function SiteFooter() {
 
             <address className="space-y-2.5 text-sm not-italic">
               <p className="flex items-start gap-2.5">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-[--color-teal-400]" aria-hidden="true" />
+                <MapPin
+                  className="mt-0.5 size-4 shrink-0 text-[--color-teal-400]"
+                  aria-hidden="true"
+                />
                 <span>
                   {contact.address.line1}, {contact.address.line2}
                   <br />
@@ -57,7 +60,10 @@ export function SiteFooter() {
               </p>
               <p className="flex items-center gap-2.5">
                 <Mail className="size-4 shrink-0 text-[--color-teal-400]" aria-hidden="true" />
-                <a href={`mailto:${contact.email.primary}`} className="break-all hover:text-white hover:underline">
+                <a
+                  href={`mailto:${contact.email.primary}`}
+                  className="break-all hover:text-white hover:underline"
+                >
                   {contact.email.primary}
                 </a>
               </p>
@@ -75,14 +81,20 @@ export function SiteFooter() {
                   .slice(0, 3)
                   .map((service) => (
                     <li key={service.slug}>
-                      <Link href={`/services/${service.slug}`} className="hover:text-white hover:underline">
+                      <Link
+                        href={`/services/${service.slug}`}
+                        className="hover:text-white hover:underline"
+                      >
                         {service.name}
                       </Link>
                     </li>
                   )),
               )}
               <li>
-                <Link href="/services" className="font-medium text-[--color-teal-300] hover:underline">
+                <Link
+                  href="/services"
+                  className="font-medium text-[--color-teal-300] hover:underline"
+                >
                   All treatments →
                 </Link>
               </li>

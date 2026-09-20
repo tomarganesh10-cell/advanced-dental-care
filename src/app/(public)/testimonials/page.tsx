@@ -23,10 +23,9 @@ export default function TestimonialsPage() {
         <h1 className="text-3xl md:text-4xl">Patient stories</h1>
         <div className="prose-clinic mt-4">
           <p>
-            The star rating below is fetched from Google, not typed into this page. It
-            reflects every review the practice has received, not a selection — we do not
-            filter which patients are asked for a public review, and we do not edit what
-            they write.
+            The star rating below is fetched from Google, not typed into this page. It reflects
+            every review the practice has received, not a selection — we do not filter which
+            patients are asked for a public review, and we do not edit what they write.
           </p>
         </div>
       </div>

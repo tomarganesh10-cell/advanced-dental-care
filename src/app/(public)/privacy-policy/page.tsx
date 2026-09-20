@@ -27,15 +27,15 @@ export default function PrivacyPolicyPage() {
       breadcrumb={{ name: "Privacy policy", path: "/privacy-policy" }}
     >
       <p>
-        This policy explains what personal information {identity.legalName} collects, why we
-        collect it, how we look after it and what rights you have over it. It covers this
-        website, the patient portal and the records we keep as your dental practice.
+        This policy explains what personal information {identity.legalName} collects, why we collect
+        it, how we look after it and what rights you have over it. It covers this website, the
+        patient portal and the records we keep as your dental practice.
       </p>
 
       <h2>Who is responsible for your data</h2>
       <p>
-        {identity.legalName}, {contact.address.formatted}, is the data fiduciary for the
-        information described here. For any question about your data, contact us at{" "}
+        {identity.legalName}, {contact.address.formatted}, is the data fiduciary for the information
+        described here. For any question about your data, contact us at{" "}
         <a href={`mailto:${contact.email.primary}`}>{contact.email.primary}</a> or{" "}
         {contact.phone.display}.
       </p>
@@ -46,13 +46,13 @@ export default function PrivacyPolicyPage() {
         <li>Your name, mobile number and email when you book or enquire</li>
         <li>The treatment you asked about and anything you tell us in the message field</li>
         <li>
-          How you reached the site (search, an advertisement, a link), so we know which of
-          our own efforts are worth continuing
+          How you reached the site (search, an advertisement, a link), so we know which of our own
+          efforts are worth continuing
         </li>
       </ul>
       <p>
-        Our own analytics records events such as &ldquo;a booking was started&rdquo; without
-        any identifier that links back to a person.
+        Our own analytics records events such as &ldquo;a booking was started&rdquo; without any
+        identifier that links back to a person.
       </p>
 
       <h3>When you become a patient</h3>
@@ -64,9 +64,9 @@ export default function PrivacyPolicyPage() {
         <li>Appointment history, invoices and payment records</li>
       </ul>
       <p>
-        Health information is sensitive personal data and we treat it accordingly. We collect
-        the minimum needed to treat you safely — the medical history questions exist because
-        the answers change how treatment is planned, not to build a profile.
+        Health information is sensitive personal data and we treat it accordingly. We collect the
+        minimum needed to treat you safely — the medical history questions exist because the answers
+        change how treatment is planned, not to build a profile.
       </p>
 
       <h2>Why we use it</h2>
@@ -78,31 +78,31 @@ export default function PrivacyPolicyPage() {
         <li>To respond to your enquiries</li>
       </ul>
       <p>
-        We do not sell your data. We do not share it with advertisers. We do not use your
-        clinical information for marketing.
+        We do not sell your data. We do not share it with advertisers. We do not use your clinical
+        information for marketing.
       </p>
 
       <h2>Messaging you</h2>
       <p>
-        Appointment confirmations, reminders and receipts are part of providing your care and
-        are sent to the contact details you give us. WhatsApp and SMS messaging require your
-        consent, which you give when booking and can withdraw at any time by replying STOP or
-        telling reception. Withdrawing consent for messages does not affect your treatment.
+        Appointment confirmations, reminders and receipts are part of providing your care and are
+        sent to the contact details you give us. WhatsApp and SMS messaging require your consent,
+        which you give when booking and can withdraw at any time by replying STOP or telling
+        reception. Withdrawing consent for messages does not affect your treatment.
       </p>
 
       <h2>Who can see your records</h2>
       <ul>
         <li>The clinicians involved in your care</li>
         <li>
-          Front-office staff, who can see your contact and appointment details but cannot
-          open your clinical notes
+          Front-office staff, who can see your contact and appointment details but cannot open your
+          clinical notes
         </li>
         <li>Our accountant, for invoices and payments only</li>
         <li>A laboratory or specialist we refer you to, with the information they need</li>
       </ul>
       <p>
-        Access is controlled by role, every access to a patient record is logged, and those
-        logs are reviewable. Staff who do not need your clinical record cannot reach it.
+        Access is controlled by role, every access to a patient record is logged, and those logs are
+        reviewable. Staff who do not need your clinical record cannot reach it.
       </p>
 
       <h2>Service providers</h2>
@@ -116,11 +116,11 @@ export default function PrivacyPolicyPage() {
 
       <h2>How long we keep it</h2>
       <p>
-        Dental records are kept for the periods required by professional and legal
-        obligations, which outlast your treatment and, in the case of records relating to
-        someone treated as a minor, run past adulthood. Website enquiries that do not become
-        patient records are kept for up to two years. Marketing consents are kept as long as
-        the consent stands, plus a record of its withdrawal.
+        Dental records are kept for the periods required by professional and legal obligations,
+        which outlast your treatment and, in the case of records relating to someone treated as a
+        minor, run past adulthood. Website enquiries that do not become patient records are kept for
+        up to two years. Marketing consents are kept as long as the consent stands, plus a record of
+        its withdrawal.
       </p>
 
       <h2>How we protect it</h2>
@@ -146,32 +146,31 @@ export default function PrivacyPolicyPage() {
         <li>Complain to us, and to the Data Protection Board of India</li>
       </ul>
       <p>
-        On deletion, one honest caveat: we cannot delete clinical records we are legally
-        required to retain, and we will not pretend otherwise. Where that applies we will
-        tell you exactly what we are keeping and why, delete everything we are not obliged to
-        keep, and stop all non-essential processing. See{" "}
-        <Link href="/patient-rights">your data rights</Link> for how to make a request.
+        On deletion, one honest caveat: we cannot delete clinical records we are legally required to
+        retain, and we will not pretend otherwise. Where that applies we will tell you exactly what
+        we are keeping and why, delete everything we are not obliged to keep, and stop all
+        non-essential processing. See <Link href="/patient-rights">your data rights</Link> for how
+        to make a request.
       </p>
 
       <h2>Cookies</h2>
       <p>
-        This site uses a small number of cookies and similar storage: one to keep you signed
-        in to the patient portal, and browser storage to remember which campaign brought you
-        here for the duration of your visit. If analytics is enabled, it is configured with
-        IP anonymisation. We do not use advertising or cross-site tracking cookies.
+        This site uses a small number of cookies and similar storage: one to keep you signed in to
+        the patient portal, and browser storage to remember which campaign brought you here for the
+        duration of your visit. If analytics is enabled, it is configured with IP anonymisation. We
+        do not use advertising or cross-site tracking cookies.
       </p>
 
       <h2>Children</h2>
       <p>
-        We treat children, and their records are created and accessed by a parent or
-        guardian. The patient portal is for adults; a guardian manages a child&apos;s
-        appointments and records.
+        We treat children, and their records are created and accessed by a parent or guardian. The
+        patient portal is for adults; a guardian manages a child&apos;s appointments and records.
       </p>
 
       <h2>Changes</h2>
       <p>
-        If we change this policy we will update the date above. Material changes affecting how
-        we use patient data will be communicated directly, not just posted.
+        If we change this policy we will update the date above. Material changes affecting how we
+        use patient data will be communicated directly, not just posted.
       </p>
     </LegalPage>
   );

@@ -49,8 +49,8 @@ export default async function DoctorsPage() {
         <h1 className="text-3xl md:text-4xl">Our dental team</h1>
         <p className="prose-clinic mt-4">
           Complex dentistry benefits from more than one pair of hands. Implants, orthodontics,
-          endodontics and oral surgery are handled by clinicians who do that work regularly,
-          rather than by one generalist attempting all of it.
+          endodontics and oral surgery are handled by clinicians who do that work regularly, rather
+          than by one generalist attempting all of it.
         </p>
       </div>
 
@@ -79,7 +79,10 @@ export default async function DoctorsPage() {
 
                     {qualifications?.length ? (
                       <p className="mt-2.5 flex items-center gap-2 text-sm text-[--color-ink-subtle]">
-                        <GraduationCap className="size-4 shrink-0 text-[--color-accent]" aria-hidden="true" />
+                        <GraduationCap
+                          className="size-4 shrink-0 text-[--color-accent]"
+                          aria-hidden="true"
+                        />
                         {qualifications.join(" · ")}
                       </p>
                     ) : null}
@@ -90,7 +93,9 @@ export default async function DoctorsPage() {
                       </p>
                     ) : null}
 
-                    <p className="mt-3 text-sm leading-relaxed text-[--color-ink-muted]">{doctor.bio}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-[--color-ink-muted]">
+                      {doctor.bio}
+                    </p>
 
                     <ul className="mt-4 flex flex-wrap gap-1.5">
                       {doctor.specialInterests.map((interest) => (
@@ -141,7 +146,9 @@ export default async function DoctorsPage() {
                       </p>
                     ) : null}
                     {doctor.bio ? (
-                      <p className="mt-3 text-sm leading-relaxed text-[--color-ink-muted]">{doctor.bio}</p>
+                      <p className="mt-3 text-sm leading-relaxed text-[--color-ink-muted]">
+                        {doctor.bio}
+                      </p>
                     ) : null}
                     <Link
                       href={`/doctors/${doctor.slug}`}
@@ -167,10 +174,10 @@ export default async function DoctorsPage() {
               <div>
                 <h2 className="text-base font-semibold">Specialist clinicians</h2>
                 <p className="mt-1.5 text-sm leading-relaxed text-[--color-ink-muted]">
-                  The practice covers endodontics, orthodontics, oral &amp; maxillofacial
-                  surgery and paediatric dentistry. Individual specialists are listed here
-                  with their qualifications and council registration once those details have
-                  been verified — we would rather list nobody than list someone incorrectly.
+                  The practice covers endodontics, orthodontics, oral &amp; maxillofacial surgery
+                  and paediatric dentistry. Individual specialists are listed here with their
+                  qualifications and council registration once those details have been verified — we
+                  would rather list nobody than list someone incorrectly.
                 </p>
                 <p className="mt-2 text-sm text-[--color-ink-subtle]">
                   Ask reception which clinician would see you for a specific treatment.

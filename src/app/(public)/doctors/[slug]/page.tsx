@@ -155,7 +155,11 @@ export default async function DoctorProfilePage({ params }: { params: Promise<{ 
             ) : null}
           </dl>
 
-          {profile.bio ? <div className="prose-clinic mt-6"><p>{profile.bio}</p></div> : null}
+          {profile.bio ? (
+            <div className="prose-clinic mt-6">
+              <p>{profile.bio}</p>
+            </div>
+          ) : null}
 
           {profile.specialInterests.length > 0 ? (
             <div className="mt-6">
@@ -194,9 +198,9 @@ export default async function DoctorProfilePage({ params }: { params: Promise<{ 
           */}
           {profile.qualifications.length === 0 ? (
             <p className="mt-6 rounded-lg border border-[--color-hairline] bg-[--color-surface-sunken] p-4 text-xs leading-relaxed text-[--color-ink-subtle]">
-              Qualifications and council registration are published here once verified
-              against the original documents. Ask reception if you would like to see them
-              before your appointment — you are entitled to.
+              Qualifications and council registration are published here once verified against the
+              original documents. Ask reception if you would like to see them before your
+              appointment — you are entitled to.
             </p>
           ) : null}
         </div>

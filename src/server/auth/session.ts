@@ -213,7 +213,9 @@ export async function destroySession(kind: SessionKind): Promise<void> {
   if (token) {
     await prisma.session
       .updateMany({ where: { tokenHash: hashToken(token) }, data: { revokedAt: new Date() } })
-      .catch((err: unknown) => logger.warn({ err: (err as Error).message }, "failed to revoke session"));
+      .catch((err: unknown) =>
+        logger.warn({ err: (err as Error).message }, "failed to revoke session"),
+      );
   }
 
   store.delete(cookieName(kind));

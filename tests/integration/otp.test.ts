@@ -41,9 +41,9 @@ describe("OTP", () => {
 
     await verifyOtp("+919800000003", issued.code, "PATIENT_LOGIN");
 
-    await expect(
-      verifyOtp("+919800000003", issued.code, "PATIENT_LOGIN"),
-    ).rejects.toThrow(/no longer valid/i);
+    await expect(verifyOtp("+919800000003", issued.code, "PATIENT_LOGIN")).rejects.toThrow(
+      /no longer valid/i,
+    );
   });
 
   it("rejects a wrong code and counts the attempt", async () => {

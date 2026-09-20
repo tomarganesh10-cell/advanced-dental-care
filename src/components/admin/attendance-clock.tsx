@@ -58,7 +58,13 @@ export function AttendanceClock({
                 {lateMinutes > 0 ? ` · ${lateMinutes} min late` : ""}
               </span>
             </div>
-            <Button size="lg" variant="outline" full onClick={() => run(checkOutAction)} disabled={pending}>
+            <Button
+              size="lg"
+              variant="outline"
+              full
+              onClick={() => run(checkOutAction)}
+              disabled={pending}
+            >
               <LogOut aria-hidden="true" />
               Check out
             </Button>

@@ -20,7 +20,9 @@ export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
             const isLast = index === trail.length - 1;
             return (
               <li key={item.path} className="flex items-center gap-1.5">
-                {index > 0 ? <ChevronRight className="size-3.5 opacity-60" aria-hidden="true" /> : null}
+                {index > 0 ? (
+                  <ChevronRight className="size-3.5 opacity-60" aria-hidden="true" />
+                ) : null}
                 {isLast ? (
                   <span aria-current="page" className="font-medium text-[--color-ink]">
                     {item.name}

@@ -25,9 +25,8 @@ vi.mock("@/lib/env", () => ({
   isProduction: false,
 }));
 
-const { verifyCheckoutSignature, verifyWebhookSignature } = await import(
-  "@/server/payments/razorpay"
-);
+const { verifyCheckoutSignature, verifyWebhookSignature } =
+  await import("@/server/payments/razorpay");
 
 function sign(payload: string, secret: string): string {
   return createHmac("sha256", secret).update(payload).digest("hex");
@@ -109,9 +108,9 @@ describe("Razorpay signature verification", () => {
       const paymentId = "pay_XYZ789";
       const full = sign(`${orderId}|${paymentId}`, SECRET);
 
-      expect(
-        verifyCheckoutSignature({ orderId, paymentId, signature: full.slice(0, 32) }),
-      ).toBe(false);
+      expect(verifyCheckoutSignature({ orderId, paymentId, signature: full.slice(0, 32) })).toBe(
+        false,
+      );
     });
   });
 

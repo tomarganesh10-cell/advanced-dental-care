@@ -102,9 +102,7 @@ export function PatientLoginForm() {
           )}
         </div>
 
-        <h1 className="mt-5 text-2xl">
-          {step === "phone" ? "Patient login" : "Enter your code"}
-        </h1>
+        <h1 className="mt-5 text-2xl">{step === "phone" ? "Patient login" : "Enter your code"}</h1>
         <p className="mt-2 text-sm leading-relaxed text-[--color-ink-subtle]">
           {step === "phone"
             ? "Sign in with the mobile number registered at the clinic. We will send you a 6-digit code — no password needed."
@@ -127,13 +125,20 @@ export function PatientLoginForm() {
             </Field>
 
             {error ? (
-              <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+              <p
+                role="alert"
+                className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800"
+              >
                 {error}
               </p>
             ) : null}
 
             <Button type="submit" size="lg" full disabled={submitting || phone.trim().length < 6}>
-              {submitting ? <Loader2 className="animate-spin" aria-hidden="true" /> : <LogIn aria-hidden="true" />}
+              {submitting ? (
+                <Loader2 className="animate-spin" aria-hidden="true" />
+              ) : (
+                <LogIn aria-hidden="true" />
+              )}
               Send me a code
             </Button>
           </form>
@@ -160,7 +165,10 @@ export function PatientLoginForm() {
             ) : null}
 
             {error ? (
-              <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+              <p
+                role="alert"
+                className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800"
+              >
                 {error}
               </p>
             ) : null}

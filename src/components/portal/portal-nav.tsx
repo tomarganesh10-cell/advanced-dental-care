@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { CalendarDays, FileImage, LayoutDashboard, LogOut, ReceiptText, Stethoscope } from "lucide-react";
+import {
+  CalendarDays,
+  FileImage,
+  LayoutDashboard,
+  LogOut,
+  ReceiptText,
+  Stethoscope,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const ITEMS = [

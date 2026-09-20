@@ -11,7 +11,9 @@ import { z } from "zod";
 
 const bool = z
   .union([z.boolean(), z.string()])
-  .transform((v) => (typeof v === "boolean" ? v : ["1", "true", "yes", "on"].includes(v.toLowerCase())));
+  .transform((v) =>
+    typeof v === "boolean" ? v : ["1", "true", "yes", "on"].includes(v.toLowerCase()),
+  );
 
 const int = (def: number) =>
   z
@@ -102,7 +104,13 @@ const schema = z.object({
 export type Env = z.infer<typeof schema>;
 
 /** Values that are obviously placeholders and must never reach production. */
-const PLACEHOLDER_PATTERNS = [/change-?me/i, /replace-?with/i, /your-?secret/i, /^dev-only/i, /xxxx/i];
+const PLACEHOLDER_PATTERNS = [
+  /change-?me/i,
+  /replace-?with/i,
+  /your-?secret/i,
+  /^dev-only/i,
+  /xxxx/i,
+];
 
 function looksLikePlaceholder(value: string | undefined): boolean {
   if (!value) return false;
@@ -136,17 +144,20 @@ function parseEnv(): Env {
    * AUTH_SECRET or with OTP echoing enabled refuses to serve.
    */
   const isBuildPhase =
-    process.env.NEXT_PHASE === "phase-production-build" ||
-    process.env.SKIP_ENV_VALIDATION === "1";
+    process.env.NEXT_PHASE === "phase-production-build" || process.env.SKIP_ENV_VALIDATION === "1";
 
   if (env.NODE_ENV === "production" && !isBuildPhase) {
     const problems: string[] = [];
 
     if (looksLikePlaceholder(env.AUTH_SECRET) || Buffer.from(env.AUTH_SECRET).length < 32) {
-      problems.push("AUTH_SECRET is a placeholder or too short. Generate one: openssl rand -base64 48");
+      problems.push(
+        "AUTH_SECRET is a placeholder or too short. Generate one: openssl rand -base64 48",
+      );
     }
     if (env.NEXT_PUBLIC_SITE_URL.startsWith("http://")) {
-      problems.push("NEXT_PUBLIC_SITE_URL must be https in production — session cookies are Secure-only.");
+      problems.push(
+        "NEXT_PUBLIC_SITE_URL must be https in production — session cookies are Secure-only.",
+      );
     }
     if (env.OTP_DEV_ECHO) {
       problems.push("OTP_DEV_ECHO must be false in production. It logs one-time codes.");
@@ -167,7 +178,9 @@ function parseEnv(): Env {
     }
 
     if (problems.length > 0) {
-      throw new Error(`Refusing to start in production:\n${problems.map((p) => `  - ${p}`).join("\n")}`);
+      throw new Error(
+        `Refusing to start in production:\n${problems.map((p) => `  - ${p}`).join("\n")}`,
+      );
     }
   }
 

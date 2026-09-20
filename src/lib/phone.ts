@@ -78,13 +78,11 @@ export const phoneSchema = z
     return normalised;
   });
 
-export const indianPhoneSchema = z
-  .string()
-  .transform((v, ctx) => {
-    const normalised = normalisePhone(v);
-    if (!normalised || !isIndianMobile(normalised)) {
-      ctx.addIssue({ code: "custom", message: "Enter a valid 10-digit Indian mobile number." });
-      return z.NEVER;
-    }
-    return normalised;
-  });
+export const indianPhoneSchema = z.string().transform((v, ctx) => {
+  const normalised = normalisePhone(v);
+  if (!normalised || !isIndianMobile(normalised)) {
+    ctx.addIssue({ code: "custom", message: "Enter a valid 10-digit Indian mobile number." });
+    return z.NEVER;
+  }
+  return normalised;
+});

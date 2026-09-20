@@ -9,7 +9,13 @@ import {
   getPortalInvoices,
   getPortalOverview,
 } from "@/server/portal";
-import { clinicInstant, createAppointment, createDoctor, createPatient, createStaff } from "./factories";
+import {
+  clinicInstant,
+  createAppointment,
+  createDoctor,
+  createPatient,
+  createStaff,
+} from "./factories";
 
 /**
  * Patient isolation.
@@ -20,7 +26,13 @@ import { clinicInstant, createAppointment, createDoctor, createPatient, createSt
  * and it is invisible in review because the code looks correct.
  */
 
-function patientPrincipal(patient: { id: string; fullName: string; patientNumber: string; phone: string; userId: string | null }) {
+function patientPrincipal(patient: {
+  id: string;
+  fullName: string;
+  patientNumber: string;
+  phone: string;
+  userId: string | null;
+}) {
   return {
     kind: "PATIENT" as const,
     userId: patient.userId ?? "test-user",

@@ -39,7 +39,9 @@ function StateShell({
       <div
         className={cn(
           "mb-3 flex size-11 items-center justify-center rounded-full",
-          tone === "danger" ? "bg-red-100 text-red-700" : "bg-[--color-navy-100] text-[--color-navy-700]",
+          tone === "danger"
+            ? "bg-red-100 text-red-700"
+            : "bg-[--color-navy-100] text-[--color-navy-700]",
         )}
         aria-hidden="true"
       >
@@ -58,10 +60,7 @@ export function EmptyState(props: StateProps) {
   return <StateShell icon={<Inbox className="size-5" />} {...props} />;
 }
 
-export function ErrorState({
-  onRetry,
-  ...props
-}: StateProps & { onRetry?: () => void }) {
+export function ErrorState({ onRetry, ...props }: StateProps & { onRetry?: () => void }) {
   return (
     <StateShell
       icon={<AlertTriangle className="size-5" />}

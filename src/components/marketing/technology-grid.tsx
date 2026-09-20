@@ -35,10 +35,10 @@ export function TechnologyGrid({ showPendingNotice = false }: { showPendingNotic
           <div className="text-sm text-[--color-ink-muted]">
             <p className="font-medium text-[--color-ink]">Equipment list awaiting verification</p>
             <p className="mt-1 leading-relaxed">
-              CBCT, laser and digital planning claims are held back until the clinic supplies
-              the supporting documents (including the AERB licence for the CBCT unit). Verify
-              them in <span className="font-medium">Admin → Content verification</span> and they
-              will appear here.
+              CBCT, laser and digital planning claims are held back until the clinic supplies the
+              supporting documents (including the AERB licence for the CBCT unit). Verify them in{" "}
+              <span className="font-medium">Admin → Content verification</span> and they will appear
+              here.
             </p>
           </div>
         </div>

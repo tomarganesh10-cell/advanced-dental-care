@@ -37,7 +37,12 @@ export function apiSuccess<T>(data: T, init?: ResponseInit): NextResponse<ApiSuc
 
 export function apiError(
   message: string,
-  options: { status?: number; code?: string; details?: Record<string, unknown>; requestId?: string } = {},
+  options: {
+    status?: number;
+    code?: string;
+    details?: Record<string, unknown>;
+    requestId?: string;
+  } = {},
 ): NextResponse<ApiFailure> {
   return NextResponse.json(
     {
@@ -109,7 +114,11 @@ export function toErrorResponse(error: unknown, requestId: string): NextResponse
   }
 
   logger.error(
-    { err: error instanceof Error ? error.message : String(error), stack: (error as Error)?.stack, requestId },
+    {
+      err: error instanceof Error ? error.message : String(error),
+      stack: (error as Error)?.stack,
+      requestId,
+    },
     "unhandled api error",
   );
 

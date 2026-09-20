@@ -31,8 +31,8 @@ export function DoctorIntro() {
               </div>
               <p className="text-sm font-medium text-[--color-ink]">Portrait of {doctor.name}</p>
               <p className="max-w-xs text-xs leading-relaxed text-[--color-ink-subtle]">
-                A professional headshot belongs here. Patients look for the person before
-                they look for the practice.
+                A professional headshot belongs here. Patients look for the person before they look
+                for the practice.
               </p>
             </div>
           </div>
@@ -44,7 +44,9 @@ export function DoctorIntro() {
           </p>
 
           <h2 className="text-3xl md:text-4xl">{doctor.name}</h2>
-          <p className="mt-2 text-base font-medium text-[--color-ink-muted]">{doctor.designation}</p>
+          <p className="mt-2 text-base font-medium text-[--color-ink-muted]">
+            {doctor.designation}
+          </p>
 
           {qualifications?.length ? (
             <p className="mt-3 flex items-center gap-2 text-sm text-[--color-ink-muted]">
@@ -67,10 +69,10 @@ export function DoctorIntro() {
 
           <div className="prose-clinic mt-5">
             <p>
-              Dr. Gupta leads the implant and cosmetic practice at the clinic. Complex cases
-              here start with records and a written plan rather than a chair-side estimate —
-              you should know what is proposed, what it will cost and what the alternatives
-              are before treatment begins.
+              Dr. Gupta leads the implant and cosmetic practice at the clinic. Complex cases here
+              start with records and a written plan rather than a chair-side estimate — you should
+              know what is proposed, what it will cost and what the alternatives are before
+              treatment begins.
             </p>
           </div>
 

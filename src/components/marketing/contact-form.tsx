@@ -92,8 +92,8 @@ export function ContactForm() {
         <CheckCircle2 className="mx-auto size-10 text-[--color-teal-700]" aria-hidden="true" />
         <h2 className="mt-4 text-xl">Enquiry received</h2>
         <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-[--color-ink-muted]">
-          Someone from the clinic will be in touch. If it is urgent, please call us rather
-          than waiting for a reply.
+          Someone from the clinic will be in touch. If it is urgent, please call us rather than
+          waiting for a reply.
         </p>
         {reference ? (
           <p className="mt-3 text-sm">
@@ -204,19 +204,26 @@ export function ContactForm() {
       </div>
 
       {formError ? (
-        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3.5 text-sm text-red-800">
+        <p
+          role="alert"
+          className="rounded-lg border border-red-200 bg-red-50 p-3.5 text-sm text-red-800"
+        >
           {formError}
         </p>
       ) : null}
 
       <Button type="submit" size="lg" disabled={submitting} full>
-        {submitting ? <Loader2 className="animate-spin" aria-hidden="true" /> : <Send aria-hidden="true" />}
+        {submitting ? (
+          <Loader2 className="animate-spin" aria-hidden="true" />
+        ) : (
+          <Send aria-hidden="true" />
+        )}
         Send enquiry
       </Button>
 
       <p className="text-xs leading-relaxed text-[--color-ink-subtle]">
-        We use your details to answer this enquiry and, if you become a patient, to provide
-        your care. We do not sell them. See our{" "}
+        We use your details to answer this enquiry and, if you become a patient, to provide your
+        care. We do not sell them. See our{" "}
         <Link href="/privacy-policy" className="underline underline-offset-4">
           privacy policy
         </Link>

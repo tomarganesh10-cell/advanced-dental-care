@@ -49,13 +49,16 @@ export function SiteHeader() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[--color-hairline] bg-white/95 backdrop-blur-sm no-print">
+    <header className="no-print sticky top-0 z-40 border-b border-[--color-hairline] bg-white/95 backdrop-blur-sm">
       {/* Utility strip — phone number visible without scrolling on desktop. */}
       <div className="hidden border-b border-[--color-hairline] bg-[--color-navy-900] text-white lg:block">
         <div className="container-page flex h-9 items-center justify-between text-xs">
           <p>{contact.address.formatted}</p>
           <div className="flex items-center gap-5">
-            <a href={`tel:${contact.phone.e164}`} className="flex items-center gap-1.5 hover:underline">
+            <a
+              href={`tel:${contact.phone.e164}`}
+              className="flex items-center gap-1.5 hover:underline"
+            >
               <Phone className="size-3" aria-hidden="true" />
               {contact.phone.display}
             </a>
@@ -67,7 +70,11 @@ export function SiteHeader() {
       </div>
 
       <div className="container-page flex h-16 items-center justify-between gap-4 lg:h-[4.5rem]">
-        <Link href="/" className="flex items-center gap-2.5" aria-label={`${identity.displayName} — home`}>
+        <Link
+          href="/"
+          className="flex items-center gap-2.5"
+          aria-label={`${identity.displayName} — home`}
+        >
           <ToothMark className="size-8 shrink-0 text-[--color-action]" />
           <span className="flex flex-col leading-none">
             <span className="font-[family-name:--font-display] text-[15px] font-semibold tracking-tight text-[--color-primary] sm:text-base">

@@ -22,7 +22,10 @@ import { Button } from "@/components/ui/button";
 
 declare global {
   interface Window {
-    Razorpay?: new (options: RazorpayOptions) => { open: () => void; on: (event: string, handler: (response: unknown) => void) => void };
+    Razorpay?: new (options: RazorpayOptions) => {
+      open: () => void;
+      on: (event: string, handler: (response: unknown) => void) => void;
+    };
   }
 }
 
@@ -58,7 +61,9 @@ export function PayInvoiceButton({
   patientPhone: string;
 }) {
   const [scriptReady, setScriptReady] = useState(false);
-  const [state, setState] = useState<"idle" | "starting" | "open" | "verifying" | "done" | "error">("idle");
+  const [state, setState] = useState<"idle" | "starting" | "open" | "verifying" | "done" | "error">(
+    "idle",
+  );
   const [error, setError] = useState<string | null>(null);
 
   async function startPayment() {
@@ -87,7 +92,9 @@ export function PayInvoiceButton({
       }
 
       if (!window.Razorpay) {
-        setError("The payment window could not load. Please check your connection or pay at the clinic.");
+        setError(
+          "The payment window could not load. Please check your connection or pay at the clinic.",
+        );
         setState("error");
         return;
       }

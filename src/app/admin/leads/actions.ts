@@ -52,7 +52,8 @@ export async function updateLeadAction(formData: FormData): Promise<ActionResult
     const input = updateSchema.parse({
       leadId: formData.get("leadId"),
       status: formData.get("status") || undefined,
-      assignedToId: formData.get("assignedToId") === "" ? null : (formData.get("assignedToId") ?? undefined),
+      assignedToId:
+        formData.get("assignedToId") === "" ? null : (formData.get("assignedToId") ?? undefined),
       nextFollowUpAt: formData.get("nextFollowUpAt") || undefined,
       lostReason: formData.get("lostReason") || undefined,
       note: formData.get("note") || undefined,

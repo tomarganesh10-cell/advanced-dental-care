@@ -37,15 +37,18 @@ export function EmergencyBanner() {
             <h2 className="mt-4 text-2xl md:text-3xl">In pain today?</h2>
 
             <p className="mt-3 max-w-lg text-sm leading-relaxed text-[--color-ink-muted]">
-              Call the clinic during opening hours and we will try to see you the same day.
-              Tell reception what the problem is — dental pain with swelling is triaged ahead
-              of a routine check-up.
+              Call the clinic during opening hours and we will try to see you the same day. Tell
+              reception what the problem is — dental pain with swelling is triaged ahead of a
+              routine check-up.
             </p>
 
             <ul className="mt-4 grid gap-x-6 gap-y-1.5 text-sm text-[--color-ink-muted] sm:grid-cols-2">
               {URGENT_SYMPTOMS.map((symptom) => (
                 <li key={symptom} className="flex items-start gap-2">
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-amber-500" aria-hidden="true" />
+                  <span
+                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-amber-500"
+                    aria-hidden="true"
+                  />
                   {symptom}
                 </li>
               ))}

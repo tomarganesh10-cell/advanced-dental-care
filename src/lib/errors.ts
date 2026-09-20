@@ -57,7 +57,10 @@ export class NotFoundError extends AppError {
 }
 
 export class ConflictError extends AppError {
-  constructor(message = "That conflicts with something that already exists.", details?: Record<string, unknown>) {
+  constructor(
+    message = "That conflicts with something that already exists.",
+    details?: Record<string, unknown>,
+  ) {
     super(message, { status: 409, code: "CONFLICT", details });
   }
 }

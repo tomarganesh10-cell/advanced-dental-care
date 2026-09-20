@@ -67,7 +67,9 @@ export default async function PortalDocumentsPage() {
                     {formatBytes(document.sizeBytes)}
                   </p>
                   {document.description ? (
-                    <p className="mt-0.5 text-xs text-[--color-ink-muted]">{document.description}</p>
+                    <p className="mt-0.5 text-xs text-[--color-ink-muted]">
+                      {document.description}
+                    </p>
                   ) : null}
                 </div>
 
@@ -118,18 +120,27 @@ export default async function PortalDocumentsPage() {
 
                 <ul className="mt-3 space-y-2">
                   {prescription.items.map((item) => (
-                    <li key={item.id} className="rounded-lg bg-[--color-surface-sunken] p-3 text-sm">
+                    <li
+                      key={item.id}
+                      className="rounded-lg bg-[--color-surface-sunken] p-3 text-sm"
+                    >
                       <p className="font-medium">
                         {item.drugName}
                         {item.strength ? ` ${item.strength}` : ""}
                       </p>
                       <p className="mt-0.5 text-xs text-[--color-ink-muted]">
-                        {[item.dosage, item.frequency, item.durationDays ? `for ${item.durationDays} days` : null]
+                        {[
+                          item.dosage,
+                          item.frequency,
+                          item.durationDays ? `for ${item.durationDays} days` : null,
+                        ]
                           .filter(Boolean)
                           .join(" · ")}
                       </p>
                       {item.instructions ? (
-                        <p className="mt-1 text-xs text-[--color-ink-subtle]">{item.instructions}</p>
+                        <p className="mt-1 text-xs text-[--color-ink-subtle]">
+                          {item.instructions}
+                        </p>
                       ) : null}
                     </li>
                   ))}
@@ -147,10 +158,10 @@ export default async function PortalDocumentsPage() {
       <div className="mt-8 flex items-start gap-3 rounded-[--radius-card] border border-[--color-hairline] bg-white p-4">
         <Info className="mt-0.5 size-4 shrink-0 text-[--color-ink-subtle]" aria-hidden="true" />
         <p className="text-xs leading-relaxed text-[--color-ink-subtle]">
-          Not everything in your record appears here. Your dentist shares images and reports
-          once they have been through them with you, because a scan without an explanation
-          usually causes more worry than it resolves. You are entitled to your full record at
-          any time — ask reception, or call {contact.phone.display}.
+          Not everything in your record appears here. Your dentist shares images and reports once
+          they have been through them with you, because a scan without an explanation usually causes
+          more worry than it resolves. You are entitled to your full record at any time — ask
+          reception, or call {contact.phone.display}.
         </p>
       </div>
     </>

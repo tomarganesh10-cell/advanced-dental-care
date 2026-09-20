@@ -51,13 +51,7 @@ export function SectionHeading({
   className?: string;
 }) {
   return (
-    <div
-      className={cn(
-        "max-w-2xl",
-        align === "center" && "mx-auto text-center",
-        className,
-      )}
-    >
+    <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow ? (
         <p
           className={cn(
@@ -68,12 +62,7 @@ export function SectionHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h2
-        className={cn(
-          "text-3xl leading-tight md:text-4xl",
-          tone === "dark" && "text-white",
-        )}
-      >
+      <h2 className={cn("text-3xl leading-tight md:text-4xl", tone === "dark" && "text-white")}>
         {title}
       </h2>
       {description ? (

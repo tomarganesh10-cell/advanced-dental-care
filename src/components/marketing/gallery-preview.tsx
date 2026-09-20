@@ -61,7 +61,9 @@ export async function GalleryPreview() {
                   <p className="mt-1 text-sm text-[--color-ink-subtle]">Concern: {item.concern}</p>
                 ) : null}
                 {item.summary ? (
-                  <p className="mt-2 text-sm leading-relaxed text-[--color-ink-muted]">{item.summary}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-[--color-ink-muted]">
+                    {item.summary}
+                  </p>
                 ) : null}
               </div>
             </li>

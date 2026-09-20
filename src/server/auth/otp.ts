@@ -57,9 +57,16 @@ export async function issueOtp(input: IssueOtpInput): Promise<IssuedOtp> {
   }
 
   if (input.ipAddress) {
-    const perIp = await rateLimit(`otp:ip:${input.ipAddress}`, env.RATE_LIMIT_OTP_PER_HOUR * 3, 3600);
+    const perIp = await rateLimit(
+      `otp:ip:${input.ipAddress}`,
+      env.RATE_LIMIT_OTP_PER_HOUR * 3,
+      3600,
+    );
     if (!perIp.allowed) {
-      throw new RateLimitError(perIp.retryAfterSeconds, "Too many requests. Please try again later.");
+      throw new RateLimitError(
+        perIp.retryAfterSeconds,
+        "Too many requests. Please try again later.",
+      );
     }
   }
 

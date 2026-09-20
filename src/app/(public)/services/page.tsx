@@ -22,9 +22,9 @@ export default function ServicesPage() {
       <div className="container-page pb-4">
         <h1 className="text-3xl md:text-4xl">Dental treatments</h1>
         <p className="prose-clinic mt-4">
-          Every treatment listed here starts with an examination and a conversation about
-          what you actually want to change. Where a simpler or cheaper option would achieve
-          the same thing, we will tell you.
+          Every treatment listed here starts with an examination and a conversation about what you
+          actually want to change. Where a simpler or cheaper option would achieve the same thing,
+          we will tell you.
         </p>
       </div>
 
@@ -33,7 +33,11 @@ export default function ServicesPage() {
         if (services.length === 0) return null;
 
         return (
-          <Section key={category.slug} tone={index % 2 === 0 ? "muted" : "default"} id={category.slug}>
+          <Section
+            key={category.slug}
+            tone={index % 2 === 0 ? "muted" : "default"}
+            id={category.slug}
+          >
             <div className="container-page">
               <div className="flex items-start gap-4">
                 <span

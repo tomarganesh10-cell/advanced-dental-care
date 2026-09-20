@@ -46,11 +46,7 @@ export async function rateLimit(
 
   if (redis) {
     try {
-      const results = await redis
-        .multi()
-        .incr(namespaced)
-        .ttl(namespaced)
-        .exec();
+      const results = await redis.multi().incr(namespaced).ttl(namespaced).exec();
 
       const count = Number(results?.[0]?.[1] ?? 0);
       let ttl = Number(results?.[1]?.[1] ?? -1);
@@ -70,7 +66,10 @@ export async function rateLimit(
       };
     } catch (err) {
       // Fall through to the in-memory limiter rather than failing the request.
-      logger.warn({ err: (err as Error).message, key }, "rate limit: redis unavailable, using memory");
+      logger.warn(
+        { err: (err as Error).message, key },
+        "rate limit: redis unavailable, using memory",
+      );
     }
   }
 
@@ -80,7 +79,13 @@ export async function rateLimit(
   if (!existing || existing.resetAt <= now) {
     const bucket: Bucket = { count: 1, resetAt: now + windowMs };
     memoryBuckets.set(namespaced, bucket);
-    return { allowed: true, remaining: limit - 1, limit, resetAt: bucket.resetAt, retryAfterSeconds: 0 };
+    return {
+      allowed: true,
+      remaining: limit - 1,
+      limit,
+      resetAt: bucket.resetAt,
+      retryAfterSeconds: 0,
+    };
   }
 
   existing.count += 1;

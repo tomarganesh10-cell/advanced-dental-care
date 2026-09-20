@@ -40,7 +40,12 @@ export const TRANSITIONS: Record<AppointmentStatus, AppointmentStatus[]> = {
 };
 
 /** Statuses after which the appointment no longer occupies a slot. */
-export const RELEASING_STATUSES: AppointmentStatus[] = ["CANCELLED", "NO_SHOW", "COMPLETED", "RESCHEDULED"];
+export const RELEASING_STATUSES: AppointmentStatus[] = [
+  "CANCELLED",
+  "NO_SHOW",
+  "COMPLETED",
+  "RESCHEDULED",
+];
 
 /** Statuses a patient may still act on from the portal. */
 export const PATIENT_ACTIONABLE_STATUSES: AppointmentStatus[] = [
@@ -89,7 +94,10 @@ export function humanStatus(status: AppointmentStatus): string {
  * Colour tokens for the calendar. Paired with a distinct label and icon in the
  * UI — colour alone is not an accessible status indicator.
  */
-export const STATUS_TONES: Record<AppointmentStatus, "neutral" | "info" | "success" | "warning" | "danger"> = {
+export const STATUS_TONES: Record<
+  AppointmentStatus,
+  "neutral" | "info" | "success" | "warning" | "danger"
+> = {
   REQUESTED: "neutral",
   PENDING_CONFIRMATION: "warning",
   CONFIRMED: "info",

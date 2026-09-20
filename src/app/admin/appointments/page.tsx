@@ -17,7 +17,11 @@ export const dynamic = "force-dynamic";
 const PAGE_SIZE = 25;
 
 const FILTERS: Array<{ key: string; label: string; statuses?: AppointmentStatus[] }> = [
-  { key: "needs-action", label: "Needs confirming", statuses: ["REQUESTED", "PENDING_CONFIRMATION"] },
+  {
+    key: "needs-action",
+    label: "Needs confirming",
+    statuses: ["REQUESTED", "PENDING_CONFIRMATION"],
+  },
   { key: "upcoming", label: "Upcoming", statuses: ["CONFIRMED", "RESCHEDULED"] },
   { key: "today", label: "Today" },
   { key: "completed", label: "Completed", statuses: ["COMPLETED"] },
@@ -68,7 +72,10 @@ export default async function AppointmentsPage({
   const [appointments, total] = await Promise.all([
     prisma.appointment.findMany({
       where,
-      orderBy: filterKey === "completed" || filterKey === "cancelled" ? { startsAt: "desc" } : { startsAt: "asc" },
+      orderBy:
+        filterKey === "completed" || filterKey === "cancelled"
+          ? { startsAt: "desc" }
+          : { startsAt: "asc" },
       skip: (page - 1) * PAGE_SIZE,
       take: PAGE_SIZE,
       select: {
@@ -148,20 +155,34 @@ export default async function AppointmentsPage({
             <caption className="sr-only">Appointments, {filter.label}</caption>
             <thead className="border-b border-[--color-hairline] bg-[--color-surface-sunken]">
               <tr>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">When</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Patient</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Treatment</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Dentist</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Status</th>
-                <th scope="col" className="px-4 py-2.5 text-left font-medium">Actions</th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  When
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Patient
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Treatment
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Dentist
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Status
+                </th>
+                <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[--color-hairline]">
               {appointments.map((appointment) => (
                 <tr key={appointment.id} className="align-top">
                   <td className="px-4 py-3 whitespace-nowrap">
-                    <span className="block font-medium">{formatClinicDate(appointment.startsAt, "d MMM")}</span>
-                    <span className="block text-xs tabular-nums text-[--color-ink-subtle]">
+                    <span className="block font-medium">
+                      {formatClinicDate(appointment.startsAt, "d MMM")}
+                    </span>
+                    <span className="block text-xs text-[--color-ink-subtle] tabular-nums">
                       {formatClinicTime(appointment.startsAt)}
                     </span>
                   </td>
@@ -179,7 +200,9 @@ export default async function AppointmentsPage({
                   <td className="px-4 py-3 text-[--color-ink-muted]">
                     {appointment.serviceName ?? "—"}
                     {appointment.isNewPatient ? (
-                      <Badge tone="info" className="ml-1.5">New</Badge>
+                      <Badge tone="info" className="ml-1.5">
+                        New
+                      </Badge>
                     ) : null}
                   </td>
                   <td className="px-4 py-3 text-[--color-ink-muted]">
@@ -196,7 +219,10 @@ export default async function AppointmentsPage({
                     ) : null}
                   </td>
                   <td className="px-4 py-3">
-                    <AppointmentActions appointmentId={appointment.id} status={appointment.status} />
+                    <AppointmentActions
+                      appointmentId={appointment.id}
+                      status={appointment.status}
+                    />
                   </td>
                 </tr>
               ))}

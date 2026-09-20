@@ -67,17 +67,19 @@ export default function InternationalPatientsPage() {
           <Globe2 className="size-3.5" aria-hidden="true" />
           Dental tourism
         </p>
-        <h1 className="mt-4 text-3xl md:text-4xl">Dental treatment in Chandigarh, planned from home</h1>
+        <h1 className="mt-4 text-3xl md:text-4xl">
+          Dental treatment in Chandigarh, planned from home
+        </h1>
         <div className="prose-clinic mt-5">
           <p>
-            Travelling for dental treatment works when the planning happens before the
-            flight. Send us your records, we assess them, and you arrive knowing what is
-            proposed, roughly what it costs and how many visits it takes.
+            Travelling for dental treatment works when the planning happens before the flight. Send
+            us your records, we assess them, and you arrive knowing what is proposed, roughly what
+            it costs and how many visits it takes.
           </p>
           <p>
-            We will also tell you when travelling is not the right answer. Some treatment is
-            better done close to home, particularly where it needs long-term follow-up, and
-            saying so is more useful to you than a booking.
+            We will also tell you when travelling is not the right answer. Some treatment is better
+            done close to home, particularly where it needs long-term follow-up, and saying so is
+            more useful to you than a booking.
           </p>
         </div>
       </div>
@@ -88,8 +90,14 @@ export default function InternationalPatientsPage() {
             <SectionHeading align="left" eyebrow="Step one" title="What to send us" />
             <ul className="mt-6 space-y-3">
               {RECORDS_NEEDED.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-[--color-ink-muted]">
-                  <FileText className="mt-0.5 size-4 shrink-0 text-[--color-accent]" aria-hidden="true" />
+                <li
+                  key={item}
+                  className="flex items-start gap-3 text-sm leading-relaxed text-[--color-ink-muted]"
+                >
+                  <FileText
+                    className="mt-0.5 size-4 shrink-0 text-[--color-accent]"
+                    aria-hidden="true"
+                  />
                   {item}
                 </li>
               ))}
@@ -97,7 +105,10 @@ export default function InternationalPatientsPage() {
 
             <p className="mt-5 text-sm text-[--color-ink-subtle]">
               Send them by email to{" "}
-              <a href={`mailto:${contact.email.primary}`} className="font-medium text-[--color-action]">
+              <a
+                href={`mailto:${contact.email.primary}`}
+                className="font-medium text-[--color-action]"
+              >
                 {contact.email.primary}
               </a>{" "}
               or on{" "}
@@ -115,9 +126,9 @@ export default function InternationalPatientsPage() {
             <div className="mt-6 flex items-start gap-3 rounded-[--radius-card] border border-amber-200 bg-amber-50 p-5">
               <AlertTriangle className="mt-0.5 size-4 shrink-0 text-amber-700" aria-hidden="true" />
               <p className="text-sm leading-relaxed text-amber-900">
-                A remote assessment is a starting point, not a diagnosis. Nothing we say
-                before examining you is final, and we will not ask you to pay for treatment
-                before you have been seen.
+                A remote assessment is a starting point, not a diagnosis. Nothing we say before
+                examining you is final, and we will not ask you to pay for treatment before you have
+                been seen.
               </p>
             </div>
           </div>

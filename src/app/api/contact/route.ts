@@ -29,7 +29,10 @@ export const POST = withApiHandler(async (request) => {
 
   const limit = await rateLimit(`contact:${clientKey}`, env.RATE_LIMIT_BOOKING_PER_HOUR, 3600);
   if (!limit.allowed) {
-    throw new RateLimitError(limit.retryAfterSeconds, "Too many enquiries. Please call the clinic.");
+    throw new RateLimitError(
+      limit.retryAfterSeconds,
+      "Too many enquiries. Please call the clinic.",
+    );
   }
 
   const body = await request.json();

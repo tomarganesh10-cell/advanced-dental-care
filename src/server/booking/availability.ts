@@ -215,13 +215,15 @@ export async function getDayAvailability(query: SlotQuery): Promise<DayAvailabil
 
       // 4. doctor unavailable
       const isOff = timeOff.some(
-        (t) => t.doctorId === block.doctorId && intervalsOverlap(startsAt, endsAt, t.startsAt, t.endsAt),
+        (t) =>
+          t.doctorId === block.doctorId && intervalsOverlap(startsAt, endsAt, t.startsAt, t.endsAt),
       );
       if (isOff) continue;
 
       // 5. capacity
       const overlapping = existing.filter(
-        (a) => a.doctorId === block.doctorId && intervalsOverlap(startsAt, endsAt, a.startsAt, a.endsAt),
+        (a) =>
+          a.doctorId === block.doctorId && intervalsOverlap(startsAt, endsAt, a.startsAt, a.endsAt),
       ).length;
       const remainingCapacity = block.capacity - overlapping;
       if (remainingCapacity <= 0) continue;
@@ -237,7 +239,10 @@ export async function getDayAvailability(query: SlotQuery): Promise<DayAvailabil
     }
   }
 
-  slots.sort((a, b) => a.startsAt.getTime() - b.startsAt.getTime() || a.doctorName.localeCompare(b.doctorName));
+  slots.sort(
+    (a, b) =>
+      a.startsAt.getTime() - b.startsAt.getTime() || a.doctorName.localeCompare(b.doctorName),
+  );
 
   return {
     date: query.date,
@@ -267,13 +272,14 @@ export interface SlotCheckInput {
   ignoreLeadTime?: boolean;
 }
 
-export type SlotCheckResult =
-  | { ok: true }
-  | { ok: false; reason: string };
+export type SlotCheckResult = { ok: true } | { ok: false; reason: string };
 
 export async function checkSlotBookable(
   input: SlotCheckInput,
-  client: Pick<typeof prisma, "appointment" | "doctorSchedule" | "doctorTimeOff" | "clinicHoliday"> = prisma,
+  client: Pick<
+    typeof prisma,
+    "appointment" | "doctorSchedule" | "doctorTimeOff" | "clinicHoliday"
+  > = prisma,
 ): Promise<SlotCheckResult> {
   const now = input.now ?? new Date();
 
@@ -290,7 +296,8 @@ export async function checkSlotBookable(
     if (input.startsAt.getTime() < minStart) {
       return {
         ok: false,
-        reason: "Online bookings need at least two hours' notice. Please call the clinic for anything sooner.",
+        reason:
+          "Online bookings need at least two hours' notice. Please call the clinic for anything sooner.",
       };
     }
     const maxStart = now.getTime() + DEFAULT_MAX_ADVANCE_DAYS * 24 * 60 * 60 * 1000;
@@ -332,7 +339,11 @@ export async function checkSlotBookable(
     const blockStart = timeToMinutes(s.startTime);
     const blockEnd = timeToMinutes(s.endTime);
     if (startMinutes < blockStart || endMinutes > blockEnd) return false;
-    if (s.serviceSlugs.length > 0 && input.serviceSlug && !s.serviceSlugs.includes(input.serviceSlug)) {
+    if (
+      s.serviceSlugs.length > 0 &&
+      input.serviceSlug &&
+      !s.serviceSlugs.includes(input.serviceSlug)
+    ) {
       return false;
     }
     return true;

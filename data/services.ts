@@ -59,7 +59,8 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     slug: "implants",
     name: "Dental Implants",
-    description: "Replacing missing teeth with titanium implants and implant-supported restorations.",
+    description:
+      "Replacing missing teeth with titanium implants and implant-supported restorations.",
     icon: "Anchor",
   },
   {
@@ -239,7 +240,10 @@ export const SERVICES: Service[] = [
       "Upper back teeth where the sinus limits available height",
     ],
     steps: [
-      { title: "3D assessment", description: "CBCT measurement of the bone that is actually there." },
+      {
+        title: "3D assessment",
+        description: "CBCT measurement of the bone that is actually there.",
+      },
       { title: "Grafting procedure", description: "Carried out under local anaesthetic." },
       { title: "Healing", description: "Several months for the graft to consolidate." },
       { title: "Implant placement", description: "Once the graft has matured." },
@@ -275,7 +279,10 @@ export const SERVICES: Service[] = [
       "A combination of colour, shape and alignment concerns",
     ],
     steps: [
-      { title: "Photographs and records", description: "Clinical photographs, scans and measurements." },
+      {
+        title: "Photographs and records",
+        description: "Clinical photographs, scans and measurements.",
+      },
       { title: "Digital mock-up", description: "A proposed design you can see and respond to." },
       {
         title: "Trial",
@@ -321,10 +328,23 @@ export const SERVICES: Service[] = [
       "Small gaps between front teeth",
     ],
     steps: [
-      { title: "Assessment and design", description: "Photographs, shade selection and a mock-up." },
-      { title: "Preparation", description: "Minimal reduction of the tooth surface where required, and an impression or scan." },
-      { title: "Temporaries", description: "Provisional veneers while the laboratory work is made." },
-      { title: "Fitting", description: "The veneers are tried in, checked for shade and fit, and bonded." },
+      {
+        title: "Assessment and design",
+        description: "Photographs, shade selection and a mock-up.",
+      },
+      {
+        title: "Preparation",
+        description:
+          "Minimal reduction of the tooth surface where required, and an impression or scan.",
+      },
+      {
+        title: "Temporaries",
+        description: "Provisional veneers while the laboratory work is made.",
+      },
+      {
+        title: "Fitting",
+        description: "The veneers are tried in, checked for shade and fit, and bonded.",
+      },
     ],
     faqs: [
       {
@@ -362,9 +382,18 @@ export const SERVICES: Service[] = [
       "Staining from tea, coffee, tobacco or certain foods",
     ],
     steps: [
-      { title: "Check-up", description: "Confirming the teeth and gums are healthy enough to whiten." },
-      { title: "Shade record", description: "The starting shade is recorded so the change can be measured." },
-      { title: "Treatment", description: "In-clinic application or custom trays for home use, as agreed." },
+      {
+        title: "Check-up",
+        description: "Confirming the teeth and gums are healthy enough to whiten.",
+      },
+      {
+        title: "Shade record",
+        description: "The starting shade is recorded so the change can be measured.",
+      },
+      {
+        title: "Treatment",
+        description: "In-clinic application or custom trays for home use, as agreed.",
+      },
       { title: "Review", description: "Shade check and advice on maintaining the result." },
     ],
     faqs: [
@@ -406,9 +435,18 @@ export const SERVICES: Service[] = [
       "A gap where implant treatment is not suitable or not wanted",
     ],
     steps: [
-      { title: "Preparation", description: "The tooth is shaped and an impression or digital scan is taken." },
-      { title: "Temporary", description: "A provisional crown protects the tooth while the laboratory work is made." },
-      { title: "Fitting", description: "The definitive restoration is tried in, adjusted and cemented." },
+      {
+        title: "Preparation",
+        description: "The tooth is shaped and an impression or digital scan is taken.",
+      },
+      {
+        title: "Temporary",
+        description: "A provisional crown protects the tooth while the laboratory work is made.",
+      },
+      {
+        title: "Fitting",
+        description: "The definitive restoration is tried in, adjusted and cemented.",
+      },
     ],
     faqs: [
       {
@@ -422,7 +460,8 @@ export const SERVICES: Service[] = [
     icon: "Crown",
     seo: {
       title: "Dental Crowns & Bridges in Chandigarh",
-      description: "Ceramic and zirconia crowns and fixed bridges at Advanced Dental Care Centre, Chandigarh.",
+      description:
+        "Ceramic and zirconia crowns and fixed bridges at Advanced Dental Care Centre, Chandigarh.",
     },
   },
   {
@@ -440,10 +479,22 @@ export const SERVICES: Service[] = [
       "Difficulty chewing because of a collapsed bite",
     ],
     steps: [
-      { title: "Records and diagnosis", description: "Full clinical records, photographs, scans and bite analysis." },
-      { title: "Diagnostic plan", description: "A wax-up or digital plan showing the proposed end point." },
-      { title: "Staged treatment", description: "Treatment carried out in a planned sequence over several months." },
-      { title: "Maintenance", description: "Review, and a night guard where grinding was a contributing cause." },
+      {
+        title: "Records and diagnosis",
+        description: "Full clinical records, photographs, scans and bite analysis.",
+      },
+      {
+        title: "Diagnostic plan",
+        description: "A wax-up or digital plan showing the proposed end point.",
+      },
+      {
+        title: "Staged treatment",
+        description: "Treatment carried out in a planned sequence over several months.",
+      },
+      {
+        title: "Maintenance",
+        description: "Review, and a night guard where grinding was a contributing cause.",
+      },
     ],
     faqs: [
       {
@@ -477,7 +528,10 @@ export const SERVICES: Service[] = [
     ],
     steps: [
       { title: "Assessment", description: "Examination, radiographs and a digital scan." },
-      { title: "Digital plan", description: "A tooth-movement plan showing the projected sequence." },
+      {
+        title: "Digital plan",
+        description: "A tooth-movement plan showing the projected sequence.",
+      },
       { title: "Aligner wear", description: "Trays changed on schedule, with periodic reviews." },
       { title: "Retention", description: "Retainers afterwards — teeth move back without them." },
     ],
@@ -538,7 +592,8 @@ export const SERVICES: Service[] = [
     icon: "Minus",
     seo: {
       title: "Braces & Orthodontic Treatment in Chandigarh",
-      description: "Fixed braces and orthodontic assessment at Advanced Dental Care Centre, Chandigarh.",
+      description:
+        "Fixed braces and orthodontic assessment at Advanced Dental Care Centre, Chandigarh.",
       landingSlug: "orthodontist-chandigarh",
     },
   },
@@ -560,9 +615,15 @@ export const SERVICES: Service[] = [
     ],
     steps: [
       { title: "Diagnosis", description: "Examination, vitality testing and radiographs." },
-      { title: "Access and cleaning", description: "The canals are located, cleaned and shaped under anaesthetic." },
+      {
+        title: "Access and cleaning",
+        description: "The canals are located, cleaned and shaped under anaesthetic.",
+      },
       { title: "Sealing", description: "The canals are filled and sealed." },
-      { title: "Restoration", description: "A permanent filling and, in most cases, a crown to protect the tooth." },
+      {
+        title: "Restoration",
+        description: "A permanent filling and, in most cases, a crown to protect the tooth.",
+      },
     ],
     faqs: [
       {
@@ -608,10 +669,19 @@ export const SERVICES: Service[] = [
       "A broken or lost filling",
     ],
     steps: [
-      { title: "Examination", description: "Teeth, gums, bite and soft tissues, with radiographs where indicated." },
-      { title: "Scaling and polishing", description: "Removal of plaque and calculus above and below the gum line." },
+      {
+        title: "Examination",
+        description: "Teeth, gums, bite and soft tissues, with radiographs where indicated.",
+      },
+      {
+        title: "Scaling and polishing",
+        description: "Removal of plaque and calculus above and below the gum line.",
+      },
       { title: "Restorations", description: "Fillings where decay is present." },
-      { title: "Prevention advice", description: "Technique, interdental cleaning and recall interval." },
+      {
+        title: "Prevention advice",
+        description: "Technique, interdental cleaning and recall interval.",
+      },
     ],
     faqs: [
       {
@@ -630,7 +700,8 @@ export const SERVICES: Service[] = [
     icon: "ShieldCheck",
     seo: {
       title: "Dental Check-up, Cleaning & Fillings in Chandigarh",
-      description: "Routine dental examination, scaling and tooth-coloured fillings in Sector 18-A, Chandigarh.",
+      description:
+        "Routine dental examination, scaling and tooth-coloured fillings in Sector 18-A, Chandigarh.",
     },
   },
   {
@@ -649,8 +720,14 @@ export const SERVICES: Service[] = [
       "Before implant or orthodontic treatment",
     ],
     steps: [
-      { title: "Periodontal assessment", description: "Pocket charting and radiographs to measure bone levels." },
-      { title: "Non-surgical therapy", description: "Deep cleaning of the root surfaces, usually over one or more visits." },
+      {
+        title: "Periodontal assessment",
+        description: "Pocket charting and radiographs to measure bone levels.",
+      },
+      {
+        title: "Non-surgical therapy",
+        description: "Deep cleaning of the root surfaces, usually over one or more visits.",
+      },
       { title: "Review", description: "Re-measurement to see how the gums responded." },
       { title: "Maintenance", description: "A recall interval matched to your risk." },
     ],
@@ -665,7 +742,8 @@ export const SERVICES: Service[] = [
     icon: "Heart",
     seo: {
       title: "Gum Disease Treatment in Chandigarh",
-      description: "Periodontal assessment and gum disease treatment at Advanced Dental Care Centre, Chandigarh.",
+      description:
+        "Periodontal assessment and gum disease treatment at Advanced Dental Care Centre, Chandigarh.",
     },
   },
   // ----------------------------------------------------------------- surgery
@@ -684,9 +762,18 @@ export const SERVICES: Service[] = [
       "A cyst associated with an unerupted tooth",
     ],
     steps: [
-      { title: "Assessment", description: "Radiograph, and CBCT where the nerve relationship needs clarifying." },
-      { title: "Surgery", description: "Removal under local anaesthetic, with sedation where appropriate." },
-      { title: "Recovery", description: "Swelling and limited mouth opening for several days is usual." },
+      {
+        title: "Assessment",
+        description: "Radiograph, and CBCT where the nerve relationship needs clarifying.",
+      },
+      {
+        title: "Surgery",
+        description: "Removal under local anaesthetic, with sedation where appropriate.",
+      },
+      {
+        title: "Recovery",
+        description: "Swelling and limited mouth opening for several days is usual.",
+      },
       { title: "Review", description: "Suture removal and healing check where required." },
     ],
     faqs: [
@@ -705,7 +792,8 @@ export const SERVICES: Service[] = [
     icon: "Scissors",
     seo: {
       title: "Wisdom Tooth Removal in Chandigarh",
-      description: "Assessment and surgical removal of impacted wisdom teeth in Sector 18-A, Chandigarh.",
+      description:
+        "Assessment and surgical removal of impacted wisdom teeth in Sector 18-A, Chandigarh.",
       landingSlug: "oral-surgeon-chandigarh",
     },
   },
@@ -725,9 +813,19 @@ export const SERVICES: Service[] = [
       "Crowding, as part of an orthodontic plan",
     ],
     steps: [
-      { title: "Assessment", description: "Radiograph and discussion of alternatives to extraction." },
-      { title: "Extraction", description: "Under local anaesthetic, with socket preservation where an implant is planned." },
-      { title: "Aftercare", description: "Written post-operative instructions and a point of contact." },
+      {
+        title: "Assessment",
+        description: "Radiograph and discussion of alternatives to extraction.",
+      },
+      {
+        title: "Extraction",
+        description:
+          "Under local anaesthetic, with socket preservation where an implant is planned.",
+      },
+      {
+        title: "Aftercare",
+        description: "Written post-operative instructions and a point of contact.",
+      },
     ],
     faqs: [
       {
@@ -740,7 +838,8 @@ export const SERVICES: Service[] = [
     icon: "Minus",
     seo: {
       title: "Tooth Extraction in Chandigarh",
-      description: "Tooth extraction and replacement planning at Advanced Dental Care Centre, Chandigarh.",
+      description:
+        "Tooth extraction and replacement planning at Advanced Dental Care Centre, Chandigarh.",
     },
   },
   // --------------------------------------------------------------- paediatric
@@ -761,9 +860,19 @@ export const SERVICES: Service[] = [
     ],
     steps: [
       { title: "Introduction visit", description: "A short, low-pressure look at the teeth." },
-      { title: "Prevention", description: "Fluoride varnish, sealants and practical diet and brushing advice." },
-      { title: "Treatment where needed", description: "Explained at the child's level, at their pace." },
-      { title: "Monitoring", description: "Watching how adult teeth erupt and referring for orthodontic assessment at the right time." },
+      {
+        title: "Prevention",
+        description: "Fluoride varnish, sealants and practical diet and brushing advice.",
+      },
+      {
+        title: "Treatment where needed",
+        description: "Explained at the child's level, at their pace.",
+      },
+      {
+        title: "Monitoring",
+        description:
+          "Watching how adult teeth erupt and referring for orthodontic assessment at the right time.",
+      },
     ],
     faqs: [
       {
@@ -781,7 +890,8 @@ export const SERVICES: Service[] = [
     icon: "Baby",
     seo: {
       title: "Children's Dentist in Chandigarh",
-      description: "Paediatric dental check-ups, prevention and treatment in Sector 18-A, Chandigarh.",
+      description:
+        "Paediatric dental check-ups, prevention and treatment in Sector 18-A, Chandigarh.",
     },
   },
 ];

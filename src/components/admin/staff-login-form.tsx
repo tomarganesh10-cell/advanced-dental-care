@@ -67,13 +67,12 @@ export function StaffLoginForm() {
         <Lock className="size-6 text-amber-700" aria-hidden="true" />
         <h1 className="mt-4 text-xl text-amber-950">Two-factor authentication required</h1>
         <p className="mt-2 text-sm leading-relaxed text-amber-900">
-          This account has two-factor authentication enrolled, and the authenticator step is
-          not yet available in this build. Your password was accepted but no session was
-          created.
+          This account has two-factor authentication enrolled, and the authenticator step is not yet
+          available in this build. Your password was accepted but no session was created.
         </p>
         <p className="mt-3 text-sm text-amber-900">
-          Ask a super administrator to complete the TOTP setup, or to temporarily disable
-          two-factor on this account.
+          Ask a super administrator to complete the TOTP setup, or to temporarily disable two-factor
+          on this account.
         </p>
       </div>
     );
@@ -89,7 +88,10 @@ export function StaffLoginForm() {
         <h1 className="mt-5 text-2xl">Staff sign in</h1>
         <p className="mt-2 text-sm text-[--color-ink-subtle]">
           For clinic staff only. Patients should use the{" "}
-          <Link href="/patient-login" className="font-medium text-[--color-action] underline underline-offset-2">
+          <Link
+            href="/patient-login"
+            className="font-medium text-[--color-action] underline underline-offset-2"
+          >
             patient login
           </Link>
           .
@@ -118,7 +120,10 @@ export function StaffLoginForm() {
           </Field>
 
           {error ? (
-            <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+            <p
+              role="alert"
+              className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800"
+            >
               {error}
             </p>
           ) : null}
@@ -130,8 +135,8 @@ export function StaffLoginForm() {
         </form>
 
         <p className="mt-5 border-t border-[--color-hairline] pt-4 text-xs leading-relaxed text-[--color-ink-subtle]">
-          This system holds patient health records. Access is logged. Do not share your
-          password or leave this device signed in where others can use it.
+          This system holds patient health records. Access is logged. Do not share your password or
+          leave this device signed in where others can use it.
         </p>
       </div>
     </div>

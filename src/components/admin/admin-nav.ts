@@ -57,7 +57,12 @@ export const ADMIN_NAV: NavGroup[] = [
   {
     label: "Patients",
     items: [
-      { href: "/admin/patients", label: "Patients", icon: "Users", permission: PERMISSIONS.PATIENT_VIEW },
+      {
+        href: "/admin/patients",
+        label: "Patients",
+        icon: "Users",
+        permission: PERMISSIONS.PATIENT_VIEW,
+      },
       {
         href: "/admin/clinical",
         label: "Clinical records",
@@ -75,7 +80,13 @@ export const ADMIN_NAV: NavGroup[] = [
   {
     label: "Growth",
     items: [
-      { href: "/admin/leads", label: "Leads", icon: "Target", permission: PERMISSIONS.LEAD_VIEW, badgeKey: "newLeads" },
+      {
+        href: "/admin/leads",
+        label: "Leads",
+        icon: "Target",
+        permission: PERMISSIONS.LEAD_VIEW,
+        badgeKey: "newLeads",
+      },
       {
         href: "/admin/international",
         label: "International",
@@ -93,16 +104,36 @@ export const ADMIN_NAV: NavGroup[] = [
   {
     label: "Money",
     items: [
-      { href: "/admin/invoices", label: "Invoices", icon: "ReceiptText", permission: PERMISSIONS.INVOICE_VIEW },
-      { href: "/admin/payments", label: "Payments", icon: "IndianRupee", permission: PERMISSIONS.PAYMENT_VIEW },
+      {
+        href: "/admin/invoices",
+        label: "Invoices",
+        icon: "ReceiptText",
+        permission: PERMISSIONS.INVOICE_VIEW,
+      },
+      {
+        href: "/admin/payments",
+        label: "Payments",
+        icon: "IndianRupee",
+        permission: PERMISSIONS.PAYMENT_VIEW,
+      },
     ],
   },
   {
     label: "Team",
     items: [
       { href: "/admin/staff", label: "Staff", icon: "IdCard", permission: PERMISSIONS.STAFF_VIEW },
-      { href: "/admin/attendance", label: "Attendance", icon: "Clock", permission: PERMISSIONS.ATTENDANCE_SELF },
-      { href: "/admin/schedules", label: "Schedules", icon: "CalendarRange", permission: PERMISSIONS.SCHEDULE_VIEW },
+      {
+        href: "/admin/attendance",
+        label: "Attendance",
+        icon: "Clock",
+        permission: PERMISSIONS.ATTENDANCE_SELF,
+      },
+      {
+        href: "/admin/schedules",
+        label: "Schedules",
+        icon: "CalendarRange",
+        permission: PERMISSIONS.SCHEDULE_VIEW,
+      },
     ],
   },
   {
@@ -114,8 +145,18 @@ export const ADMIN_NAV: NavGroup[] = [
         icon: "BadgeCheck",
         permission: PERMISSIONS.CONTENT_VERIFY_CLAIMS,
       },
-      { href: "/admin/blog", label: "Blog", icon: "Newspaper", permission: PERMISSIONS.BLOG_MANAGE },
-      { href: "/admin/gallery", label: "Smile gallery", icon: "Images", permission: PERMISSIONS.GALLERY_MANAGE },
+      {
+        href: "/admin/blog",
+        label: "Blog",
+        icon: "Newspaper",
+        permission: PERMISSIONS.BLOG_MANAGE,
+      },
+      {
+        href: "/admin/gallery",
+        label: "Smile gallery",
+        icon: "Images",
+        permission: PERMISSIONS.GALLERY_MANAGE,
+      },
       {
         href: "/admin/testimonials",
         label: "Testimonials",
@@ -127,15 +168,30 @@ export const ADMIN_NAV: NavGroup[] = [
   {
     label: "System",
     items: [
-      { href: "/admin/reports", label: "Reports", icon: "ChartColumn", permission: PERMISSIONS.REPORT_VIEW },
+      {
+        href: "/admin/reports",
+        label: "Reports",
+        icon: "ChartColumn",
+        permission: PERMISSIONS.REPORT_VIEW,
+      },
       {
         href: "/admin/notifications",
         label: "Messages",
         icon: "Send",
         permission: PERMISSIONS.NOTIFICATION_VIEW,
       },
-      { href: "/admin/audit", label: "Audit log", icon: "ScrollText", permission: PERMISSIONS.AUDIT_LOG_VIEW },
-      { href: "/admin/settings", label: "Settings", icon: "Settings", permission: PERMISSIONS.SETTINGS_VIEW },
+      {
+        href: "/admin/audit",
+        label: "Audit log",
+        icon: "ScrollText",
+        permission: PERMISSIONS.AUDIT_LOG_VIEW,
+      },
+      {
+        href: "/admin/settings",
+        label: "Settings",
+        icon: "Settings",
+        permission: PERMISSIONS.SETTINGS_VIEW,
+      },
     ],
   },
 ];

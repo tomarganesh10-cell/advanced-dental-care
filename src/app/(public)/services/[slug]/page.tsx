@@ -107,8 +107,14 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             </h2>
             <ul className="mt-3 space-y-2">
               {service.indications.map((indication) => (
-                <li key={indication} className="flex items-start gap-2 text-sm text-[--color-ink-muted]">
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[--color-accent]" aria-hidden="true" />
+                <li
+                  key={indication}
+                  className="flex items-start gap-2 text-sm text-[--color-ink-muted]"
+                >
+                  <CheckCircle2
+                    className="mt-0.5 size-4 shrink-0 text-[--color-accent]"
+                    aria-hidden="true"
+                  />
                   {indication}
                 </li>
               ))}

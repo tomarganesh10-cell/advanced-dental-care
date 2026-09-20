@@ -129,7 +129,15 @@ Reference: {{reference}}
 If this does not suit you, call {{clinicPhone}} and we will find another time.
 
 {{clinicName}}`,
-    variables: ["patientName", "date", "time", "doctorName", "reference", "clinicPhone", "clinicName"],
+    variables: [
+      "patientName",
+      "date",
+      "time",
+      "doctorName",
+      "reference",
+      "clinicPhone",
+      "clinicName",
+    ],
     description: "Email version of the reschedule notice.",
   },
   {
@@ -389,7 +397,10 @@ If you did not request this, you can ignore this email — your password has not
 ];
 
 /** Substitutes {{variable}} placeholders. Missing variables render as empty. */
-export function renderTemplate(body: string, variables: Record<string, string | number | undefined>): string {
+export function renderTemplate(
+  body: string,
+  variables: Record<string, string | number | undefined>,
+): string {
   return body.replace(/\{\{\s*(\w+)\s*\}\}/g, (_match, name: string) => {
     const value = variables[name];
     return value === undefined || value === null ? "" : String(value);
@@ -397,10 +408,7 @@ export function renderTemplate(body: string, variables: Record<string, string | 
 }
 
 /** Names referenced in a body but not supplied — surfaced in the admin editor. */
-export function missingVariables(
-  body: string,
-  variables: Record<string, unknown>,
-): string[] {
+export function missingVariables(body: string, variables: Record<string, unknown>): string[] {
   const used = [...body.matchAll(/\{\{\s*(\w+)\s*\}\}/g)].map((m) => m[1] as string);
   return [...new Set(used)].filter((name) => variables[name] === undefined);
 }

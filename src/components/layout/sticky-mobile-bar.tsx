@@ -18,7 +18,13 @@ import { trackEvent } from "@/lib/analytics";
  * the primary action on the page.
  */
 
-const HIDDEN_PREFIXES = ["/book-appointment", "/patient-dashboard", "/admin", "/patient-login", "/staff-login"];
+const HIDDEN_PREFIXES = [
+  "/book-appointment",
+  "/patient-dashboard",
+  "/admin",
+  "/patient-login",
+  "/staff-login",
+];
 
 export function StickyMobileBar() {
   const pathname = usePathname();
@@ -32,7 +38,7 @@ export function StickyMobileBar() {
   return (
     <nav
       aria-label="Quick actions"
-      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-[--color-hairline] bg-white/97 backdrop-blur-sm md:hidden no-print"
+      className="no-print fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-[--color-hairline] bg-white/97 backdrop-blur-sm md:hidden"
     >
       <a
         href={`tel:${contact.phone.e164}`}

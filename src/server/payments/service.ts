@@ -38,7 +38,10 @@ export interface StartPaymentResult {
 
 export async function startPayment(input: StartPaymentInput): Promise<StartPaymentResult> {
   if (!Number.isInteger(input.amountPaise) || input.amountPaise <= 0) {
-    throw new AppError("That payment amount is not valid.", { status: 400, code: "INVALID_AMOUNT" });
+    throw new AppError("That payment amount is not valid.", {
+      status: 400,
+      code: "INVALID_AMOUNT",
+    });
   }
 
   // The amount is taken from the invoice server-side where one exists, so a
@@ -324,7 +327,9 @@ function mapMethod(method?: string) {
  */
 export async function reconcileWebhookPayment(event: {
   event: string;
-  payload: { payment?: { entity?: { id?: string; order_id?: string; status?: string; amount?: number } } };
+  payload: {
+    payment?: { entity?: { id?: string; order_id?: string; status?: string; amount?: number } };
+  };
 }): Promise<{ handled: boolean; reason?: string }> {
   const entity = event.payload.payment?.entity;
   if (!entity?.order_id || !entity.id) return { handled: false, reason: "No payment entity" };

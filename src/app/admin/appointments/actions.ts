@@ -77,7 +77,10 @@ export async function transitionAppointmentAction(formData: FormData): Promise<A
     revalidatePath("/admin/calendar");
     revalidatePath("/admin");
 
-    return { ok: true, message: `Appointment marked ${input.to.toLowerCase().replace(/_/g, " ")}.` };
+    return {
+      ok: true,
+      message: `Appointment marked ${input.to.toLowerCase().replace(/_/g, " ")}.`,
+    };
   } catch (error) {
     return { ok: false, message: toMessage(error) };
   }

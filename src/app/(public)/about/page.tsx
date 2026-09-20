@@ -27,22 +27,23 @@ export default function AboutPage() {
         <h1 className="text-3xl md:text-4xl">About the practice</h1>
         <div className="prose-clinic mt-5">
           <p>
-            {identity.legalName} is a multi-specialist dental practice in Sector 18-A,
-            Chandigarh
-            {foundedYear ? `, established in ${foundedYear} — ${yearsSince(foundedYear)} years of practice in the city` : ""}
+            {identity.legalName} is a multi-specialist dental practice in Sector 18-A, Chandigarh
+            {foundedYear
+              ? `, established in ${foundedYear} — ${yearsSince(foundedYear)} years of practice in the city`
+              : ""}
             . We see patients from across Chandigarh, Punjab and Haryana, and from overseas.
           </p>
           <p>
-            What we try to do differently is unremarkable in principle and rarer than it
-            should be in practice: examine first, explain the findings in language that
-            makes sense, set out the options including the cheaper one and the do-nothing
-            one, and put the plan in writing before treatment starts.
+            What we try to do differently is unremarkable in principle and rarer than it should be
+            in practice: examine first, explain the findings in language that makes sense, set out
+            the options including the cheaper one and the do-nothing one, and put the plan in
+            writing before treatment starts.
           </p>
           <p>
             We are also careful about what we claim. You will not find promises of
-            &ldquo;permanent&rdquo; results, guaranteed outcomes, or claims to be the best
-            clinic in the city on this website. Dentistry does not work that way, and a
-            practice that tells you it does is telling you something about itself.
+            &ldquo;permanent&rdquo; results, guaranteed outcomes, or claims to be the best clinic in
+            the city on this website. Dentistry does not work that way, and a practice that tells
+            you it does is telling you something about itself.
           </p>
         </div>
       </div>
@@ -85,7 +86,9 @@ export default function AboutPage() {
                   {index + 1}
                 </span>
                 <h3 className="mt-3.5 text-base font-semibold">{step.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-[--color-ink-muted]">{step.body}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-[--color-ink-muted]">
+                  {step.body}
+                </p>
               </li>
             ))}
           </ol>

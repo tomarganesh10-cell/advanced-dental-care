@@ -10,7 +10,10 @@ export const dynamic = "force-dynamic";
 
 const schema = z.object({
   phone: phoneSchema,
-  code: z.string().trim().regex(/^\d{6}$/, "Enter the 6-digit code."),
+  code: z
+    .string()
+    .trim()
+    .regex(/^\d{6}$/, "Enter the 6-digit code."),
 });
 
 export const POST = withApiHandler(async (request) => {

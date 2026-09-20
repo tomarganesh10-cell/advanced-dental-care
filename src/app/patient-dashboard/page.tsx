@@ -25,7 +25,10 @@ export default async function PatientDashboardPage() {
     await getPortalOverview(principal);
 
   const nextAppointment = upcoming[0];
-  const totalOutstanding = outstandingInvoices.reduce((sum, invoice) => sum + invoice.balancePaise, 0);
+  const totalOutstanding = outstandingInvoices.reduce(
+    (sum, invoice) => sum + invoice.balancePaise,
+    0,
+  );
 
   return (
     <>
@@ -140,7 +143,10 @@ export default async function PatientDashboardPage() {
           </h2>
           <ul className="divide-y divide-[--color-hairline] overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
             {upcoming.slice(1).map((appointment) => (
-              <li key={appointment.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm">
+              <li
+                key={appointment.id}
+                className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm"
+              >
                 <span className="font-medium">
                   {formatClinicDate(appointment.startsAt, "d MMM")} ·{" "}
                   {formatClinicTime(appointment.startsAt)}
@@ -158,8 +164,8 @@ export default async function PatientDashboardPage() {
       ) : null}
 
       <p className="mt-8 rounded-[--radius-card] border border-[--color-hairline] bg-white p-4 text-xs leading-relaxed text-[--color-ink-subtle]">
-        This portal shows your appointments, treatment plan and records. It is not a way to
-        reach the clinic urgently — if you are in pain or something is wrong, please call{" "}
+        This portal shows your appointments, treatment plan and records. It is not a way to reach
+        the clinic urgently — if you are in pain or something is wrong, please call{" "}
         <a href={`tel:${contact.phone.e164}`} className="font-medium text-[--color-action]">
           {contact.phone.display}
         </a>

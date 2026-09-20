@@ -41,7 +41,12 @@ export const logger = pino({
   },
   ...(isProduction
     ? {}
-    : { transport: { target: "pino-pretty", options: { colorize: true, translateTime: "HH:MM:ss" } } }),
+    : {
+        transport: {
+          target: "pino-pretty",
+          options: { colorize: true, translateTime: "HH:MM:ss" },
+        },
+      }),
 });
 
 /** Child logger bound to a request id, so one request's lines can be grouped. */

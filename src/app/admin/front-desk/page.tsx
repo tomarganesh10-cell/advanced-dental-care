@@ -88,7 +88,9 @@ async function loadFrontDeskBoard() {
       isNewPatient: true,
       checkedInAt: true,
       patientNote: true,
-      patient: { select: { id: true, fullName: true, patientNumber: true, phone: true, clinicalAlert: true } },
+      patient: {
+        select: { id: true, fullName: true, patientNumber: true, phone: true, clinicalAlert: true },
+      },
       doctor: { select: { displayName: true } },
     },
   });
@@ -159,7 +161,7 @@ export default async function FrontDeskPage() {
                               {appointment.patient.patientNumber}
                             </p>
                           </div>
-                          <span className="shrink-0 text-xs font-semibold tabular-nums text-[--color-ink]">
+                          <span className="shrink-0 text-xs font-semibold text-[--color-ink] tabular-nums">
                             {formatClinicTime(appointment.startsAt)}
                           </span>
                         </div>
@@ -172,7 +174,15 @@ export default async function FrontDeskPage() {
                         <div className="mt-2 flex flex-wrap gap-1.5">
                           {appointment.isNewPatient ? <Badge tone="info">New patient</Badge> : null}
                           {waitingMinutes !== null ? (
-                            <Badge tone={waitingMinutes > 20 ? "danger" : waitingMinutes > 10 ? "warning" : "neutral"}>
+                            <Badge
+                              tone={
+                                waitingMinutes > 20
+                                  ? "danger"
+                                  : waitingMinutes > 10
+                                    ? "warning"
+                                    : "neutral"
+                              }
+                            >
                               Waiting {waitingMinutes}m
                             </Badge>
                           ) : null}

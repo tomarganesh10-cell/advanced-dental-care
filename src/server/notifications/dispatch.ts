@@ -174,7 +174,10 @@ export async function queueNotification(
       "code" in err &&
       (err as { code: string }).code === "P2002"
     ) {
-      logger.debug({ dedupeKey: input.dedupeKey }, "notification already queued, skipping duplicate");
+      logger.debug(
+        { dedupeKey: input.dedupeKey },
+        "notification already queued, skipping duplicate",
+      );
       return null;
     }
     throw err;

@@ -55,7 +55,9 @@ export function WhyChoose() {
             </span>
             <div>
               <h3 className="text-base font-semibold">{reason.title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[--color-ink-muted]">{reason.body}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-[--color-ink-muted]">
+                {reason.body}
+              </p>
             </div>
           </li>
         ))}

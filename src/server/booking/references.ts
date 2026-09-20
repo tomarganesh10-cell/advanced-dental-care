@@ -48,7 +48,10 @@ export async function generateEnquiryReference(): Promise<string> {
 export async function generatePaymentReference(): Promise<string> {
   for (let i = 0; i < MAX_ATTEMPTS; i += 1) {
     const reference = generateReference("ADC-PY", 8);
-    const existing = await prisma.payment.findUnique({ where: { reference }, select: { id: true } });
+    const existing = await prisma.payment.findUnique({
+      where: { reference },
+      select: { id: true },
+    });
     if (!existing) return reference;
   }
   throw new Error("Could not allocate a payment reference");

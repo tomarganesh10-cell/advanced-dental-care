@@ -6,10 +6,16 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     <div className="flex min-h-dvh flex-col bg-[--color-surface-sunken]">
       <header className="border-b border-[--color-hairline] bg-white">
         <div className="container-page flex h-16 items-center justify-between">
-          <Link href="/" className="font-[family-name:--font-display] font-semibold text-[--color-primary]">
+          <Link
+            href="/"
+            className="font-[family-name:--font-display] font-semibold text-[--color-primary]"
+          >
             {identity.displayName}
           </Link>
-          <a href={`tel:${contact.phone.e164}`} className="text-sm font-medium text-[--color-action]">
+          <a
+            href={`tel:${contact.phone.e164}`}
+            className="text-sm font-medium text-[--color-action]"
+          >
             {contact.phone.display}
           </a>
         </div>

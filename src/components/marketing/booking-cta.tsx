@@ -26,7 +26,11 @@ export function BookingCta({
             </Link>
           </Button>
           <Button asChild size="xl" variant="whatsapp">
-            <a href={`https://wa.me/${contact.phone.whatsapp}`} target="_blank" rel="noopener noreferrer">
+            <a
+              href={`https://wa.me/${contact.phone.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <MessageCircle aria-hidden="true" />
               WhatsApp
             </a>

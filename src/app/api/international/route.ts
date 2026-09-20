@@ -24,7 +24,10 @@ export const POST = withApiHandler(async (request) => {
 
   const limit = await rateLimit(`international:${clientKey}`, 6, 3600);
   if (!limit.allowed) {
-    throw new RateLimitError(limit.retryAfterSeconds, "Too many enquiries. Please email the clinic.");
+    throw new RateLimitError(
+      limit.retryAfterSeconds,
+      "Too many enquiries. Please email the clinic.",
+    );
   }
 
   const body = await request.json();

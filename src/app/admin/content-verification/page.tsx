@@ -104,10 +104,9 @@ export default async function ContentVerificationPage() {
               {pending} claim{pending === 1 ? "" : "s"} are being withheld from the website
             </p>
             <p className="mt-1 leading-relaxed">
-              This is deliberate. The previous site published contradictory figures — 25 years
-              and 18 years of experience, 20,000 and 5,000 patients — because the numbers were
-              typed into the page. Here, a claim is hidden until someone records the evidence
-              behind it.
+              This is deliberate. The previous site published contradictory figures — 25 years and
+              18 years of experience, 20,000 and 5,000 patients — because the numbers were typed
+              into the page. Here, a claim is hidden until someone records the evidence behind it.
             </p>
             <p className="mt-2 leading-relaxed">
               Two of these are more than a marketing issue: a CBCT claim needs a current AERB
@@ -125,7 +124,11 @@ export default async function ContentVerificationPage() {
             </h2>
             <ul className="overflow-hidden rounded-[--radius-card] border border-[--color-hairline] bg-white">
               {groupClaims.map((claim) => (
-                <ClaimRow key={claim.key} claim={claim} stored={storedByKey.get(claim.key) ?? null} />
+                <ClaimRow
+                  key={claim.key}
+                  claim={claim}
+                  stored={storedByKey.get(claim.key) ?? null}
+                />
               ))}
             </ul>
           </section>

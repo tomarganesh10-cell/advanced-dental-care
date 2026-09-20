@@ -49,10 +49,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
  * every nav item; the cost is a dozen queries on every admin page load, for
  * numbers nobody acts on.
  */
-async function loadBadges(
-  staffId: string,
-  role: StaffRoleName,
-): Promise<Record<string, number>> {
+async function loadBadges(staffId: string, role: StaffRoleName): Promise<Record<string, number>> {
   const today = clinicDateString(new Date());
   const dayStart = clinicDayStart(today);
   const dayEnd = clinicDayEnd(today);

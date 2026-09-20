@@ -81,13 +81,55 @@ async function main(): Promise<void> {
   const passwordHash = await hash(SEED_PASSWORD, ARGON2_OPTIONS);
 
   const staffSeeds = [
-    { code: "ADC-S-0001", name: "Dr. Anshu Gupta", role: "SUPER_ADMIN" as const, email: process.env.SEED_ADMIN_EMAIL ?? "admin@example.com", isDoctor: true },
-    { code: "ADC-S-0002", name: "Dr. Priya Sharma (DEMO)", role: "DOCTOR" as const, email: "doctor@example.com", isDoctor: true },
-    { code: "ADC-S-0003", name: "Neha Verma (DEMO)", role: "RECEPTIONIST" as const, email: "reception@example.com", isDoctor: false },
-    { code: "ADC-S-0004", name: "Rajesh Kumar (DEMO)", role: "MANAGER" as const, email: "manager@example.com", isDoctor: false },
-    { code: "ADC-S-0005", name: "Simran Kaur (DEMO)", role: "DENTAL_ASSISTANT" as const, email: "assistant@example.com", isDoctor: false },
-    { code: "ADC-S-0006", name: "Arjun Mehta (DEMO)", role: "MARKETING" as const, email: "marketing@example.com", isDoctor: false },
-    { code: "ADC-S-0007", name: "Kavita Rao (DEMO)", role: "ACCOUNTANT" as const, email: "accounts@example.com", isDoctor: false },
+    {
+      code: "ADC-S-0001",
+      name: "Dr. Anshu Gupta",
+      role: "SUPER_ADMIN" as const,
+      email: process.env.SEED_ADMIN_EMAIL ?? "admin@example.com",
+      isDoctor: true,
+    },
+    {
+      code: "ADC-S-0002",
+      name: "Dr. Priya Sharma (DEMO)",
+      role: "DOCTOR" as const,
+      email: "doctor@example.com",
+      isDoctor: true,
+    },
+    {
+      code: "ADC-S-0003",
+      name: "Neha Verma (DEMO)",
+      role: "RECEPTIONIST" as const,
+      email: "reception@example.com",
+      isDoctor: false,
+    },
+    {
+      code: "ADC-S-0004",
+      name: "Rajesh Kumar (DEMO)",
+      role: "MANAGER" as const,
+      email: "manager@example.com",
+      isDoctor: false,
+    },
+    {
+      code: "ADC-S-0005",
+      name: "Simran Kaur (DEMO)",
+      role: "DENTAL_ASSISTANT" as const,
+      email: "assistant@example.com",
+      isDoctor: false,
+    },
+    {
+      code: "ADC-S-0006",
+      name: "Arjun Mehta (DEMO)",
+      role: "MARKETING" as const,
+      email: "marketing@example.com",
+      isDoctor: false,
+    },
+    {
+      code: "ADC-S-0007",
+      name: "Kavita Rao (DEMO)",
+      role: "ACCOUNTANT" as const,
+      email: "accounts@example.com",
+      isDoctor: false,
+    },
   ];
 
   const doctorIds: string[] = [];
@@ -136,7 +178,8 @@ async function main(): Promise<void> {
           // Deliberately empty: qualifications are a verified claim and must be
           // entered with evidence, not invented by a seed script.
           qualifications: [],
-          specialties: seed.code === "ADC-S-0001" ? ["Implantology", "Cosmetic Dentistry"] : ["Endodontics"],
+          specialties:
+            seed.code === "ADC-S-0001" ? ["Implantology", "Cosmetic Dentistry"] : ["Endodontics"],
           specialInterests:
             seed.code === "ADC-S-0001"
               ? ["Dental implants", "Full-mouth rehabilitation", "Smile design"]
@@ -184,11 +227,33 @@ async function main(): Promise<void> {
 
   // ----------------------------------------------------------------- patients
   const patientSeeds = [
-    { number: "ADC-P-000001", name: "Aditya Singh (DEMO)", phone: "+919000000001", email: "demo1@example.com" },
-    { number: "ADC-P-000002", name: "Meera Joshi (DEMO)", phone: "+919000000002", email: "demo2@example.com" },
+    {
+      number: "ADC-P-000001",
+      name: "Aditya Singh (DEMO)",
+      phone: "+919000000001",
+      email: "demo1@example.com",
+    },
+    {
+      number: "ADC-P-000002",
+      name: "Meera Joshi (DEMO)",
+      phone: "+919000000002",
+      email: "demo2@example.com",
+    },
     { number: "ADC-P-000003", name: "Harpreet Sandhu (DEMO)", phone: "+919000000003", email: null },
-    { number: "ADC-P-000004", name: "James Whitfield (DEMO)", phone: "+447700900001", email: "demo4@example.com", international: true, country: "United Kingdom" },
-    { number: "ADC-P-000005", name: "Ananya Rao (DEMO)", phone: "+919000000005", email: "demo5@example.com" },
+    {
+      number: "ADC-P-000004",
+      name: "James Whitfield (DEMO)",
+      phone: "+447700900001",
+      email: "demo4@example.com",
+      international: true,
+      country: "United Kingdom",
+    },
+    {
+      number: "ADC-P-000005",
+      name: "Ananya Rao (DEMO)",
+      phone: "+919000000005",
+      email: "demo5@example.com",
+    },
   ];
 
   const patientIds: string[] = [];
@@ -265,12 +330,54 @@ async function main(): Promise<void> {
 
   if (primaryDoctorId && patientIds.length > 0) {
     const appointmentSeeds = [
-      { patientIndex: 0, dayOffset: 0, time: "10:30", status: "CONFIRMED" as const, service: "dental-implants", name: "Dental Implants" },
-      { patientIndex: 1, dayOffset: 0, time: "11:30", status: "CHECKED_IN" as const, service: "root-canal", name: "Root Canal Treatment" },
-      { patientIndex: 2, dayOffset: 0, time: "16:30", status: "REQUESTED" as const, service: "general-dentistry", name: "Check-ups, Cleaning & Fillings" },
-      { patientIndex: 3, dayOffset: 2, time: "10:00", status: "CONFIRMED" as const, service: "smile-design", name: "Smile Design" },
-      { patientIndex: 4, dayOffset: -7, time: "12:00", status: "COMPLETED" as const, service: "teeth-whitening", name: "Teeth Whitening" },
-      { patientIndex: 0, dayOffset: -14, time: "17:00", status: "NO_SHOW" as const, service: "general-dentistry", name: "Check-ups, Cleaning & Fillings" },
+      {
+        patientIndex: 0,
+        dayOffset: 0,
+        time: "10:30",
+        status: "CONFIRMED" as const,
+        service: "dental-implants",
+        name: "Dental Implants",
+      },
+      {
+        patientIndex: 1,
+        dayOffset: 0,
+        time: "11:30",
+        status: "CHECKED_IN" as const,
+        service: "root-canal",
+        name: "Root Canal Treatment",
+      },
+      {
+        patientIndex: 2,
+        dayOffset: 0,
+        time: "16:30",
+        status: "REQUESTED" as const,
+        service: "general-dentistry",
+        name: "Check-ups, Cleaning & Fillings",
+      },
+      {
+        patientIndex: 3,
+        dayOffset: 2,
+        time: "10:00",
+        status: "CONFIRMED" as const,
+        service: "smile-design",
+        name: "Smile Design",
+      },
+      {
+        patientIndex: 4,
+        dayOffset: -7,
+        time: "12:00",
+        status: "COMPLETED" as const,
+        service: "teeth-whitening",
+        name: "Teeth Whitening",
+      },
+      {
+        patientIndex: 0,
+        dayOffset: -14,
+        time: "17:00",
+        status: "NO_SHOW" as const,
+        service: "general-dentistry",
+        name: "Check-ups, Cleaning & Fillings",
+      },
     ];
 
     for (const [index, seed] of appointmentSeeds.entries()) {
@@ -307,10 +414,42 @@ async function main(): Promise<void> {
 
   // -------------------------------------------------------------------- leads
   const leadSeeds = [
-    { ref: "ADC-L-SEED01", name: "Rohit Bansal (DEMO)", phone: "+919000000011", treatment: "Dental Implants", source: "GOOGLE" as const, status: "NEW" as const, utm: "google" },
-    { ref: "ADC-L-SEED02", name: "Sneha Gupta (DEMO)", phone: "+919000000012", treatment: "Clear Aligners", source: "INSTAGRAM" as const, status: "CONTACTED" as const, utm: "instagram" },
-    { ref: "ADC-L-SEED03", name: "David Miller (DEMO)", phone: "+14155550001", treatment: "Full-Mouth Rehabilitation", source: "INTERNATIONAL" as const, status: "QUALIFIED" as const, utm: null },
-    { ref: "ADC-L-SEED04", name: "Pooja Nair (DEMO)", phone: "+919000000014", treatment: "Dental Veneers", source: "WEBSITE" as const, status: "LOST" as const, utm: "google" },
+    {
+      ref: "ADC-L-SEED01",
+      name: "Rohit Bansal (DEMO)",
+      phone: "+919000000011",
+      treatment: "Dental Implants",
+      source: "GOOGLE" as const,
+      status: "NEW" as const,
+      utm: "google",
+    },
+    {
+      ref: "ADC-L-SEED02",
+      name: "Sneha Gupta (DEMO)",
+      phone: "+919000000012",
+      treatment: "Clear Aligners",
+      source: "INSTAGRAM" as const,
+      status: "CONTACTED" as const,
+      utm: "instagram",
+    },
+    {
+      ref: "ADC-L-SEED03",
+      name: "David Miller (DEMO)",
+      phone: "+14155550001",
+      treatment: "Full-Mouth Rehabilitation",
+      source: "INTERNATIONAL" as const,
+      status: "QUALIFIED" as const,
+      utm: null,
+    },
+    {
+      ref: "ADC-L-SEED04",
+      name: "Pooja Nair (DEMO)",
+      phone: "+919000000014",
+      treatment: "Dental Veneers",
+      source: "WEBSITE" as const,
+      status: "LOST" as const,
+      utm: "google",
+    },
   ];
 
   for (const seed of leadSeeds) {

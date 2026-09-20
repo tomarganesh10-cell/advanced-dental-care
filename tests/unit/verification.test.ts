@@ -34,7 +34,9 @@ describe("verified claims", () => {
   });
 
   it("hides an archived value", () => {
-    const claim = { ...verified(1, { source: "s", verifiedBy: "b", verifiedOn: "d", evidence: "e" }) };
+    const claim = {
+      ...verified(1, { source: "s", verifiedBy: "b", verifiedOn: "d", evidence: "e" }),
+    };
     claim.status = "ARCHIVED";
     expect(publicValue(claim)).toBeUndefined();
   });

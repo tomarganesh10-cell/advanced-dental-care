@@ -106,7 +106,11 @@ export const internationalEnquirySchema = z.object({
   email: emailSchema,
   phone: phoneSchema,
   whatsapp: phoneSchema.optional(),
-  country: z.string().trim().min(2, "Please tell us which country you are travelling from.").max(80),
+  country: z
+    .string()
+    .trim()
+    .min(2, "Please tell us which country you are travelling from.")
+    .max(80),
   city: z.string().trim().max(80).optional().or(z.literal("")),
   timezone: z.string().max(60).optional(),
   treatmentInterest: z
