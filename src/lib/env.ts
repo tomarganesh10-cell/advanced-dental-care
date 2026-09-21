@@ -100,6 +100,18 @@ const schema = z.object({
    */
   CRON_SECRET: optionalString,
 
+  /**
+   * How long analytics page-view events are kept. This is the only table that
+   * grows with traffic rather than with patients treated.
+   */
+  ANALYTICS_RETENTION_DAYS: int(400),
+  /**
+   * Audit-log retention. Unset means keep forever, which is the right default
+   * for a record of who opened which patient file. Set it only on advice about
+   * the practice's own record-keeping obligations.
+   */
+  AUDIT_LOG_RETENTION_DAYS: optionalString,
+
   RATE_LIMIT_BOOKING_PER_HOUR: int(10),
   RATE_LIMIT_OTP_PER_HOUR: int(8),
   RATE_LIMIT_LOGIN_PER_15MIN: int(10),

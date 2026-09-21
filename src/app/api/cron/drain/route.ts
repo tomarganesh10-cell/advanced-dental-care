@@ -6,6 +6,7 @@ import { logger } from "@/lib/logger";
 import { pruneExpiredOtps } from "@/server/auth/otp";
 import { pruneExpiredSessions } from "@/server/auth/session";
 import { drainNotificationQueue } from "@/server/notifications/worker";
+import { runRetention } from "@/server/retention";
 
 export const dynamic = "force-dynamic";
 
@@ -53,12 +54,26 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const drained = await drainNotificationQueue();
     const [sessions, otps] = await Promise.all([pruneExpiredSessions(), pruneExpiredOtps()]);
 
+    const retention = await runRetention({
+      analyticsRetentionDays: env.ANALYTICS_RETENTION_DAYS,
+      auditRetentionDays: env.AUDIT_LOG_RETENTION_DAYS
+        ? Number.parseInt(env.AUDIT_LOG_RETENTION_DAYS, 10)
+        : undefined,
+    });
+
     if (drained.attempted > 0 || sessions > 0 || otps > 0) {
-      logger.info({ ...drained, sessions, otps }, "cron drain completed");
+      logger.info({ ...drained, sessions, otps, ...retention }, "cron drain completed");
     }
 
     return NextResponse.json(
-      { status: "ok", ...drained, prunedSessions: sessions, prunedOtps: otps },
+      {
+        status: "ok",
+        ...drained,
+        prunedSessions: sessions,
+        prunedOtps: otps,
+        prunedAnalyticsEvents: retention.analyticsEvents,
+        prunedAuditLogs: retention.auditLogs,
+      },
       { headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {

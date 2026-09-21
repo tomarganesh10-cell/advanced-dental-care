@@ -17,6 +17,8 @@ import { pruneExpiredOtps } from "@/server/auth/otp";
 import { pruneExpiredSessions } from "@/server/auth/session";
 import { drainNotificationQueue } from "@/server/notifications/worker";
 import { getGoogleRating } from "@/server/integrations/google-places";
+import { runRetention } from "@/server/retention";
+import { env } from "@/lib/env";
 
 const QUEUE_INTERVAL_MS = 30_000;
 const MAINTENANCE_INTERVAL_MS = 60 * 60 * 1000;
@@ -48,6 +50,14 @@ async function maintenance(): Promise<void> {
     if (sessions > 0 || otps > 0) {
       logger.info({ sessions, otps }, "expired records pruned");
     }
+
+    // Bounds the two tables that grow with traffic rather than with patients.
+    await runRetention({
+      analyticsRetentionDays: env.ANALYTICS_RETENTION_DAYS,
+      auditRetentionDays: env.AUDIT_LOG_RETENTION_DAYS
+        ? Number.parseInt(env.AUDIT_LOG_RETENTION_DAYS, 10)
+        : undefined,
+    });
 
     // Refreshes the cache so the public site is not the first request to pay
     // the API latency after a TTL expiry.
