@@ -65,18 +65,114 @@ else
 fi
 
 # ---------------------------------------------------------------------------
+# Is this server already doing something?
+# ---------------------------------------------------------------------------
+# A VPS is rarely as empty as the person deploying remembers. This section
+# exists because running the rest of the script on a box that is already
+# serving something can take that something offline — and finding out by
+# watching it happen is the expensive way.
+
+say "Checking what is already running"
+
+existing_containers="$(docker ps --format '{{.Names}}\t{{.Ports}}' 2>/dev/null || true)"
+if [[ -n "$existing_containers" ]]; then
+  echo "    Containers already running on this server:"
+  echo "$existing_containers" | sed 's/^/      /'
+else
+  echo "    No containers currently running."
+fi
+
+# Caddy needs 80 and 443. If anything else holds them, it cannot start, and a
+# half-deployed stack is worse than one that refused to begin.
+#
+# Whichever tool is present is used, and the matching line is printed raw rather
+# than parsed into a field — the exact output differs between ss versions, and a
+# line the operator can read beats a field this script guessed wrong.
+listeners_on() {
+  local port="$1"
+  if command -v ss >/dev/null 2>&1; then
+    ss -ltnp 2>/dev/null | awk -v p=":${port}\$" 'NR > 1 && $4 ~ p'
+  elif command -v lsof >/dev/null 2>&1; then
+    lsof -nP -iTCP:"${port}" -sTCP:LISTEN 2>/dev/null | tail -n +2
+  elif command -v netstat >/dev/null 2>&1; then
+    netstat -ltnp 2>/dev/null | awk -v p=":${port}\$" '$4 ~ p'
+  fi
+}
+
+blocked=""
+for port in 80 443; do
+  holder="$(listeners_on "$port")"
+  if [[ -n "$holder" ]]; then
+    blocked+="      port ${port}:\n$(echo "$holder" | sed 's/^/        /')\n"
+  fi
+done
+
+if [[ -n "$blocked" ]]; then
+  echo
+  echo "Cannot continue: the web ports are already in use." >&2
+  printf "%b" "$blocked" >&2
+  cat >&2 <<'EOF'
+
+The reverse proxy in this deployment needs ports 80 and 443. Something else has
+them, so starting would either fail or disrupt whatever is serving there now.
+
+Pick one:
+
+  * If the other service should keep the ports, do not use this script's proxy.
+    Bring the app up without it and point your existing reverse proxy at
+    127.0.0.1:3000:
+
+        docker compose up -d --build
+
+  * If the other service is finished with, stop it first, then re-run this.
+
+Nothing has been changed on this server.
+EOF
+  exit 1
+fi
+
+echo "    Ports 80 and 443 are free."
+
+# ---------------------------------------------------------------------------
 # Firewall
 # ---------------------------------------------------------------------------
 # Port 3000 is deliberately absent. The app binds to loopback and is reached
 # only through the reverse proxy, so it is never exposed without TLS.
+#
+# Enabling a firewall on a server that does not have one is the single most
+# likely way this script breaks something it did not install: any other service
+# reachable on a port other than 22, 80 or 443 stops being reachable, with no
+# error anywhere except in someone else's monitoring. So it is only configured
+# when a firewall is ALREADY active (adding two rules to an existing policy is
+# safe) or when the operator explicitly asks for it.
 
-say "Configuring the firewall"
-ufw allow OpenSSH >/dev/null
-ufw allow 80/tcp >/dev/null
-ufw allow 443/tcp >/dev/null
-ufw allow 443/udp >/dev/null
-ufw --force enable >/dev/null
-echo "    Open: 22 (SSH), 80 and 443 (web). Everything else is closed."
+ufw_state="$(ufw status 2>/dev/null | head -1 || echo 'Status: unknown')"
+
+if [[ "$ufw_state" == *active* ]]; then
+  say "Firewall already active — allowing the web ports"
+  ufw allow OpenSSH >/dev/null
+  ufw allow 80/tcp >/dev/null
+  ufw allow 443/tcp >/dev/null
+  ufw allow 443/udp >/dev/null
+  echo "    Added 80 and 443 to the existing policy. Nothing was removed."
+elif [[ "${ENABLE_FIREWALL:-0}" == "1" ]]; then
+  say "Enabling the firewall (ENABLE_FIREWALL=1)"
+  ufw allow OpenSSH >/dev/null
+  ufw allow 80/tcp >/dev/null
+  ufw allow 443/tcp >/dev/null
+  ufw allow 443/udp >/dev/null
+  ufw --force enable >/dev/null
+  echo "    Open: 22 (SSH), 80 and 443 (web). Everything else is now closed."
+  echo "    If another service on this server used a different port, it is no"
+  echo "    longer reachable from outside. Add it with: ufw allow <port>/tcp"
+else
+  warn "No firewall is active, and this script did not enable one."
+  echo "    Enabling it would close every port except 22, 80 and 443 — which"
+  echo "    would cut off anything else on this server that listens elsewhere."
+  echo "    Once you know that is safe, run:"
+  echo
+  echo "      ENABLE_FIREWALL=1 bash scripts/deploy-hostinger.sh $SITE_DOMAIN $ADMIN_EMAIL"
+fi
 
 # ---------------------------------------------------------------------------
 # Secrets and environment
