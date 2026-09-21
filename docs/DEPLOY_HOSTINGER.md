@@ -4,25 +4,27 @@
 
 | Hostinger product | Runs this app? |
 | --- | --- |
-| **VPS (KVM 1/2/4/8)** | **Yes.** This is the supported target. |
-| Shared / Premium / Business | **No.** |
-| Cloud Startup / Professional | **No.** |
+| **VPS (KVM 1/2/4/8)** | **Yes, fully.** App, worker, PostgreSQL and Redis on one box. |
+| Business / Cloud (Node.js app) | **Partly.** Runs the app; needs an external PostgreSQL. |
+| Premium / Single / shared | **No.** |
 | Website Builder | No. |
 
-Everything except the VPS line is LiteSpeed serving PHP against MySQL. This
-application is a long-running Node 22 server with PostgreSQL 16 and a
-background worker process. None of those three exist on shared hosting, and no
-amount of configuration adds them — there is no shell daemon, no PostgreSQL,
-and processes are killed between requests.
+The dividing line is Node.js. Hostinger's Node.js app feature exists only on
+**Business and Cloud** plans; Premium and below are LiteSpeed serving PHP, with
+no long-running process, so this application cannot start there at all.
 
-If the clinic is on a shared plan today, there are two honest options:
+Even on Business or Cloud there is a second limit: **Hostinger provides MySQL
+only — no PostgreSQL on any shared or managed plan.** This application requires
+PostgreSQL, so that route means an external database (Neon or Supabase) and a
+cron job calling `/api/cron/drain` in place of the worker process. Workable, but
+two moving parts in two places.
 
-1. **Upgrade to a Hostinger VPS.** KVM 2 (2 vCPU, 8 GB) is comfortable for a
-   single clinic. KVM 1 (1 vCPU, 4 GB) works but the first Docker build is
-   slow.
-2. **Keep the shared plan for the domain and email, and host the application
-   somewhere that runs Node** (see `DEPLOY_VERCEL.md`). Point the domain's DNS
-   at that host. This is a perfectly normal arrangement.
+A VPS has neither limitation, which is why it is the supported target.
+
+If the clinic is on Premium today and owns a VPS, the right arrangement is to
+**keep Premium for the domain, DNS and email, and run the application on the
+VPS.** Premium's DNS zone editor points the domain wherever you like; nothing
+has to move.
 
 Pick a **datacentre in India** when creating the VPS. Hostinger has one in
 Mumbai. A clinic site served from Europe pays roughly 150ms on every request,
