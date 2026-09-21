@@ -35,7 +35,7 @@
     "verify:live": "npm run verify:routes && npm run verify:permissions && npm run verify:portal",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "build:standalone": "prisma generate && next build && node scripts/postbuild-standalone.mjs",
-    "hostinger-build": "prisma generate && prisma migrate deploy && next build && node scripts/postbuild-standalone.mjs"
+    "hostinger-build": "node scripts/preflight-deploy.mjs && prisma generate && prisma migrate deploy && next build && node scripts/postbuild-standalone.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
