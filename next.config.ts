@@ -25,6 +25,16 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  /**
+   * Emits .next/standalone/server.js alongside the normal build.
+   *
+   * Managed Node hosts (Hostinger's Node.js app among them) ask for an "entry
+   * file" and run it directly rather than invoking `next start`. Without this
+   * there is no such file to name. It is additive — `next start` and the Docker
+   * image are unaffected — and it also trims the deployed node_modules to what
+   * the server actually imports.
+   */
+  output: "standalone",
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,

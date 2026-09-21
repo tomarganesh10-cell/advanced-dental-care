@@ -44,8 +44,12 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    # Loopback only. Published on 0.0.0.0 this would serve the whole clinic over
+    # plain HTTP on port 3000, alongside whatever TLS the reverse proxy adds —
+    # and session cookies are Secure-only, so that endpoint cannot even log in.
+    # The reverse proxy reaches the app over the compose network as `app:3000`.
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
 
   # Without this, nothing is ever sent to a patient. See docs/DEPLOYMENT.md.
   worker:
