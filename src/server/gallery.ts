@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { prerenderSafe } from "@/lib/prerender";
 
 /**
  * Smile gallery queries.
@@ -54,36 +55,41 @@ export async function listPublicGalleryCases(
 ): Promise<PublicGalleryCase[]> {
   const now = options.now ?? new Date();
 
-  const cases = await prisma.galleryCase.findMany({
-    where: {
-      ...publicWhere(now),
-      ...(options.category && options.category !== "all" ? { category: options.category } : {}),
-    },
-    orderBy: [{ displayOrder: "asc" }, { createdAt: "desc" }],
-    take: options.limit,
-    select: {
-      id: true,
-      slug: true,
-      title: true,
-      category: true,
-      serviceSlug: true,
-      concern: true,
-      summary: true,
-      treatmentDescription: true,
-      doctor: { select: { displayName: true } },
-      media: {
-        orderBy: { sequence: "asc" },
+  const cases = await prerenderSafe(
+    () =>
+      prisma.galleryCase.findMany({
+        where: {
+          ...publicWhere(now),
+          ...(options.category && options.category !== "all" ? { category: options.category } : {}),
+        },
+        orderBy: [{ displayOrder: "asc" }, { createdAt: "desc" }],
+        take: options.limit,
         select: {
           id: true,
-          phase: true,
-          imageUrl: true,
-          altText: true,
-          width: true,
-          height: true,
+          slug: true,
+          title: true,
+          category: true,
+          serviceSlug: true,
+          concern: true,
+          summary: true,
+          treatmentDescription: true,
+          doctor: { select: { displayName: true } },
+          media: {
+            orderBy: { sequence: "asc" },
+            select: {
+              id: true,
+              phase: true,
+              imageUrl: true,
+              altText: true,
+              width: true,
+              height: true,
+            },
+          },
         },
-      },
-    },
-  });
+      }),
+    [],
+    "public gallery cases",
+  );
 
   return cases.map((item) => ({
     id: item.id,
@@ -139,7 +145,7 @@ export const GALLERY_CATEGORIES = [
 
 /** Published testimonials, gated on their own consent flag. */
 export async function listPublishedTestimonials(limit?: number) {
-  return prisma.testimonial.findMany({
+  return prerenderSafe(() => prisma.testimonial.findMany({
     where: { isPublished: true, consentGranted: true, deletedAt: null },
     orderBy: [{ displayOrder: "asc" }, { createdAt: "desc" }],
     take: limit,
@@ -153,5 +159,5 @@ export async function listPublishedTestimonials(limit?: number) {
       videoUrl: true,
       thumbnailUrl: true,
     },
-  });
+  }), [], "published testimonials");
 }
