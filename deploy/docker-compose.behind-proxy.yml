@@ -1,0 +1,24 @@
+# Run the clinic platform behind a reverse proxy that already exists on this
+# server, instead of the Caddy in deploy/docker-compose.prod.yml.
+#
+#   PROXY_NETWORK=<the network your proxy is on> \
+#   docker compose -f docker-compose.yml -f deploy/docker-compose.behind-proxy.yml up -d
+#
+# The app joins that network under the alias `clinic-app`, so the existing proxy
+# reaches it as http://clinic-app:3000 — a name that does not change when the
+# container is recreated, unlike a container name or an IP address.
+#
+# TLS is the proxy's job in this arrangement, not this stack's. Nothing here
+# binds port 80 or 443, so whatever is already serving them is untouched.
+services:
+  app:
+    networks:
+      default:
+      proxy:
+        aliases:
+          - clinic-app
+
+networks:
+  proxy:
+    external: true
+    name: ${PROXY_NETWORK:?set PROXY_NETWORK to the docker network your reverse proxy is on}

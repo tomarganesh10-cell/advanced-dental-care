@@ -129,6 +129,48 @@ engines for internet-connected devices.
 
 ---
 
+## When the server already has a reverse proxy
+
+A VPS that already runs something has its own front door on ports 80 and 443,
+and this stack must not try to take them. `scripts/deploy-hostinger.sh` refuses
+to continue in that case rather than fighting for the port.
+
+Run without the bundled proxy instead:
+
+```bash
+# The docker network your existing proxy is attached to.
+docker inspect <proxy-container> --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{"\n"}}{{end}}'
+
+PROXY_NETWORK=<that network> \
+  docker compose -f docker-compose.yml -f deploy/docker-compose.behind-proxy.yml up -d --build
+docker compose -f docker-compose.yml -f deploy/docker-compose.behind-proxy.yml \
+  run --rm --entrypoint "" app npx prisma migrate deploy
+```
+
+The app joins that network under the alias **`clinic-app`**, reachable as
+`http://clinic-app:3000`. An alias rather than a container name or an IP,
+because those change when a container is recreated and the alias does not.
+
+Then add `deploy/nginx-clinic.conf.template` to the proxy as a **new** file,
+with `__DOMAIN__` replaced. Never edit an existing server block: adding one
+cannot change how the other sites behave, editing one can. Check before
+reloading — `nginx -t` refuses a broken config, so a typo cannot take the proxy
+down, and `reload` does not drop connections the way `restart` does:
+
+```bash
+nginx -t && nginx -s reload
+```
+
+Two settings in that template are load-bearing. `X-Forwarded-Proto` tells the
+app it is on https; without it the Secure-only session cookies are never set and
+signing in appears to work and then silently does nothing. `client_max_body_size
+64m` allows X-rays through; the 1 MB default rejects them with a 413.
+
+TLS is the existing proxy's job here, so the certificate for the clinic domain
+has to be issued the same way that proxy issues its others.
+
+---
+
 ## Running it
 
 ```bash

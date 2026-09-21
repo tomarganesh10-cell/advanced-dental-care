@@ -1,0 +1,75 @@
+# Clinic platform — an ADDITIONAL nginx server block.
+#
+# Drop this in as a NEW file (for example /etc/nginx/conf.d/clinic.conf).
+# Do not edit any existing file: adding a server block cannot change how the
+# other sites on this proxy behave, editing one can.
+#
+# Replace __DOMAIN__ before use. The upstream name `clinic-app` comes from the
+# network alias in deploy/docker-compose.behind-proxy.yml.
+#
+# Check and reload — never restart, which would drop every other site:
+#     nginx -t && nginx -s reload
+# `nginx -t` refuses a broken config, so a typo here cannot take the proxy down.
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name __DOMAIN__ www.__DOMAIN__;
+
+    # Leave this in place even after TLS is issued: it is how certificates get
+    # renewed without stopping nginx.
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://__DOMAIN__$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name www.__DOMAIN__;
+
+    ssl_certificate     /etc/letsencrypt/live/__DOMAIN__/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/__DOMAIN__/privkey.pem;
+
+    return 301 https://__DOMAIN__$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name __DOMAIN__;
+
+    ssl_certificate     /etc/letsencrypt/live/__DOMAIN__/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/__DOMAIN__/privkey.pem;
+
+    # X-rays and scans. The default 1m would reject them with a 413.
+    client_max_body_size 64m;
+
+    location / {
+        proxy_pass http://clinic-app:3000;
+        proxy_http_version 1.1;
+
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        # Without this the app believes it is on http and its Secure-only
+        # session cookies are never set — sign-in appears to succeed and then
+        # silently does nothing.
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade           $http_upgrade;
+        proxy_set_header Connection        "upgrade";
+
+        # Server-rendered pages stream; buffering them delays first paint.
+        proxy_buffering off;
+        proxy_read_timeout 120s;
+    }
+
+    # The app sets its own CSP, HSTS and frame headers per request. Nothing is
+    # added here, so the two cannot disagree.
+}
